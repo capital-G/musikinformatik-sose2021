@@ -1,0 +1,8 @@
+-r requirements.txt
+jupyter-book
+sphinx
+sphinx-book-theme
+jupyter-sphinx
+pydata-sphinx-theme
+MyST-NB
+imageio

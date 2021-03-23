@@ -1,0 +1,5 @@
+jupyterlab
+numpy
+pandas
+matplotlib
+music21
