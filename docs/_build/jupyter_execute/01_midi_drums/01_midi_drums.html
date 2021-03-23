@@ -1,0 +1,2324 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysing drum patterns from MIDI files &#8212; Musikinformatik SoSe2021</title>
+    
+  <link rel="stylesheet" href="../../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+    
+  <link rel="preload" as="script" href="../../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script src="../../../../_static/thebelab-helper.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="../../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Course information
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../course-info/setup.html">
+   Environment setup
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Basics of Python
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../00_python_basics/00_01-data-types.html">
+   Data types
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Lesson 1
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../01_midi_drums/01_midi_drums.html">
+   Analysing drum patterns from MIDI files
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../../_sources/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#getting-the-dataset">
+   Getting the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parsing-the-dataset">
+   Parsing the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inspecting-the-data">
+   Inspecting the data
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="analysing-drum-patterns-from-midi-files">
+<h1>Analysing drum patterns from MIDI files<a class="headerlink" href="#analysing-drum-patterns-from-midi-files" title="Permalink to this headline">¶</a></h1>
+<p>In our first lesson we want to get to know how to work with datasets so we can</p>
+<ul class="simple">
+<li><p>parse a dataset</p></li>
+<li><p>analyse the dataset so it matches our expectations and we did not screw up during parsing</p></li>
+</ul>
+<p>After this is done we want to take a look at how we can generate new drum patterns from the existing one.
+But in order to do this we want to take a look at the quantisation (?) of our patterns.</p>
+<p>The cleaning of the dataset and setting the data up properly takes the most time in such experiments but if one makes errors here those errors will propagate through our system - so its good to spend some time at this task.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># makes the randomness deterministic</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getting-the-dataset">
+<h2>Getting the dataset<a class="headerlink" href="#getting-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>As our methods rely on data we need a way to obtain such data.
+Of course we start to get into difficult teritory here from a copyright point of view - so for now we will rely on public domain datasets?</p>
+</div>
+<div class="section" id="parsing-the-dataset">
+<h2>Parsing the dataset<a class="headerlink" href="#parsing-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>When working with large sets of files the unix utility <a class="reference external" href="https://en.wikipedia.org/wiki/Glob_(programming)">glob</a> comes in handy as we can describe the pattern of the file paths we want to match instead of listing all files.</p>
+<p>When we take a quick look at the data set we see that there are two occurences of common file pattens:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">midi_dataset</span><span class="o">/</span><span class="n">C</span><span class="o">/</span><span class="n">Celine</span> <span class="n">Dion</span> <span class="o">-</span> <span class="p">(</span><span class="n">If</span><span class="o">-</span><span class="n">There</span><span class="o">-</span><span class="n">Was</span><span class="p">)</span> <span class="n">Any</span> <span class="n">Other</span> <span class="n">Way</span><span class="o">.</span><span class="n">mid</span>
+<span class="n">midi_dataset</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">A</span> <span class="n">AH</span><span class="o">.</span><span class="n">The</span> <span class="n">living</span> <span class="n">daylights</span><span class="o">.</span><span class="n">mid</span>
+</pre></div>
+</div>
+<p>So we have either</p>
+<ul class="simple">
+<li><p>a single character folder in which <code class="docutils literal notranslate"><span class="pre">.mid</span></code> files are</p></li>
+<li><p>a single character folder with another single character folder in which <code class="docutils literal notranslate"><span class="pre">.mid</span></code> files are</p></li>
+</ul>
+<p>Some googling for <em>glob any depth only extension</em> reveals <a class="reference external" href="https://stackoverflow.com/a/14798263/3475778">this stack overflow answer</a> from which we can now deduce our glob pattern to match the files.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GLOB_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;../datasets/midi_dataset/**/*.mid&#39;</span>
+<span class="n">midi_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">GLOB_PATTERN</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 0 midi files in dataset
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select 5 random files</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">f0993117107c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># select 5 random files</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="nn">mtrand.pyx</span> in <span class="ni">numpy.random.mtrand.RandomState.choice</span><span class="nt">()</span>
+
+<span class="ne">ValueError</span>: &#39;a&#39; cannot be empty unless no samples are taken
+</pre></div>
+</div>
+</div>
+</div>
+<p>But how are sure that we matched every midi file in our folder?
+We can simply match every file in our dataset directory and show us the differences by using <a class="reference external" href="https://realpython.com/python-sets/">sets</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missed_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/midi_dataset/**/*.*&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> files&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Did not match 765 files
+</pre></div>
+</div>
+</div>
+</div>
+<p>It turns out that we missed some files.
+Lets take a look at them using <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html">random.choice</a> from the numpy library.
+But as this function does not work with sets we need to transform the set to a list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">missed_files</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;../datasets/midi_dataset/D/D/DION.Treat her like a lady K.MID&#39;,
+       &quot;../datasets/midi_dataset/M/M/M.GREGER.Ev&#39;rybody loves somebody.MID&quot;,
+       &#39;../datasets/midi_dataset/M/M/MOTI SPECIAL.Cold days hot night K.MID&#39;,
+       &#39;../datasets/midi_dataset/N/N/NATIONAL TICKET.Il mondo K.MID&#39;,
+       &#39;../datasets/midi_dataset/G/G/goodmorninghide.MID&#39;], dtype=&#39;&lt;U114&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It seems there are files missing that have a capitalized file extension <code class="docutils literal notranslate"><span class="pre">.MID</span></code>.</p>
+<p>But lets not rely on the few examples, lets use a <a class="reference external" href="https://realpython.com/list-comprehension-python/">list comprehension</a> to filter out all examples that are not ending in a capitalized manner.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.MID&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
+ &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
+ &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;,
+ &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
+ &#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
+ &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;,
+ &#39;../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid&#39;,
+ &#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that we are still missing the files that have <code class="docutils literal notranslate"><span class="pre">.Mid</span></code>, <code class="docutils literal notranslate"><span class="pre">.midi</span></code> and <code class="docutils literal notranslate"><span class="pre">.MIDi</span></code> as extension.
+If we include these we will now have matched all files of our dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;MID&#39;</span><span class="p">,</span> <span class="s1">&#39;Mid&#39;</span><span class="p">,</span> <span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;MIDi&#39;</span><span class="p">]:</span>
+    <span class="n">MID_GLOB_PATTERN</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;../datasets/midi_dataset/**/*.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">midi_files</span> <span class="o">+=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">MID_GLOB_PATTERN</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 40477 midi files in dataset
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missed_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/midi_dataset/**/*.*&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> files&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Did not match 0 files
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course we could have just matched every file in the directory but then we would not have those exercises and one will at one point work with <em>dirty</em> datasets so its good to have at least some experience on how to inspect just the files of our dataset.</p>
+<p>Also it is always a good idea to only include such files into the dataset that we expect because having an unexpected file in the dataset needs to be avoided because this can mess up our results.</p>
+</div>
+<div class="section" id="inspecting-the-data">
+<h2>Inspecting the data<a class="headerlink" href="#inspecting-the-data" title="Permalink to this headline">¶</a></h2>
+<p>Now as we have all file paths available it is a good practice to take a first look at the data.
+We need to understand how the information we are interested in is accessible and also that it is probably not standardized - as we have seen above with the filenames already.</p>
+<p>To parse the midi files we will use the python library <a class="reference external" href="https://web.mit.edu/music21/">music21</a> from the MIT.
+The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html">docs</a> reveal that <code class="docutils literal notranslate"><span class="pre">music21.converter</span></code> seems to be the proper package.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">music21</span> <span class="kn">import</span> <span class="n">converter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_midi_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Selected </span><span class="si">{</span><span class="n">example_midi_file</span><span class="si">}</span><span class="s1"> as example MIDI file&#39;</span><span class="p">)</span>
+<span class="n">example_score</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">example_midi_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected ../datasets/midi_dataset/A/A/AreYouAfraidOfTheDark.mid as example MIDI file
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_score</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x12aa61970&gt;
+    {0.0} &lt;music21.instrument.Piano &#39;Theme from Love Story: piano&#39;&gt;
+    {0.0} &lt;music21.key.Key of C major&gt;
+    {0.0} &lt;music21.stream.Voice 0x12bba7970&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {8.0} &lt;music21.note.Note A&gt;
+        {8.75} &lt;music21.note.Note C&gt;
+        {9.0} &lt;music21.note.Note E&gt;
+        {9.25} &lt;music21.note.Rest rest&gt;
+        {9.3333} &lt;music21.note.Note A&gt;
+        {9.5833} &lt;music21.note.Rest rest&gt;
+        {9.6667} &lt;music21.note.Note E&gt;
+        {10.1667} &lt;music21.note.Rest rest&gt;
+        {10.25} &lt;music21.note.Note E&gt;
+        {10.5833} &lt;music21.note.Rest rest&gt;
+        {10.6667} &lt;music21.note.Note A&gt;
+        {11.0} &lt;music21.note.Note E&gt;
+        {11.25} &lt;music21.note.Note C&gt;
+        {11.5} &lt;music21.note.Note E&gt;
+        {11.8333} &lt;music21.note.Rest rest&gt;
+        {12.0} &lt;music21.note.Note E&gt;
+        {12.3333} &lt;music21.note.Rest rest&gt;
+        {12.5} &lt;music21.note.Note A&gt;
+        {12.8333} &lt;music21.note.Rest rest&gt;
+        {13.25} &lt;music21.note.Note A&gt;
+        {13.5833} &lt;music21.note.Rest rest&gt;
+        {13.75} &lt;music21.note.Note C&gt;
+        {14.75} &lt;music21.note.Note E&gt;
+        {16.5} &lt;music21.note.Note A&gt;
+        {17.25} &lt;music21.note.Rest rest&gt;
+        {17.5} &lt;music21.note.Note F&gt;
+        {18.5} &lt;music21.note.Note F&gt;
+        {19.75} &lt;music21.note.Note E&gt;
+        {21.0} &lt;music21.note.Note G#&gt;
+        {22.25} &lt;music21.note.Rest rest&gt;
+        {22.3333} &lt;music21.note.Note B&gt;
+        {24.6667} &lt;music21.note.Note G#&gt;
+        {28.1667} &lt;music21.note.Rest rest&gt;
+        {31.3333} &lt;music21.note.Note A&gt;
+        {32.0833} &lt;music21.note.Rest rest&gt;
+        {32.3333} &lt;music21.note.Note E&gt;
+        {32.8333} &lt;music21.note.Rest rest&gt;
+        {33.0} &lt;music21.chord.Chord C5 A3&gt;
+        {33.25} &lt;music21.note.Rest rest&gt;
+        {33.5} &lt;music21.note.Note C&gt;
+        {34.25} &lt;music21.note.Rest rest&gt;
+        {35.0} &lt;music21.note.Note A&gt;
+        {37.75} &lt;music21.note.Rest rest&gt;
+        {38.0} &lt;music21.note.Note E&gt;
+        {38.3333} &lt;music21.note.Rest rest&gt;
+        {38.5} &lt;music21.note.Note C&gt;
+        {38.75} &lt;music21.note.Rest rest&gt;
+        {39.0} &lt;music21.note.Note C&gt;
+        {40.0} &lt;music21.note.Note F&gt;
+        {40.5} &lt;music21.note.Rest rest&gt;
+        {40.75} &lt;music21.note.Note E&gt;
+        {41.0} &lt;music21.note.Rest rest&gt;
+        {41.25} &lt;music21.note.Note B&gt;
+        {41.5833} &lt;music21.note.Rest rest&gt;
+        {41.6667} &lt;music21.note.Note E&gt;
+        {42.1667} &lt;music21.note.Rest rest&gt;
+        {42.25} &lt;music21.chord.Chord B2 D4&gt;
+        {42.75} &lt;music21.note.Rest rest&gt;
+        {43.0} &lt;music21.note.Note B&gt;
+        {43.25} &lt;music21.note.Rest rest&gt;
+        {43.3333} &lt;music21.note.Note B&gt;
+        {43.8333} &lt;music21.note.Rest rest&gt;
+        {44.0} &lt;music21.note.Note G#&gt;
+        {45.75} &lt;music21.note.Rest rest&gt;
+        {46.0} &lt;music21.note.Note G#&gt;
+        {46.75} &lt;music21.note.Rest rest&gt;
+        {47.6667} &lt;music21.note.Note B&gt;
+        {47.9167} &lt;music21.note.Rest rest&gt;
+        {48.25} &lt;music21.note.Note B&gt;
+        {48.5} &lt;music21.note.Rest rest&gt;
+        {48.75} &lt;music21.note.Note D&gt;
+        {49.0} &lt;music21.note.Note B&gt;
+        {49.25} &lt;music21.note.Rest rest&gt;
+        {49.5} &lt;music21.note.Note E&gt;
+        {50.25} &lt;music21.note.Rest rest&gt;
+        {50.3333} &lt;music21.note.Note B&gt;
+        {50.6667} &lt;music21.note.Rest rest&gt;
+        {51.0} &lt;music21.note.Note D&gt;
+        {51.75} &lt;music21.note.Note C&gt;
+        {52.4167} &lt;music21.note.Rest rest&gt;
+        {52.6667} &lt;music21.note.Note C&gt;
+        {53.0} &lt;music21.note.Note D&gt;
+        {53.3333} &lt;music21.note.Note D&gt;
+        {53.5833} &lt;music21.note.Rest rest&gt;
+        {53.6667} &lt;music21.note.Note D&gt;
+        {53.9167} &lt;music21.note.Rest rest&gt;
+        {54.0} &lt;music21.note.Note D&gt;
+        {54.25} &lt;music21.note.Note C&gt;
+        {54.5} &lt;music21.note.Rest rest&gt;
+        {54.6667} &lt;music21.note.Note B&gt;
+        {54.9167} &lt;music21.note.Rest rest&gt;
+        {55.0} &lt;music21.note.Note A&gt;
+        {55.75} &lt;music21.note.Note C&gt;
+        {56.0833} &lt;music21.note.Rest rest&gt;
+        {56.3333} &lt;music21.note.Note G&gt;
+        {57.0833} &lt;music21.note.Rest rest&gt;
+        {57.5} &lt;music21.note.Note C&gt;
+        {58.25} &lt;music21.note.Note C&gt;
+        {58.5833} &lt;music21.note.Rest rest&gt;
+        {59.0} &lt;music21.note.Note C&gt;
+        {59.25} &lt;music21.note.Rest rest&gt;
+        {59.3333} &lt;music21.note.Note A&gt;
+        {59.5833} &lt;music21.note.Rest rest&gt;
+        {59.75} &lt;music21.note.Note A&gt;
+        {60.4167} &lt;music21.note.Rest rest&gt;
+        {60.6667} &lt;music21.note.Note D&gt;
+        {61.0} &lt;music21.note.Note C&gt;
+        {61.5} &lt;music21.note.Note B&gt;
+        {61.75} &lt;music21.note.Rest rest&gt;
+        {62.0} &lt;music21.note.Note C&gt;
+        {62.5} &lt;music21.note.Note C&gt;
+        {62.75} &lt;music21.note.Note C&gt;
+        {63.0} &lt;music21.note.Note B&gt;
+        {63.25} &lt;music21.note.Note B&gt;
+        {63.5} &lt;music21.note.Note C&gt;
+        {63.75} &lt;music21.note.Rest rest&gt;
+        {64.0} &lt;music21.note.Note B-&gt;
+        {64.25} &lt;music21.note.Note B&gt;
+        {64.5} &lt;music21.note.Note B&gt;
+        {67.1667} &lt;music21.note.Rest rest&gt;
+        {67.25} &lt;music21.note.Note B&gt;
+        {68.9167} &lt;music21.note.Rest rest&gt;
+        {69.0} &lt;music21.note.Note E&gt;
+        {69.75} &lt;music21.note.Rest rest&gt;
+        {70.0} &lt;music21.note.Note E&gt;
+        {70.25} &lt;music21.note.Rest rest&gt;
+        {70.3333} &lt;music21.chord.Chord G#4 G#3&gt;
+        {70.5833} &lt;music21.note.Rest rest&gt;
+        {71.0} &lt;music21.note.Note E&gt;
+        {71.5} &lt;music21.note.Note E&gt;
+        {72.1667} &lt;music21.note.Rest rest&gt;
+        {72.5} &lt;music21.note.Note A&gt;
+        {74.1667} &lt;music21.note.Rest rest&gt;
+        {75.0} &lt;music21.note.Note E&gt;
+        {76.75} &lt;music21.note.Rest rest&gt;
+        {77.5} &lt;music21.note.Note B&gt;
+        {77.8333} &lt;music21.note.Rest rest&gt;
+        {78.0} &lt;music21.note.Note A&gt;
+        {78.6667} &lt;music21.note.Rest rest&gt;
+        {79.0} &lt;music21.note.Note C&gt;
+        {79.5} &lt;music21.note.Note A&gt;
+        {80.25} &lt;music21.note.Rest rest&gt;
+        {80.5} &lt;music21.note.Note E&gt;
+        {81.1667} &lt;music21.note.Rest rest&gt;
+        {81.5} &lt;music21.note.Note B&gt;
+        {82.8333} &lt;music21.note.Rest rest&gt;
+        {83.75} &lt;music21.note.Note C&gt;
+        {84.5} &lt;music21.note.Rest rest&gt;
+        {84.75} &lt;music21.note.Note E&gt;
+        {85.5} &lt;music21.note.Rest rest&gt;
+        {85.75} &lt;music21.note.Note C&gt;
+        {86.4167} &lt;music21.note.Rest rest&gt;
+        {87.0} &lt;music21.note.Note F&gt;
+        {87.3333} &lt;music21.note.Note E&gt;
+        {87.6667} &lt;music21.note.Rest rest&gt;
+        {87.75} &lt;music21.note.Note E&gt;
+        {88.0833} &lt;music21.note.Rest rest&gt;
+        {88.3333} &lt;music21.chord.Chord D5 B2&gt;
+        {88.8333} &lt;music21.note.Rest rest&gt;
+        {89.25} &lt;music21.note.Note B&gt;
+        {89.5} &lt;music21.chord.Chord B5 G#3&gt;
+        {90.0} &lt;music21.note.Note B&gt;
+        {90.3333} &lt;music21.note.Rest rest&gt;
+        {90.5} &lt;music21.note.Note G#&gt;
+        {91.0} &lt;music21.note.Rest rest&gt;
+        {91.25} &lt;music21.note.Note D&gt;
+        {92.25} &lt;music21.note.Note E&gt;
+        {92.5} &lt;music21.note.Rest rest&gt;
+        {92.6667} &lt;music21.note.Note E&gt;
+        {93.1667} &lt;music21.note.Rest rest&gt;
+        {93.25} &lt;music21.note.Note B&gt;
+        {93.9167} &lt;music21.note.Rest rest&gt;
+        {94.25} &lt;music21.note.Note D&gt;
+        {94.75} &lt;music21.note.Note E&gt;
+        {95.0833} &lt;music21.note.Rest rest&gt;
+        {95.25} &lt;music21.note.Note D&gt;
+        {95.9167} &lt;music21.note.Rest rest&gt;
+        {96.0} &lt;music21.note.Note C&gt;
+        {96.25} &lt;music21.note.Note D&gt;
+        {96.5} &lt;music21.note.Note C&gt;
+        {96.75} &lt;music21.chord.Chord C5 E4&gt;
+        {97.0} &lt;music21.note.Note D&gt;
+        {97.25} &lt;music21.note.Note D&gt;
+        {97.5} &lt;music21.note.Note D&gt;
+        {97.75} &lt;music21.note.Note C&gt;
+        {98.0} &lt;music21.note.Note A&gt;
+        {98.6667} &lt;music21.note.Note C&gt;
+        {99.0} &lt;music21.note.Note E&gt;
+        {99.5} &lt;music21.note.Note B&gt;
+        {100.25} &lt;music21.note.Note A&gt;
+        {101.25} &lt;music21.note.Rest rest&gt;
+        {101.3333} &lt;music21.note.Note C&gt;
+        {101.6667} &lt;music21.note.Note C&gt;
+        {101.9167} &lt;music21.note.Rest rest&gt;
+        {102.0} &lt;music21.note.Note F&gt;
+        {102.3333} &lt;music21.note.Note C&gt;
+        {102.5833} &lt;music21.note.Rest rest&gt;
+        {102.75} &lt;music21.note.Note A&gt;
+        {103.0} &lt;music21.note.Note A&gt;
+        {103.5} &lt;music21.note.Rest rest&gt;
+        {103.6667} &lt;music21.note.Note D&gt;
+        {104.0} &lt;music21.chord.Chord C5 B2&gt;
+        {104.25} &lt;music21.note.Rest rest&gt;
+        {104.3333} &lt;music21.note.Note E&gt;
+        {104.5833} &lt;music21.note.Rest rest&gt;
+        {104.75} &lt;music21.chord.Chord B2 B4&gt;
+        {105.0} &lt;music21.note.Note C&gt;
+        {105.25} &lt;music21.note.Note C&gt;
+        {105.5} &lt;music21.note.Rest rest&gt;
+        {105.6667} &lt;music21.note.Note C&gt;
+        {105.9167} &lt;music21.note.Rest rest&gt;
+        {106.0} &lt;music21.note.Note B-&gt;
+        {106.25} &lt;music21.note.Note B&gt;
+        {106.5} &lt;music21.note.Note B&gt;
+        {107.8333} &lt;music21.note.Rest rest&gt;
+        {108.3333} &lt;music21.note.Note D&gt;
+        {108.8333} &lt;music21.note.Rest rest&gt;
+        {109.0} &lt;music21.note.Note D&gt;
+        {109.5} &lt;music21.note.Rest rest&gt;
+        {109.75} &lt;music21.note.Note B&gt;
+        {110.0} &lt;music21.note.Rest rest&gt;
+        {110.25} &lt;music21.note.Note G#&gt;
+        {110.5} &lt;music21.note.Rest rest&gt;
+        {110.6667} &lt;music21.note.Note E&gt;
+        {111.0} &lt;music21.note.Note A&gt;
+        {112.0} &lt;music21.note.Note A&gt;
+        {113.0} &lt;music21.note.Note E&gt;
+        {114.0} &lt;music21.note.Rest rest&gt;
+        {114.25} &lt;music21.note.Note F&gt;
+        {114.5} &lt;music21.chord.Chord D6 D5&gt;
+        {114.75} &lt;music21.note.Note A&gt;
+        {115.25} &lt;music21.note.Note D&gt;
+        {115.5} &lt;music21.note.Rest rest&gt;
+        {115.6667} &lt;music21.note.Note F&gt;
+        {115.9167} &lt;music21.note.Rest rest&gt;
+        {116.25} &lt;music21.chord.Chord A4 A5&gt;
+        {116.5} &lt;music21.note.Rest rest&gt;
+        {116.75} &lt;music21.note.Note D&gt;
+        {117.75} &lt;music21.note.Rest rest&gt;
+        {118.5} &lt;music21.note.Note D&gt;
+        {119.75} &lt;music21.note.Rest rest&gt;
+        {120.0} &lt;music21.note.Note F&gt;
+        {120.5} &lt;music21.note.Rest rest&gt;
+        {120.6667} &lt;music21.note.Note F&gt;
+        {121.3333} &lt;music21.note.Rest rest&gt;
+        {121.5} &lt;music21.note.Note F&gt;
+        {121.8333} &lt;music21.note.Rest rest&gt;
+        {122.0} &lt;music21.chord.Chord G2 B5&gt;
+        {122.25} &lt;music21.note.Rest rest&gt;
+        {122.3333} &lt;music21.note.Note G&gt;
+        {122.8333} &lt;music21.note.Rest rest&gt;
+        {123.0} &lt;music21.note.Note F&gt;
+        {123.6667} &lt;music21.note.Note B&gt;
+        {124.0} &lt;music21.note.Note D&gt;
+        {124.25} &lt;music21.chord.Chord B5 F6&gt;
+        {124.75} &lt;music21.note.Note G&gt;
+        {125.0833} &lt;music21.note.Rest rest&gt;
+        {125.25} &lt;music21.chord.Chord C3 E5&gt;
+        {126.25} &lt;music21.note.Note G&gt;
+        {126.75} &lt;music21.note.Rest rest&gt;
+        {127.25} &lt;music21.note.Note E&gt;
+        {127.9167} &lt;music21.note.Rest rest&gt;
+        {128.25} &lt;music21.note.Note G&gt;
+        {128.5} &lt;music21.note.Rest rest&gt;
+        {128.6667} &lt;music21.chord.Chord F5 D5&gt;
+        {128.9167} &lt;music21.note.Rest rest&gt;
+        {129.0} &lt;music21.chord.Chord G5 E5&gt;
+        {129.25} &lt;music21.note.Rest rest&gt;
+        {129.3333} &lt;music21.chord.Chord F2 B5 G5&gt;
+        {129.8333} &lt;music21.note.Rest rest&gt;
+        {130.0} &lt;music21.chord.Chord F3 E3&gt;
+        {130.25} &lt;music21.note.Rest rest&gt;
+        {130.3333} &lt;music21.chord.Chord F5 A5&gt;
+        {130.8333} &lt;music21.note.Rest rest&gt;
+        {131.25} &lt;music21.note.Note A&gt;
+        {132.0} &lt;music21.note.Rest rest&gt;
+        {132.25} &lt;music21.chord.Chord G5 G4&gt;
+        {132.5} &lt;music21.note.Rest rest&gt;
+        {132.75} &lt;music21.chord.Chord F4 F5&gt;
+        {133.0} &lt;music21.note.Rest rest&gt;
+        {133.25} &lt;music21.chord.Chord E4 E5&gt;
+        {133.5} &lt;music21.note.Rest rest&gt;
+        {134.0} &lt;music21.note.Note B&gt;
+        {134.6667} &lt;music21.note.Note B&gt;
+        {135.6667} &lt;music21.note.Rest rest&gt;
+        {136.0} &lt;music21.note.Note F#&gt;
+        {137.0} &lt;music21.note.Note F#&gt;
+        {137.3333} &lt;music21.note.Rest rest&gt;
+        {137.5} &lt;music21.note.Note F#&gt;
+        {138.0} &lt;music21.note.Note G#&gt;
+        {138.75} &lt;music21.note.Rest rest&gt;
+        {139.25} &lt;music21.note.Note E&gt;
+        {140.5} &lt;music21.note.Note B&gt;
+        {142.8333} &lt;music21.note.Rest rest&gt;
+        {143.25} &lt;music21.note.Note E&gt;
+        {145.0} &lt;music21.note.Rest rest&gt;
+        {145.3333} &lt;music21.note.Note G#&gt;
+        {146.0833} &lt;music21.note.Rest rest&gt;
+        {146.25} &lt;music21.note.Note B&gt;
+        {146.5} &lt;music21.note.Rest rest&gt;
+        {147.25} &lt;music21.note.Note G#&gt;
+        {147.5} &lt;music21.note.Rest rest&gt;
+        {151.0} &lt;music21.chord.Chord A4 C7&gt;
+        {151.3333} &lt;music21.note.Note E&gt;
+        {151.5833} &lt;music21.note.Rest rest&gt;
+        {152.0} &lt;music21.note.Note E&gt;
+        {152.3333} &lt;music21.note.Note C&gt;
+        {152.5833} &lt;music21.note.Rest rest&gt;
+        {152.75} &lt;music21.note.Note C&gt;
+        {153.0833} &lt;music21.note.Rest rest&gt;
+        {153.25} &lt;music21.note.Note C&gt;
+        {154.25} &lt;music21.note.Rest rest&gt;
+        {154.5} &lt;music21.note.Note A&gt;
+        {154.8333} &lt;music21.note.Rest rest&gt;
+        {155.0} &lt;music21.note.Note C&gt;
+        {155.25} &lt;music21.note.Rest rest&gt;
+        {155.3333} &lt;music21.chord.Chord E6 E5&gt;
+        {155.8333} &lt;music21.note.Rest rest&gt;
+        {156.25} &lt;music21.chord.Chord A4 C7&gt;
+        {156.5833} &lt;music21.note.Rest rest&gt;
+        {157.0} &lt;music21.note.Note F&gt;
+        {157.3333} &lt;music21.note.Note E&gt;
+        {157.5833} &lt;music21.note.Rest rest&gt;
+        {157.75} &lt;music21.note.Note D&gt;
+        {158.0} &lt;music21.note.Rest rest&gt;
+        {158.25} &lt;music21.note.Note G#&gt;
+        {158.5} &lt;music21.note.Rest rest&gt;
+        {158.6667} &lt;music21.note.Note D&gt;
+        {158.9167} &lt;music21.note.Rest rest&gt;
+        {159.0} &lt;music21.note.Note B&gt;
+        {159.25} &lt;music21.note.Rest rest&gt;
+        {159.3333} &lt;music21.note.Note B&gt;
+        {159.6667} &lt;music21.note.Rest rest&gt;
+        {159.75} &lt;music21.note.Note G#&gt;
+        {160.75} &lt;music21.note.Rest rest&gt;
+        {161.25} &lt;music21.note.Note E&gt;
+        {161.5} &lt;music21.note.Note G#&gt;
+        {161.75} &lt;music21.note.Rest rest&gt;
+        {162.0} &lt;music21.note.Note D&gt;
+        {162.3333} &lt;music21.note.Note G#&gt;
+        {162.5833} &lt;music21.note.Rest rest&gt;
+        {162.75} &lt;music21.note.Note B&gt;
+        {163.0833} &lt;music21.note.Rest rest&gt;
+        {163.25} &lt;music21.note.Note D&gt;
+        {164.0} &lt;music21.note.Note D&gt;
+        {164.25} &lt;music21.note.Rest rest&gt;
+        {164.3333} &lt;music21.note.Note A&gt;
+        {164.5833} &lt;music21.note.Rest rest&gt;
+        {164.75} &lt;music21.note.Note C&gt;
+        {165.0} &lt;music21.note.Rest rest&gt;
+        {165.25} &lt;music21.note.Note C&gt;
+        {165.5} &lt;music21.note.Rest rest&gt;
+        {165.6667} &lt;music21.chord.Chord C5 A6&gt;
+        {165.9167} &lt;music21.note.Rest rest&gt;
+        {166.0} &lt;music21.note.Note G&gt;
+        {166.75} &lt;music21.note.Rest rest&gt;
+        {167.0} &lt;music21.note.Note D&gt;
+        {167.5} &lt;music21.note.Rest rest&gt;
+        {167.6667} &lt;music21.note.Note F&gt;
+        {168.1667} &lt;music21.note.Rest rest&gt;
+        {168.5} &lt;music21.note.Note C&gt;
+        {168.8333} &lt;music21.note.Rest rest&gt;
+        {169.0} &lt;music21.note.Note A&gt;
+        {169.25} &lt;music21.chord.Chord A6 F4&gt;
+        {169.5833} &lt;music21.note.Rest rest&gt;
+        {169.6667} &lt;music21.note.Note C&gt;
+        {169.9167} &lt;music21.note.Rest rest&gt;
+        {170.25} &lt;music21.chord.Chord D6 C5&gt;
+        {170.5} &lt;music21.chord.Chord C6 A4&gt;
+        {170.75} &lt;music21.note.Rest rest&gt;
+        {171.0} &lt;music21.note.Note B&gt;
+        {171.25} &lt;music21.note.Note G#&gt;
+        {171.5} &lt;music21.note.Rest rest&gt;
+        {171.75} &lt;music21.note.Note B&gt;
+        {172.0} &lt;music21.chord.Chord G#4 G#6&gt;
+        {172.25} &lt;music21.note.Rest rest&gt;
+        {172.5} &lt;music21.note.Note E&gt;
+        {172.8333} &lt;music21.note.Rest rest&gt;
+        {173.3333} &lt;music21.note.Note B&gt;
+        {173.6667} &lt;music21.note.Rest rest&gt;
+        {173.75} &lt;music21.note.Note G#&gt;
+        {174.0833} &lt;music21.note.Rest rest&gt;
+        {174.25} &lt;music21.note.Note E&gt;
+        {174.75} &lt;music21.note.Rest rest&gt;
+        {175.0} &lt;music21.chord.Chord A6 A5&gt;
+        {175.25} &lt;music21.note.Rest rest&gt;
+        {175.3333} &lt;music21.note.Note G#&gt;
+        {175.6667} &lt;music21.note.Rest rest&gt;
+        {175.75} &lt;music21.chord.Chord B6 E4&gt;
+        {176.0} &lt;music21.note.Rest rest&gt;
+        {176.25} &lt;music21.note.Note G#&gt;
+        {177.0} &lt;music21.chord.Chord G#4 B4&gt;
+        {177.25} &lt;music21.note.Rest rest&gt;
+        {177.3333} &lt;music21.chord.Chord A5 E6&gt;
+        {177.8333} &lt;music21.note.Rest rest&gt;
+        {178.0} &lt;music21.note.Note C&gt;
+        {178.5} &lt;music21.note.Rest rest&gt;
+        {178.6667} &lt;music21.note.Note C&gt;
+        {178.9167} &lt;music21.note.Rest rest&gt;
+        {179.0} &lt;music21.note.Note C&gt;
+        {179.25} &lt;music21.note.Note E&gt;
+        {179.5} &lt;music21.note.Note C&gt;
+        {179.8333} &lt;music21.note.Rest rest&gt;
+        {180.0} &lt;music21.note.Note C&gt;
+        {180.25} &lt;music21.note.Note A&gt;
+        {180.5} &lt;music21.note.Rest rest&gt;
+        {180.6667} &lt;music21.chord.Chord A3 C4&gt;
+        {180.9167} &lt;music21.note.Rest rest&gt;
+        {181.0} &lt;music21.note.Note E&gt;
+        {181.25} &lt;music21.note.Rest rest&gt;
+        {181.3333} &lt;music21.note.Note C&gt;
+        {182.0} &lt;music21.note.Note A&gt;
+        {182.3333} &lt;music21.note.Note C&gt;
+        {182.6667} &lt;music21.note.Note A&gt;
+        {182.9167} &lt;music21.note.Rest rest&gt;
+        {183.0} &lt;music21.note.Note E&gt;
+        {183.3333} &lt;music21.note.Note C&gt;
+        {183.6667} &lt;music21.note.Rest rest&gt;
+        {183.75} &lt;music21.note.Note A&gt;
+        {184.0} &lt;music21.note.Rest rest&gt;
+        {184.25} &lt;music21.note.Note A&gt;
+        {184.5} &lt;music21.chord.Chord C3 E3&gt;
+        {184.75} &lt;music21.note.Rest rest&gt;
+        {185.0} &lt;music21.note.Note C&gt;
+        {185.25} &lt;music21.note.Note A&gt;
+        {185.5833} &lt;music21.note.Rest rest&gt;
+        {185.75} &lt;music21.note.Note A&gt;
+        {186.25} &lt;music21.note.Rest rest&gt;
+        {186.5} &lt;music21.note.Note A&gt;
+        {187.25} &lt;music21.note.Note E&gt;
+        {188.0} &lt;music21.note.Note A&gt;
+        {188.3333} &lt;music21.note.Note A&gt;
+        {188.8333} &lt;music21.note.Rest rest&gt;
+        {189.0} &lt;music21.note.Note C&gt;
+        {189.25} &lt;music21.note.Rest rest&gt;
+        {189.5} &lt;music21.chord.Chord C5 E5&gt;
+        {189.75} &lt;music21.note.Note E&gt;
+        {190.25} &lt;music21.note.Rest rest&gt;
+        {190.3333} &lt;music21.note.Note E&gt;
+        {190.6667} &lt;music21.note.Note F&gt;
+        {191.1667} &lt;music21.note.Rest rest&gt;
+        {191.25} &lt;music21.note.Note B&gt;
+        {191.5} &lt;music21.note.Note E&gt;
+        {191.8333} &lt;music21.note.Rest rest&gt;
+        {192.0} &lt;music21.note.Note D&gt;
+        {192.25} &lt;music21.chord.Chord D4 D5&gt;
+        {192.5} &lt;music21.chord.Chord G#4 D5&gt;
+        {192.75} &lt;music21.note.Note E&gt;
+        {193.0833} &lt;music21.note.Rest rest&gt;
+        {193.3333} &lt;music21.note.Note G#&gt;
+        {193.5833} &lt;music21.note.Rest rest&gt;
+        {193.6667} &lt;music21.note.Note D&gt;
+        {195.1667} &lt;music21.note.Rest rest&gt;
+        {195.3333} &lt;music21.note.Note E&gt;
+        {195.8333} &lt;music21.note.Rest rest&gt;
+        {196.0} &lt;music21.chord.Chord D4 G#4&gt;
+        {196.25} &lt;music21.note.Rest rest&gt;
+        {196.5} &lt;music21.chord.Chord E3 B4&gt;
+        {196.75} &lt;music21.note.Note G#&gt;
+        {197.25} &lt;music21.chord.Chord D5 E5&gt;
+        {197.9167} &lt;music21.note.Rest rest&gt;
+        {198.0} &lt;music21.note.Note B&gt;
+        {198.6667} &lt;music21.note.Note B&gt;
+        {198.9167} &lt;music21.note.Rest rest&gt;
+        {199.0} &lt;music21.note.Note D&gt;
+        {199.3333} &lt;music21.note.Rest rest&gt;
+        {199.5} &lt;music21.chord.Chord A2 C5 A4&gt;
+        {199.8333} &lt;music21.note.Rest rest&gt;
+        {200.0} &lt;music21.note.Note A&gt;
+        {200.25} &lt;music21.note.Rest rest&gt;
+        {200.3333} &lt;music21.note.Note C&gt;
+        {200.5833} &lt;music21.note.Rest rest&gt;
+        {200.6667} &lt;music21.note.Note E&gt;
+        {200.9167} &lt;music21.note.Rest rest&gt;
+        {201.0} &lt;music21.note.Note E-&gt;
+        {201.25} &lt;music21.note.Note A&gt;
+        {201.5} &lt;music21.note.Rest rest&gt;
+        {201.6667} &lt;music21.note.Note C&gt;
+        {202.6667} &lt;music21.note.Note C&gt;
+        {203.3333} &lt;music21.note.Note F&gt;
+        {203.6667} &lt;music21.note.Rest rest&gt;
+        {203.75} &lt;music21.note.Note F&gt;
+        {204.25} &lt;music21.note.Rest rest&gt;
+        {204.3333} &lt;music21.note.Note F&gt;
+        {204.5833} &lt;music21.note.Rest rest&gt;
+        {204.6667} &lt;music21.note.Note A&gt;
+        {204.9167} &lt;music21.note.Rest rest&gt;
+        {205.25} &lt;music21.note.Note A&gt;
+        {205.75} &lt;music21.note.Rest rest&gt;
+        {206.0} &lt;music21.note.Note D&gt;
+        {206.25} &lt;music21.note.Note E&gt;
+        {206.5} &lt;music21.note.Note B&gt;
+        {206.75} &lt;music21.chord.Chord G#4 B4&gt;
+        {207.0} &lt;music21.note.Rest rest&gt;
+        {207.25} &lt;music21.note.Note B&gt;
+        {207.5} &lt;music21.chord.Chord G#5 G#4 E3&gt;
+        {207.75} &lt;music21.note.Rest rest&gt;
+        {208.0} &lt;music21.chord.Chord G#4 G#5&gt;
+        {208.6667} &lt;music21.note.Note D&gt;
+        {209.1667} &lt;music21.note.Rest rest&gt;
+        {209.5} &lt;music21.note.Note E&gt;
+        {210.25} &lt;music21.note.Rest rest&gt;
+        {210.5} &lt;music21.note.Note D&gt;
+        {211.0} &lt;music21.note.Rest rest&gt;
+        {211.25} &lt;music21.note.Note B&gt;
+        {211.75} &lt;music21.note.Rest rest&gt;
+        {212.0} &lt;music21.note.Note E&gt;
+        {212.25} &lt;music21.note.Rest rest&gt;
+        {212.3333} &lt;music21.chord.Chord C#6 A2&gt;
+        {213.3333} &lt;music21.note.Note A&gt;
+        {214.3333} &lt;music21.note.Rest rest&gt;
+        {214.6667} &lt;music21.note.Note G&gt;
+        {215.1667} &lt;music21.note.Rest rest&gt;
+        {215.3333} &lt;music21.note.Note E&gt;
+        {215.5833} &lt;music21.note.Rest rest&gt;
+        {215.6667} &lt;music21.chord.Chord D5 D6&gt;
+        {215.9167} &lt;music21.note.Rest rest&gt;
+        {216.0} &lt;music21.note.Note A&gt;
+        {216.6667} &lt;music21.note.Note E&gt;
+        {217.0} &lt;music21.note.Note D&gt;
+        {217.5} &lt;music21.chord.Chord A4 A5&gt;
+        {217.75} &lt;music21.note.Rest rest&gt;
+        {218.0} &lt;music21.chord.Chord D2 E2&gt;
+        {218.25} &lt;music21.chord.Chord F2 G2&gt;
+        {218.5} &lt;music21.chord.Chord G3 A3&gt;
+        {218.75} &lt;music21.note.Note C&gt;
+        {219.0} &lt;music21.note.Rest rest&gt;
+        {219.25} &lt;music21.note.Note F&gt;
+        {219.5} &lt;music21.note.Rest rest&gt;
+        {220.5} &lt;music21.note.Note D&gt;
+        {221.5} &lt;music21.note.Note F&gt;
+        {222.1667} &lt;music21.note.Rest rest&gt;
+        {222.25} &lt;music21.note.Note C&gt;
+        {223.0} &lt;music21.note.Rest rest&gt;
+        {223.3333} &lt;music21.note.Note G&gt;
+        {223.8333} &lt;music21.note.Rest rest&gt;
+        {224.25} &lt;music21.note.Note C&gt;
+        {224.5} &lt;music21.note.Note G&gt;
+        {224.8333} &lt;music21.note.Rest rest&gt;
+        {225.0} &lt;music21.note.Note G&gt;
+        {225.3333} &lt;music21.chord.Chord B5 F5&gt;
+        {225.8333} &lt;music21.note.Rest rest&gt;
+        {226.0} &lt;music21.note.Note E&gt;
+        {226.75} &lt;music21.note.Rest rest&gt;
+        {227.0} &lt;music21.note.Note C&gt;
+        {227.25} &lt;music21.note.Note D&gt;
+        {227.5833} &lt;music21.note.Rest rest&gt;
+        {227.75} &lt;music21.note.Note F&gt;
+        {228.0} &lt;music21.note.Note G&gt;
+        {228.25} &lt;music21.note.Rest rest&gt;
+        {228.3333} &lt;music21.chord.Chord E5 C3&gt;
+        {229.3333} &lt;music21.note.Rest rest&gt;
+        {229.6667} &lt;music21.note.Note B&gt;
+        {230.3333} &lt;music21.note.Note G&gt;
+        {230.6667} &lt;music21.note.Rest rest&gt;
+        {231.0} &lt;music21.note.Note B&gt;
+        {231.25} &lt;music21.note.Note F&gt;
+        {231.5} &lt;music21.note.Note G&gt;
+        {231.75} &lt;music21.chord.Chord F2 B5&gt;
+        {232.25} &lt;music21.note.Note C&gt;
+        {232.75} &lt;music21.chord.Chord C5 F5&gt;
+        {233.4167} &lt;music21.note.Rest rest&gt;
+        {233.5} &lt;music21.note.Note C&gt;
+        {234.25} &lt;music21.note.Rest rest&gt;
+        {234.5} &lt;music21.note.Note G&gt;
+        {234.8333} &lt;music21.note.Rest rest&gt;
+        {235.0} &lt;music21.note.Note E&gt;
+        {235.25} &lt;music21.note.Note B&gt;
+        {235.75} &lt;music21.note.Rest rest&gt;
+        {236.25} &lt;music21.note.Note B&gt;
+        {236.75} &lt;music21.note.Rest rest&gt;
+        {237.0} &lt;music21.note.Note F#&gt;
+        {237.6667} &lt;music21.note.Note F#&gt;
+        {237.9167} &lt;music21.note.Rest rest&gt;
+        {238.0} &lt;music21.note.Note F#&gt;
+        {238.25} &lt;music21.chord.Chord B2 G#2&gt;
+        {238.5} &lt;music21.note.Note E&gt;
+        {238.75} &lt;music21.note.Rest rest&gt;
+        {239.75} &lt;music21.note.Note E&gt;
+        {240.75} &lt;music21.note.Rest rest&gt;
+        {241.0} &lt;music21.note.Note D&gt;
+        {241.5} &lt;music21.note.Note B&gt;
+        {241.8333} &lt;music21.note.Rest rest&gt;
+        {242.0} &lt;music21.chord.Chord E3 B4&gt;
+        {242.5} &lt;music21.note.Note G#&gt;
+        {243.5} &lt;music21.note.Note B&gt;
+        {244.5} &lt;music21.note.Rest rest&gt;
+        {244.75} &lt;music21.note.Note G#&gt;
+        {245.75} &lt;music21.note.Note D&gt;
+        {247.0} &lt;music21.note.Rest rest&gt;
+        {249.3333} &lt;music21.note.Note C&gt;
+        {250.0} &lt;music21.note.Note C&gt;
+        {250.6667} &lt;music21.note.Rest rest&gt;
+        {251.0} &lt;music21.note.Note E&gt;
+        {251.75} &lt;music21.note.Rest rest&gt;
+        {252.0} &lt;music21.note.Note C&gt;
+        {254.5} &lt;music21.note.Rest rest&gt;
+        {254.6667} &lt;music21.note.Note E&gt;
+        {255.6667} &lt;music21.note.Rest rest&gt;
+        {255.75} &lt;music21.note.Note A&gt;
+        {256.25} &lt;music21.note.Note E&gt;
+        {257.25} &lt;music21.note.Note C&gt;
+        {257.75} &lt;music21.note.Note E&gt;
+        {258.25} &lt;music21.note.Note F&gt;
+        {258.75} &lt;music21.chord.Chord E5 B2&gt;
+        {259.0} &lt;music21.note.Note E&gt;
+        {259.3333} &lt;music21.note.Rest rest&gt;
+        {259.5} &lt;music21.note.Note G#&gt;
+        {260.0} &lt;music21.note.Rest rest&gt;
+        {260.25} &lt;music21.note.Note D&gt;
+        {260.75} &lt;music21.note.Rest rest&gt;
+        {261.0} &lt;music21.note.Note B&gt;
+        {261.5} &lt;music21.note.Note G#&gt;
+        {262.1667} &lt;music21.note.Rest rest&gt;
+        {262.25} &lt;music21.note.Note D&gt;
+        {263.5} &lt;music21.note.Rest rest&gt;
+        {264.5} &lt;music21.note.Note E&gt;
+        {265.1667} &lt;music21.note.Rest rest&gt;
+        {265.5} &lt;music21.note.Note D&gt;
+        {265.75} &lt;music21.note.Rest rest&gt;
+        {266.0} &lt;music21.note.Note G#&gt;
+        {266.3333} &lt;music21.note.Note D&gt;
+        {266.5833} &lt;music21.note.Rest rest&gt;
+        {266.75} &lt;music21.chord.Chord D5 G#4&gt;
+        {267.25} &lt;music21.note.Note B&gt;
+        {267.5} &lt;music21.note.Rest rest&gt;
+        {267.6667} &lt;music21.note.Note D&gt;
+        {268.1667} &lt;music21.note.Rest rest&gt;
+        {268.25} &lt;music21.note.Note C&gt;
+        {268.5833} &lt;music21.note.Rest rest&gt;
+        {268.6667} &lt;music21.chord.Chord A3 C5&gt;
+        {268.9167} &lt;music21.note.Rest rest&gt;
+        {269.0} &lt;music21.note.Note C&gt;
+        {269.25} &lt;music21.note.Note C&gt;
+        {269.5} &lt;music21.note.Note C&gt;
+        {269.75} &lt;music21.note.Note C&gt;
+        {270.0} &lt;music21.note.Rest rest&gt;
+        {270.25} &lt;music21.note.Note B&gt;
+        {270.5} &lt;music21.note.Note A&gt;
+        {271.1667} &lt;music21.note.Rest rest&gt;
+        {271.25} &lt;music21.note.Note E&gt;
+        {272.0} &lt;music21.note.Rest rest&gt;
+        {272.25} &lt;music21.note.Note E&gt;
+        {273.25} &lt;music21.note.Rest rest&gt;
+        {273.3333} &lt;music21.note.Note E&gt;
+        {274.0833} &lt;music21.note.Rest rest&gt;
+        {274.25} &lt;music21.note.Note C&gt;
+        {274.75} &lt;music21.note.Rest rest&gt;
+        {275.0} &lt;music21.chord.Chord A3 C5&gt;
+        {275.3333} &lt;music21.note.Rest rest&gt;
+        {275.5} &lt;music21.note.Note F&gt;
+        {275.8333} &lt;music21.note.Rest rest&gt;
+        {276.25} &lt;music21.note.Note A&gt;
+        {276.9167} &lt;music21.note.Rest rest&gt;
+        {277.0} &lt;music21.note.Note D&gt;
+        {277.3333} &lt;music21.note.Note C&gt;
+        {277.6667} &lt;music21.note.Note E&gt;
+        {278.1667} &lt;music21.note.Rest rest&gt;
+        {278.25} &lt;music21.note.Note C&gt;
+        {279.0} &lt;music21.note.Note D&gt;
+        {279.75} &lt;music21.note.Rest rest&gt;
+        {280.0} &lt;music21.note.Note B&gt;
+        {280.6667} &lt;music21.note.Note B&gt;
+        {281.1667} &lt;music21.note.Rest rest&gt;
+        {281.25} &lt;music21.note.Note B&gt;
+        {281.75} &lt;music21.note.Note B&gt;
+        {282.25} &lt;music21.note.Note C&gt;
+        {282.75} &lt;music21.note.Note C&gt;
+        {283.4167} &lt;music21.note.Rest rest&gt;
+        {283.6667} &lt;music21.note.Note C&gt;
+        {284.1667} &lt;music21.note.Rest rest&gt;
+        {284.3333} &lt;music21.note.Note C&gt;
+        {285.3333} &lt;music21.note.Rest rest&gt;
+        {285.5} &lt;music21.note.Note B&gt;
+        {285.8333} &lt;music21.note.Rest rest&gt;
+        {286.0} &lt;music21.note.Note C&gt;
+        {286.3333} &lt;music21.note.Rest rest&gt;
+        {286.6667} &lt;music21.note.Note B-&gt;
+        {287.0} &lt;music21.note.Rest rest&gt;
+        {287.25} &lt;music21.note.Note G#&gt;
+        {288.75} &lt;music21.note.Rest rest&gt;
+        {289.0} &lt;music21.note.Note G#&gt;
+        {293.3333} &lt;music21.note.Rest rest&gt;
+        {294.25} &lt;music21.chord.Chord B5 B4&gt;
+        {298.25} &lt;music21.note.Rest rest&gt;
+        {300.0} &lt;music21.note.Note E&gt;
+        {300.25} &lt;music21.note.Note F&gt;
+        {300.5} &lt;music21.note.Rest rest&gt;
+        {303.6667} &lt;music21.note.Note A&gt;
+        {304.9167} &lt;music21.note.Rest rest&gt;
+        {305.0} &lt;music21.note.Note A&gt;
+        {305.75} &lt;music21.note.Note G&gt;
+        {306.75} &lt;music21.note.Note C&gt;
+        {308.25} &lt;music21.note.Note G#&gt;
+    {0.0} &lt;music21.stream.Voice 0x12be489a0&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {8.3333} &lt;music21.note.Note A&gt;
+        {8.6667} &lt;music21.note.Rest rest&gt;
+        {9.5} &lt;music21.note.Note C&gt;
+        {10.1667} &lt;music21.note.Rest rest&gt;
+        {10.3333} &lt;music21.note.Note G&gt;
+        {10.5833} &lt;music21.note.Rest rest&gt;
+        {10.75} &lt;music21.note.Note G&gt;
+        {11.0} &lt;music21.note.Rest rest&gt;
+        {11.3333} &lt;music21.note.Note A&gt;
+        {11.5833} &lt;music21.note.Rest rest&gt;
+        {11.75} &lt;music21.note.Note C&gt;
+        {12.0} &lt;music21.note.Rest rest&gt;
+        {12.6667} &lt;music21.note.Note E&gt;
+        {12.9167} &lt;music21.note.Rest rest&gt;
+        {13.5} &lt;music21.note.Note E&gt;
+        {13.75} &lt;music21.note.Rest rest&gt;
+        {14.0} &lt;music21.note.Note E&gt;
+        {14.75} &lt;music21.note.Rest rest&gt;
+        {15.25} &lt;music21.note.Note C&gt;
+        {16.75} &lt;music21.note.Note D&gt;
+        {17.25} &lt;music21.note.Rest rest&gt;
+        {17.6667} &lt;music21.note.Note A&gt;
+        {18.9167} &lt;music21.note.Rest rest&gt;
+        {19.25} &lt;music21.note.Note D&gt;
+        {20.5} &lt;music21.note.Rest rest&gt;
+        {20.75} &lt;music21.note.Note D&gt;
+        {22.0} &lt;music21.note.Note G#&gt;
+        {23.6667} &lt;music21.note.Note B&gt;
+        {26.1667} &lt;music21.note.Rest rest&gt;
+        {27.0} &lt;music21.note.Note B&gt;
+        {29.0} &lt;music21.note.Rest rest&gt;
+        {31.6667} &lt;music21.note.Note C&gt;
+        {32.1667} &lt;music21.note.Rest rest&gt;
+        {32.5} &lt;music21.note.Note E&gt;
+        {33.0} &lt;music21.note.Rest rest&gt;
+        {33.5} &lt;music21.note.Note E&gt;
+        {35.25} &lt;music21.note.Rest rest&gt;
+        {37.0} &lt;music21.note.Note A&gt;
+        {37.75} &lt;music21.note.Rest rest&gt;
+        {38.25} &lt;music21.note.Note A&gt;
+        {38.75} &lt;music21.note.Rest rest&gt;
+        {39.0} &lt;music21.note.Note B&gt;
+        {40.0} &lt;music21.note.Rest rest&gt;
+        {41.75} &lt;music21.note.Note D&gt;
+        {42.5} &lt;music21.note.Rest rest&gt;
+        {42.6667} &lt;music21.note.Note D&gt;
+        {42.9167} &lt;music21.note.Rest rest&gt;
+        {43.3333} &lt;music21.note.Note B&gt;
+        {44.8333} &lt;music21.note.Rest rest&gt;
+        {45.25} &lt;music21.note.Note D&gt;
+        {46.5833} &lt;music21.note.Rest rest&gt;
+        {46.6667} &lt;music21.note.Note B&gt;
+        {47.1667} &lt;music21.note.Rest rest&gt;
+        {47.75} &lt;music21.note.Note E&gt;
+        {48.25} &lt;music21.note.Note D&gt;
+        {48.5} &lt;music21.note.Rest rest&gt;
+        {49.5} &lt;music21.note.Note B&gt;
+        {50.5} &lt;music21.note.Note E&gt;
+        {51.0} &lt;music21.note.Rest rest&gt;
+        {51.6667} &lt;music21.note.Note A&gt;
+        {52.1667} &lt;music21.note.Rest rest&gt;
+        {52.25} &lt;music21.note.Note D&gt;
+        {52.75} &lt;music21.note.Rest rest&gt;
+        {53.0} &lt;music21.note.Note A&gt;
+        {53.5} &lt;music21.note.Note C&gt;
+        {53.75} &lt;music21.note.Note C&gt;
+        {54.0} &lt;music21.note.Rest rest&gt;
+        {54.3333} &lt;music21.note.Note D&gt;
+        {54.5833} &lt;music21.note.Rest rest&gt;
+        {54.75} &lt;music21.note.Note C&gt;
+        {55.0} &lt;music21.note.Rest rest&gt;
+        {55.3333} &lt;music21.note.Note G&gt;
+        {55.8333} &lt;music21.note.Rest rest&gt;
+        {56.0} &lt;music21.note.Note E&gt;
+        {56.6667} &lt;music21.note.Rest rest&gt;
+        {56.75} &lt;music21.note.Note B&gt;
+        {57.25} &lt;music21.note.Rest rest&gt;
+        {57.75} &lt;music21.note.Note F&gt;
+        {58.25} &lt;music21.note.Rest rest&gt;
+        {58.5} &lt;music21.chord.Chord F3 C4&gt;
+        {58.75} &lt;music21.note.Rest rest&gt;
+        {59.0} &lt;music21.note.Note A&gt;
+        {59.5} &lt;music21.note.Note C&gt;
+        {59.8333} &lt;music21.note.Rest rest&gt;
+        {60.25} &lt;music21.note.Note C&gt;
+        {60.75} &lt;music21.note.Rest rest&gt;
+        {61.25} &lt;music21.note.Note B&gt;
+        {61.5833} &lt;music21.note.Rest rest&gt;
+        {61.6667} &lt;music21.note.Note E&gt;
+        {62.1667} &lt;music21.note.Rest rest&gt;
+        {62.25} &lt;music21.note.Note B&gt;
+        {62.5} &lt;music21.note.Rest rest&gt;
+        {62.6667} &lt;music21.note.Note B&gt;
+        {62.9167} &lt;music21.note.Rest rest&gt;
+        {63.0} &lt;music21.note.Note C&gt;
+        {63.25} &lt;music21.note.Rest rest&gt;
+        {63.6667} &lt;music21.note.Note B&gt;
+        {63.9167} &lt;music21.note.Rest rest&gt;
+        {64.3333} &lt;music21.note.Note G#&gt;
+        {66.8333} &lt;music21.note.Rest rest&gt;
+        {67.6667} &lt;music21.note.Note D&gt;
+        {68.9167} &lt;music21.note.Rest rest&gt;
+        {69.5} &lt;music21.note.Note B&gt;
+        {69.8333} &lt;music21.note.Rest rest&gt;
+        {71.0} &lt;music21.note.Note F&gt;
+        {71.5} &lt;music21.note.Note A&gt;
+        {72.25} &lt;music21.note.Rest rest&gt;
+        {73.5} &lt;music21.note.Note B&gt;
+        {75.25} &lt;music21.note.Rest rest&gt;
+        {75.5} &lt;music21.note.Note A&gt;
+        {77.75} &lt;music21.note.Rest rest&gt;
+        {78.5} &lt;music21.note.Note E&gt;
+        {79.5} &lt;music21.note.Note C&gt;
+        {80.5} &lt;music21.note.Note A&gt;
+        {81.5} &lt;music21.note.Rest rest&gt;
+        {81.75} &lt;music21.note.Note C&gt;
+        {84.0} &lt;music21.note.Rest rest&gt;
+        {84.3333} &lt;music21.note.Note E&gt;
+        {85.0} &lt;music21.note.Note A&gt;
+        {86.0} &lt;music21.note.Note B&gt;
+        {87.0} &lt;music21.note.Rest rest&gt;
+        {87.5} &lt;music21.note.Note B&gt;
+        {87.8333} &lt;music21.note.Rest rest&gt;
+        {88.0} &lt;music21.note.Note G#&gt;
+        {88.3333} &lt;music21.note.Rest rest&gt;
+        {88.75} &lt;music21.note.Note D&gt;
+        {89.0} &lt;music21.note.Rest rest&gt;
+        {89.25} &lt;music21.note.Note E&gt;
+        {89.9167} &lt;music21.note.Rest rest&gt;
+        {90.25} &lt;music21.note.Note D&gt;
+        {91.0} &lt;music21.note.Rest rest&gt;
+        {91.6667} &lt;music21.note.Note E&gt;
+        {92.1667} &lt;music21.note.Rest rest&gt;
+        {92.3333} &lt;music21.note.Note D&gt;
+        {92.5833} &lt;music21.note.Rest rest&gt;
+        {92.75} &lt;music21.note.Note D&gt;
+        {93.25} &lt;music21.note.Rest rest&gt;
+        {93.3333} &lt;music21.note.Note B&gt;
+        {94.0833} &lt;music21.note.Rest rest&gt;
+        {95.0} &lt;music21.note.Note E&gt;
+        {95.5} &lt;music21.note.Note A&gt;
+        {95.8333} &lt;music21.note.Rest rest&gt;
+        {96.0} &lt;music21.note.Note A&gt;
+        {96.25} &lt;music21.note.Rest rest&gt;
+        {96.5} &lt;music21.note.Note B&gt;
+        {96.75} &lt;music21.note.Rest rest&gt;
+        {97.0} &lt;music21.note.Note C&gt;
+        {97.25} &lt;music21.note.Rest rest&gt;
+        {97.3333} &lt;music21.note.Note C&gt;
+        {97.5833} &lt;music21.note.Rest rest&gt;
+        {97.6667} &lt;music21.note.Note B&gt;
+        {97.9167} &lt;music21.note.Rest rest&gt;
+        {98.3333} &lt;music21.note.Note G&gt;
+        {98.8333} &lt;music21.note.Rest rest&gt;
+        {99.25} &lt;music21.note.Note G&gt;
+        {99.5833} &lt;music21.note.Rest rest&gt;
+        {99.75} &lt;music21.note.Note E&gt;
+        {100.25} &lt;music21.note.Rest rest&gt;
+        {100.6667} &lt;music21.note.Note C&gt;
+        {101.6667} &lt;music21.note.Rest rest&gt;
+        {102.25} &lt;music21.chord.Chord C5 A3&gt;
+        {102.5} &lt;music21.note.Note F&gt;
+        {102.75} &lt;music21.note.Rest rest&gt;
+        {103.25} &lt;music21.note.Note C&gt;
+        {103.75} &lt;music21.note.Rest rest&gt;
+        {104.3333} &lt;music21.note.Note B&gt;
+        {104.6667} &lt;music21.note.Rest rest&gt;
+        {105.0} &lt;music21.note.Note D&gt;
+        {105.25} &lt;music21.note.Rest rest&gt;
+        {105.3333} &lt;music21.note.Note B&gt;
+        {105.5833} &lt;music21.note.Rest rest&gt;
+        {105.75} &lt;music21.note.Note B&gt;
+        {106.0} &lt;music21.note.Rest rest&gt;
+        {106.3333} &lt;music21.note.Note G#&gt;
+        {107.8333} &lt;music21.note.Rest rest&gt;
+        {108.5} &lt;music21.note.Note A&gt;
+        {108.75} &lt;music21.note.Rest rest&gt;
+        {109.3333} &lt;music21.chord.Chord D5 B5&gt;
+        {109.5833} &lt;music21.note.Rest rest&gt;
+        {110.25} &lt;music21.note.Note G#&gt;
+        {110.5} &lt;music21.note.Rest rest&gt;
+        {111.0} &lt;music21.chord.Chord C#6 A5&gt;
+        {112.0} &lt;music21.note.Rest rest&gt;
+        {112.3333} &lt;music21.note.Note C#&gt;
+        {113.5833} &lt;music21.note.Rest rest&gt;
+        {113.75} &lt;music21.note.Note A&gt;
+        {114.25} &lt;music21.note.Rest rest&gt;
+        {115.25} &lt;music21.note.Note E&gt;
+        {115.75} &lt;music21.note.Rest rest&gt;
+        {117.25} &lt;music21.note.Note A&gt;
+        {117.75} &lt;music21.note.Rest rest&gt;
+        {118.75} &lt;music21.note.Note F&gt;
+        {119.75} &lt;music21.note.Rest rest&gt;
+        {120.25} &lt;music21.note.Note A&gt;
+        {120.5833} &lt;music21.note.Rest rest&gt;
+        {121.0} &lt;music21.note.Note G&gt;
+        {121.25} &lt;music21.note.Note A&gt;
+        {121.5833} &lt;music21.note.Rest rest&gt;
+        {122.5} &lt;music21.note.Note B&gt;
+        {123.0} &lt;music21.note.Rest rest&gt;
+        {123.3333} &lt;music21.note.Note F&gt;
+        {123.8333} &lt;music21.note.Rest rest&gt;
+        {124.6667} &lt;music21.note.Note D&gt;
+        {124.9167} &lt;music21.note.Rest rest&gt;
+        {125.25} &lt;music21.note.Note E&gt;
+        {126.5833} &lt;music21.note.Rest rest&gt;
+        {126.6667} &lt;music21.note.Note B&gt;
+        {126.9167} &lt;music21.note.Rest rest&gt;
+        {127.6667} &lt;music21.note.Note E&gt;
+        {127.9167} &lt;music21.note.Rest rest&gt;
+        {128.3333} &lt;music21.note.Note E&gt;
+        {128.5833} &lt;music21.note.Rest rest&gt;
+        {129.3333} &lt;music21.note.Note C&gt;
+        {130.0} &lt;music21.note.Rest rest&gt;
+        {130.3333} &lt;music21.note.Note C&gt;
+        {131.0} &lt;music21.note.Rest rest&gt;
+        {131.3333} &lt;music21.note.Note C&gt;
+        {132.0} &lt;music21.note.Rest rest&gt;
+        {134.0} &lt;music21.note.Note E-&gt;
+        {134.6667} &lt;music21.note.Rest rest&gt;
+        {135.0} &lt;music21.note.Note B&gt;
+        {136.5} &lt;music21.chord.Chord F#5 A3&gt;
+        {137.25} &lt;music21.note.Rest rest&gt;
+        {137.75} &lt;music21.note.Note B&gt;
+        {138.0} &lt;music21.note.Note E&gt;
+        {139.0} &lt;music21.note.Rest rest&gt;
+        {139.5} &lt;music21.note.Note G#&gt;
+        {140.5} &lt;music21.note.Rest rest&gt;
+        {141.5} &lt;music21.note.Note B&gt;
+        {143.1667} &lt;music21.note.Rest rest&gt;
+        {143.75} &lt;music21.note.Note G#&gt;
+        {145.0} &lt;music21.note.Rest rest&gt;
+        {151.5} &lt;music21.note.Note C&gt;
+        {151.75} &lt;music21.note.Rest rest&gt;
+        {152.0} &lt;music21.note.Note E&gt;
+        {152.5} &lt;music21.note.Rest rest&gt;
+        {152.75} &lt;music21.note.Note A&gt;
+        {153.5} &lt;music21.note.Rest rest&gt;
+        {153.6667} &lt;music21.note.Note E&gt;
+        {154.4167} &lt;music21.note.Rest rest&gt;
+        {155.0} &lt;music21.note.Note E&gt;
+        {155.3333} &lt;music21.note.Rest rest&gt;
+        {155.75} &lt;music21.note.Note C&gt;
+        {156.0} &lt;music21.note.Rest rest&gt;
+        {156.5} &lt;music21.chord.Chord C5 E6&gt;
+        {156.75} &lt;music21.note.Rest rest&gt;
+        {157.75} &lt;music21.note.Note E&gt;
+        {158.25} &lt;music21.note.Note D&gt;
+        {158.5833} &lt;music21.note.Rest rest&gt;
+        {158.6667} &lt;music21.note.Note B&gt;
+        {159.0} &lt;music21.note.Note G#&gt;
+        {159.3333} &lt;music21.note.Rest rest&gt;
+        {159.5} &lt;music21.note.Note E&gt;
+        {160.25} &lt;music21.note.Rest rest&gt;
+        {160.3333} &lt;music21.note.Note B&gt;
+        {161.0833} &lt;music21.note.Rest rest&gt;
+        {161.5} &lt;music21.note.Note D&gt;
+        {161.8333} &lt;music21.note.Rest rest&gt;
+        {162.0} &lt;music21.note.Note B&gt;
+        {162.3333} &lt;music21.note.Note B&gt;
+        {162.5833} &lt;music21.note.Rest rest&gt;
+        {162.75} &lt;music21.note.Note E&gt;
+        {163.25} &lt;music21.note.Rest rest&gt;
+        {163.6667} &lt;music21.note.Note B&gt;
+        {164.0} &lt;music21.note.Rest rest&gt;
+        {164.5} &lt;music21.note.Note C&gt;
+        {164.8333} &lt;music21.note.Rest rest&gt;
+        {165.25} &lt;music21.note.Note E&gt;
+        {165.5} &lt;music21.note.Rest rest&gt;
+        {166.0} &lt;music21.note.Note A&gt;
+        {167.25} &lt;music21.note.Note B&gt;
+        {168.0} &lt;music21.note.Note C&gt;
+        {168.3333} &lt;music21.note.Rest rest&gt;
+        {168.5} &lt;music21.note.Note C&gt;
+        {168.8333} &lt;music21.note.Rest rest&gt;
+        {169.75} &lt;music21.note.Note A&gt;
+        {170.0} &lt;music21.note.Rest rest&gt;
+        {171.0} &lt;music21.note.Note E&gt;
+        {171.3333} &lt;music21.note.Note B&gt;
+        {171.6667} &lt;music21.note.Rest rest&gt;
+        {171.75} &lt;music21.note.Note B&gt;
+        {172.0833} &lt;music21.note.Rest rest&gt;
+        {172.5} &lt;music21.note.Note G#&gt;
+        {173.25} &lt;music21.note.Rest rest&gt;
+        {174.6667} &lt;music21.note.Note G#&gt;
+        {175.0} &lt;music21.note.Note B&gt;
+        {175.3333} &lt;music21.note.Rest rest&gt;
+        {175.75} &lt;music21.note.Note B&gt;
+        {176.5} &lt;music21.note.Rest rest&gt;
+        {176.6667} &lt;music21.note.Note F&gt;
+        {177.1667} &lt;music21.note.Rest rest&gt;
+        {177.5} &lt;music21.note.Note C&gt;
+        {178.0} &lt;music21.note.Rest rest&gt;
+        {178.25} &lt;music21.note.Note E&gt;
+        {178.75} &lt;music21.note.Rest rest&gt;
+        {179.0} &lt;music21.note.Note D&gt;
+        {179.25} &lt;music21.note.Rest rest&gt;
+        {179.3333} &lt;music21.note.Note A&gt;
+        {179.5833} &lt;music21.note.Rest rest&gt;
+        {179.75} &lt;music21.chord.Chord A5 E5&gt;
+        {180.0} &lt;music21.note.Rest rest&gt;
+        {180.3333} &lt;music21.note.Note E&gt;
+        {180.6667} &lt;music21.note.Rest rest&gt;
+        {181.0} &lt;music21.note.Note A&gt;
+        {181.25} &lt;music21.note.Rest rest&gt;
+        {181.5} &lt;music21.chord.Chord A4 E4&gt;
+        {182.0} &lt;music21.note.Note E&gt;
+        {182.25} &lt;music21.note.Note C&gt;
+        {182.5} &lt;music21.note.Note E&gt;
+        {182.75} &lt;music21.note.Rest rest&gt;
+        {183.25} &lt;music21.note.Note A&gt;
+        {183.5} &lt;music21.note.Rest rest&gt;
+        {184.25} &lt;music21.chord.Chord C5 E5&gt;
+        {184.5} &lt;music21.note.Rest rest&gt;
+        {184.6667} &lt;music21.chord.Chord A4 C5&gt;
+        {184.9167} &lt;music21.note.Rest rest&gt;
+        {185.3333} &lt;music21.chord.Chord C4 C6&gt;
+        {185.6667} &lt;music21.note.Rest rest&gt;
+        {186.0} &lt;music21.chord.Chord C6 E4&gt;
+        {186.25} &lt;music21.note.Rest rest&gt;
+        {186.75} &lt;music21.note.Note E&gt;
+        {187.4167} &lt;music21.note.Rest rest&gt;
+        {187.5} &lt;music21.note.Note C&gt;
+        {188.25} &lt;music21.note.Note E&gt;
+        {188.5} &lt;music21.note.Rest rest&gt;
+        {188.6667} &lt;music21.note.Note E&gt;
+        {188.9167} &lt;music21.note.Rest rest&gt;
+        {189.0} &lt;music21.note.Note E&gt;
+        {189.25} &lt;music21.note.Rest rest&gt;
+        {189.5} &lt;music21.note.Note C&gt;
+        {189.75} &lt;music21.note.Rest rest&gt;
+        {190.0} &lt;music21.note.Note C&gt;
+        {190.5} &lt;music21.note.Note E&gt;
+        {190.75} &lt;music21.note.Rest rest&gt;
+        {191.0} &lt;music21.note.Note E&gt;
+        {191.25} &lt;music21.note.Rest rest&gt;
+        {191.6667} &lt;music21.note.Note B&gt;
+        {191.9167} &lt;music21.note.Rest rest&gt;
+        {192.0} &lt;music21.chord.Chord G#4 B4&gt;
+        {192.25} &lt;music21.note.Rest rest&gt;
+        {192.5} &lt;music21.note.Note B&gt;
+        {192.75} &lt;music21.note.Rest rest&gt;
+        {193.0} &lt;music21.note.Note B&gt;
+        {193.5} &lt;music21.note.Rest rest&gt;
+        {194.0} &lt;music21.note.Note G#&gt;
+        {195.0} &lt;music21.note.Note B&gt;
+        {195.25} &lt;music21.note.Rest rest&gt;
+        {195.5} &lt;music21.note.Note G#&gt;
+        {195.8333} &lt;music21.note.Rest rest&gt;
+        {196.0} &lt;music21.chord.Chord D5 B4&gt;
+        {196.3333} &lt;music21.note.Rest rest&gt;
+        {196.5} &lt;music21.chord.Chord G#4 D5&gt;
+        {196.75} &lt;music21.note.Rest rest&gt;
+        {197.0} &lt;music21.note.Note B&gt;
+        {197.3333} &lt;music21.note.Rest rest&gt;
+        {197.5} &lt;music21.note.Note D&gt;
+        {197.75} &lt;music21.note.Note B&gt;
+        {198.4167} &lt;music21.note.Rest rest&gt;
+        {198.6667} &lt;music21.note.Note E&gt;
+        {199.0} &lt;music21.note.Rest rest&gt;
+        {199.25} &lt;music21.note.Note E&gt;
+        {199.5833} &lt;music21.note.Rest rest&gt;
+        {199.75} &lt;music21.note.Note E&gt;
+        {200.0} &lt;music21.chord.Chord C5 A4&gt;
+        {200.25} &lt;music21.note.Rest rest&gt;
+        {200.5} &lt;music21.note.Note C&gt;
+        {200.75} &lt;music21.note.Note A&gt;
+        {201.0} &lt;music21.note.Rest rest&gt;
+        {201.25} &lt;music21.chord.Chord C5 A4&gt;
+        {201.75} &lt;music21.note.Rest rest&gt;
+        {202.0} &lt;music21.note.Note G&gt;
+        {202.75} &lt;music21.note.Rest rest&gt;
+        {203.0} &lt;music21.note.Note F&gt;
+        {203.3333} &lt;music21.note.Rest rest&gt;
+        {203.5} &lt;music21.note.Note C&gt;
+        {203.75} &lt;music21.note.Rest rest&gt;
+        {204.0} &lt;music21.chord.Chord A3 A4 C5&gt;
+        {204.25} &lt;music21.note.Rest rest&gt;
+        {204.3333} &lt;music21.note.Note A&gt;
+        {204.5833} &lt;music21.note.Rest rest&gt;
+        {204.75} &lt;music21.note.Note A&gt;
+        {205.25} &lt;music21.note.Rest rest&gt;
+        {205.5} &lt;music21.note.Note C&gt;
+        {206.0} &lt;music21.note.Note B&gt;
+        {206.25} &lt;music21.note.Rest rest&gt;
+        {206.3333} &lt;music21.chord.Chord C5 A4&gt;
+        {206.5833} &lt;music21.note.Rest rest&gt;
+        {208.0} &lt;music21.note.Note G#&gt;
+        {209.0} &lt;music21.note.Note B&gt;
+        {209.3333} &lt;music21.note.Rest rest&gt;
+        {209.75} &lt;music21.note.Note G#&gt;
+        {210.25} &lt;music21.note.Rest rest&gt;
+        {210.75} &lt;music21.note.Note B&gt;
+        {211.0} &lt;music21.note.Rest rest&gt;
+        {211.6667} &lt;music21.chord.Chord G#4 G#5&gt;
+        {211.9167} &lt;music21.note.Rest rest&gt;
+        {212.3333} &lt;music21.note.Note A&gt;
+        {213.3333} &lt;music21.note.Rest rest&gt;
+        {213.6667} &lt;music21.note.Note C#&gt;
+        {214.9167} &lt;music21.note.Rest rest&gt;
+        {215.0} &lt;music21.note.Note A&gt;
+        {215.5} &lt;music21.note.Rest rest&gt;
+        {216.25} &lt;music21.note.Note D&gt;
+        {216.75} &lt;music21.note.Rest rest&gt;
+        {217.3333} &lt;music21.note.Note F&gt;
+        {217.5833} &lt;music21.note.Rest rest&gt;
+        {218.25} &lt;music21.chord.Chord A2 B2&gt;
+        {218.5} &lt;music21.chord.Chord B3 C4 D4&gt;
+        {218.75} &lt;music21.note.Rest rest&gt;
+        {219.25} &lt;music21.note.Note A&gt;
+        {219.75} &lt;music21.note.Rest rest&gt;
+        {220.5} &lt;music21.note.Note F&gt;
+        {221.25} &lt;music21.note.Note F&gt;
+        {221.9167} &lt;music21.note.Rest rest&gt;
+        {222.0} &lt;music21.note.Note F&gt;
+        {222.25} &lt;music21.note.Rest rest&gt;
+        {222.3333} &lt;music21.note.Note F&gt;
+        {223.0} &lt;music21.note.Rest rest&gt;
+        {223.75} &lt;music21.note.Note A&gt;
+        {224.0833} &lt;music21.note.Rest rest&gt;
+        {224.5} &lt;music21.note.Note A&gt;
+        {225.0} &lt;music21.note.Rest rest&gt;
+        {225.5} &lt;music21.note.Note G&gt;
+        {226.0} &lt;music21.note.Rest rest&gt;
+        {226.5} &lt;music21.note.Note F&gt;
+        {227.1667} &lt;music21.note.Rest rest&gt;
+        {227.3333} &lt;music21.chord.Chord B5 D6&gt;
+        {227.6667} &lt;music21.note.Rest rest&gt;
+        {227.75} &lt;music21.note.Note F#&gt;
+        {228.0} &lt;music21.note.Rest rest&gt;
+        {228.3333} &lt;music21.note.Note B&gt;
+        {229.5833} &lt;music21.note.Rest rest&gt;
+        {230.0} &lt;music21.note.Note E&gt;
+        {230.5} &lt;music21.note.Note B&gt;
+        {230.75} &lt;music21.note.Rest rest&gt;
+        {231.0} &lt;music21.note.Note E&gt;
+        {231.25} &lt;music21.note.Note D&gt;
+        {231.5} &lt;music21.note.Rest rest&gt;
+        {231.6667} &lt;music21.note.Note C&gt;
+        {231.9167} &lt;music21.note.Rest rest&gt;
+        {232.5} &lt;music21.note.Note F&gt;
+        {232.75} &lt;music21.note.Note A&gt;
+        {233.5} &lt;music21.note.Rest rest&gt;
+        {233.75} &lt;music21.note.Note F&gt;
+        {234.4167} &lt;music21.note.Rest rest&gt;
+        {234.75} &lt;music21.note.Note F&gt;
+        {235.0} &lt;music21.note.Rest rest&gt;
+        {235.25} &lt;music21.note.Note E-&gt;
+        {235.75} &lt;music21.note.Rest rest&gt;
+        {236.5} &lt;music21.note.Note E-&gt;
+        {237.25} &lt;music21.note.Note F#&gt;
+        {237.75} &lt;music21.note.Note A&gt;
+        {238.25} &lt;music21.note.Rest rest&gt;
+        {238.5} &lt;music21.note.Note G#&gt;
+        {239.1667} &lt;music21.note.Rest rest&gt;
+        {240.25} &lt;music21.note.Note E-&gt;
+        {240.9167} &lt;music21.note.Rest rest&gt;
+        {241.0} &lt;music21.note.Note E-&gt;
+        {241.5} &lt;music21.note.Rest rest&gt;
+        {242.0} &lt;music21.note.Note D&gt;
+        {243.25} &lt;music21.note.Rest rest&gt;
+        {244.25} &lt;music21.chord.Chord G#4 B4&gt;
+        {244.75} &lt;music21.note.Rest rest&gt;
+        {245.6667} &lt;music21.note.Note G#&gt;
+        {245.9167} &lt;music21.note.Rest rest&gt;
+        {246.75} &lt;music21.note.Note G#&gt;
+        {248.0} &lt;music21.note.Rest rest&gt;
+        {249.6667} &lt;music21.note.Note E&gt;
+        {250.6667} &lt;music21.note.Rest rest&gt;
+        {251.0} &lt;music21.note.Note A&gt;
+        {252.5} &lt;music21.note.Note B&gt;
+        {255.0} &lt;music21.note.Note A&gt;
+        {255.75} &lt;music21.note.Note E&gt;
+        {256.5} &lt;music21.note.Rest rest&gt;
+        {256.6667} &lt;music21.note.Note C&gt;
+        {257.4167} &lt;music21.note.Rest rest&gt;
+        {259.25} &lt;music21.note.Note D&gt;
+        {259.9167} &lt;music21.note.Rest rest&gt;
+        {260.6667} &lt;music21.note.Note B&gt;
+        {260.9167} &lt;music21.note.Rest rest&gt;
+        {261.25} &lt;music21.note.Note E&gt;
+        {262.25} &lt;music21.note.Rest rest&gt;
+        {262.6667} &lt;music21.note.Note G#&gt;
+        {263.6667} &lt;music21.note.Rest rest&gt;
+        {264.75} &lt;music21.note.Note B&gt;
+        {265.25} &lt;music21.note.Rest rest&gt;
+        {265.6667} &lt;music21.note.Note E&gt;
+        {266.1667} &lt;music21.note.Rest rest&gt;
+        {266.3333} &lt;music21.note.Note B&gt;
+        {267.0} &lt;music21.note.Rest rest&gt;
+        {267.25} &lt;music21.note.Note E&gt;
+        {267.5833} &lt;music21.note.Rest rest&gt;
+        {268.0} &lt;music21.note.Note A&gt;
+        {268.3333} &lt;music21.chord.Chord E3 D5&gt;
+        {268.5833} &lt;music21.note.Rest rest&gt;
+        {268.75} &lt;music21.note.Note D&gt;
+        {269.0} &lt;music21.note.Note C&gt;
+        {269.25} &lt;music21.note.Rest rest&gt;
+        {269.3333} &lt;music21.note.Note D&gt;
+        {269.5833} &lt;music21.note.Rest rest&gt;
+        {269.6667} &lt;music21.note.Note D&gt;
+        {269.9167} &lt;music21.note.Rest rest&gt;
+        {270.25} &lt;music21.note.Note C&gt;
+        {270.5} &lt;music21.note.Rest rest&gt;
+        {270.6667} &lt;music21.note.Note G&gt;
+        {271.3333} &lt;music21.note.Rest rest&gt;
+        {271.5} &lt;music21.note.Note G&gt;
+        {272.75} &lt;music21.note.Note C&gt;
+        {273.75} &lt;music21.note.Note C&gt;
+        {274.4167} &lt;music21.note.Rest rest&gt;
+        {274.6667} &lt;music21.note.Note F&gt;
+        {275.3333} &lt;music21.note.Rest rest&gt;
+        {275.75} &lt;music21.note.Note A&gt;
+        {276.0} &lt;music21.note.Rest rest&gt;
+        {276.5} &lt;music21.note.Note C&gt;
+        {277.0} &lt;music21.note.Rest rest&gt;
+        {277.3333} &lt;music21.note.Note B&gt;
+        {277.8333} &lt;music21.note.Rest rest&gt;
+        {278.0} &lt;music21.note.Note G#&gt;
+        {278.6667} &lt;music21.note.Rest rest&gt;
+        {278.75} &lt;music21.note.Note C&gt;
+        {279.5} &lt;music21.note.Note B&gt;
+        {280.25} &lt;music21.note.Rest rest&gt;
+        {280.3333} &lt;music21.note.Note B&gt;
+        {280.8333} &lt;music21.note.Rest rest&gt;
+        {281.0} &lt;music21.note.Note B&gt;
+        {281.5} &lt;music21.note.Note C&gt;
+        {282.0} &lt;music21.note.Note C&gt;
+        {282.5} &lt;music21.note.Note C&gt;
+        {283.1667} &lt;music21.note.Rest rest&gt;
+        {283.25} &lt;music21.note.Note B&gt;
+        {283.9167} &lt;music21.note.Rest rest&gt;
+        {284.0} &lt;music21.note.Note C&gt;
+        {284.6667} &lt;music21.note.Rest rest&gt;
+        {284.75} &lt;music21.note.Note C&gt;
+        {285.25} &lt;music21.note.Note C&gt;
+        {285.5833} &lt;music21.note.Rest rest&gt;
+        {286.25} &lt;music21.note.Note B&gt;
+        {286.5} &lt;music21.note.Rest rest&gt;
+        {286.75} &lt;music21.note.Note B&gt;
+        {287.0} &lt;music21.note.Rest rest&gt;
+        {287.3333} &lt;music21.note.Note B&gt;
+        {290.0833} &lt;music21.note.Rest rest&gt;
+        {293.0} &lt;music21.note.Note A&gt;
+        {297.6667} &lt;music21.note.Rest rest&gt;
+        {300.25} &lt;music21.note.Note E&gt;
+        {303.25} &lt;music21.note.Rest rest&gt;
+        {304.0} &lt;music21.note.Note E&gt;
+        {305.0} &lt;music21.note.Rest rest&gt;
+        {305.25} &lt;music21.note.Note C&gt;
+        {306.25} &lt;music21.note.Note E&gt;
+        {307.5} &lt;music21.note.Rest rest&gt;
+        {307.6667} &lt;music21.note.Note A&gt;
+        {311.4167} &lt;music21.note.Rest rest&gt;
+    {0.0} &lt;music21.stream.Voice 0x12c02f7f0&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {10.0} &lt;music21.chord.Chord A4 C5&gt;
+        {10.3333} &lt;music21.note.Rest rest&gt;
+        {14.25} &lt;music21.note.Note A&gt;
+        {14.75} &lt;music21.note.Rest rest&gt;
+        {15.5} &lt;music21.note.Note A&gt;
+        {16.8333} &lt;music21.note.Rest rest&gt;
+        {17.0} &lt;music21.note.Note D&gt;
+        {18.25} &lt;music21.note.Note D&gt;
+        {19.0} &lt;music21.note.Rest rest&gt;
+        {19.5} &lt;music21.note.Note B&gt;
+        {20.75} &lt;music21.note.Rest rest&gt;
+        {21.3333} &lt;music21.note.Note B&gt;
+        {22.3333} &lt;music21.note.Rest rest&gt;
+        {22.6667} &lt;music21.note.Note D&gt;
+        {25.1667} &lt;music21.note.Rest rest&gt;
+        {25.3333} &lt;music21.note.Note A&gt;
+        {28.8333} &lt;music21.note.Rest rest&gt;
+        {32.0} &lt;music21.note.Note E&gt;
+        {32.25} &lt;music21.note.Rest rest&gt;
+        {33.6667} &lt;music21.note.Note B&gt;
+        {37.4167} &lt;music21.note.Rest rest&gt;
+        {37.5} &lt;music21.note.Note E&gt;
+        {37.75} &lt;music21.note.Rest rest&gt;
+        {39.5} &lt;music21.note.Note E&gt;
+        {40.5} &lt;music21.note.Rest rest&gt;
+        {42.0} &lt;music21.note.Note G#&gt;
+        {42.6667} &lt;music21.note.Note D&gt;
+        {42.9167} &lt;music21.note.Rest rest&gt;
+        {43.75} &lt;music21.note.Note E&gt;
+        {45.75} &lt;music21.note.Rest rest&gt;
+        {48.3333} &lt;music21.note.Note E&gt;
+        {48.5833} &lt;music21.note.Rest rest&gt;
+        {50.0} &lt;music21.note.Note D&gt;
+        {50.6667} &lt;music21.note.Rest rest&gt;
+        {53.25} &lt;music21.note.Note C&gt;
+        {53.5833} &lt;music21.note.Rest rest&gt;
+        {57.0} &lt;music21.note.Note G&gt;
+        {57.6667} &lt;music21.note.Rest rest&gt;
+        {64.75} &lt;music21.note.Note E&gt;
+        {67.4167} &lt;music21.note.Rest rest&gt;
+        {68.25} &lt;music21.note.Note E&gt;
+        {69.0} &lt;music21.note.Rest rest&gt;
+        {69.5} &lt;music21.note.Note D&gt;
+        {70.1667} &lt;music21.note.Rest rest&gt;
+        {71.5} &lt;music21.note.Note A&gt;
+        {72.5} &lt;music21.note.Rest rest&gt;
+        {74.0} &lt;music21.note.Note A&gt;
+        {75.75} &lt;music21.note.Rest rest&gt;
+        {76.0} &lt;music21.note.Note E&gt;
+        {77.75} &lt;music21.note.Rest rest&gt;
+        {79.25} &lt;music21.note.Note E&gt;
+        {80.0} &lt;music21.chord.Chord E5 E3&gt;
+        {80.5} &lt;music21.note.Rest rest&gt;
+        {81.0} &lt;music21.note.Note A&gt;
+        {81.6667} &lt;music21.note.Rest rest&gt;
+        {82.75} &lt;music21.note.Note A&gt;
+        {84.4167} &lt;music21.note.Rest rest&gt;
+        {85.3333} &lt;music21.note.Note C&gt;
+        {86.0833} &lt;music21.note.Rest rest&gt;
+        {86.3333} &lt;music21.note.Note E&gt;
+        {87.0} &lt;music21.note.Rest rest&gt;
+        {87.75} &lt;music21.note.Note D&gt;
+        {88.25} &lt;music21.note.Rest rest&gt;
+        {88.75} &lt;music21.note.Note D&gt;
+        {89.0} &lt;music21.note.Rest rest&gt;
+        {90.75} &lt;music21.note.Note B&gt;
+        {92.0} &lt;music21.note.Note B&gt;
+        {92.3333} &lt;music21.note.Rest rest&gt;
+        {93.0} &lt;music21.note.Note G#&gt;
+        {93.5} &lt;music21.note.Rest rest&gt;
+        {93.6667} &lt;music21.note.Note D&gt;
+        {94.1667} &lt;music21.note.Rest rest&gt;
+        {95.75} &lt;music21.note.Note E&gt;
+        {96.0} &lt;music21.note.Rest rest&gt;
+        {96.5} &lt;music21.note.Note C&gt;
+        {96.75} &lt;music21.note.Rest rest&gt;
+        {101.0} &lt;music21.note.Note F&gt;
+        {101.5} &lt;music21.note.Note F&gt;
+        {101.75} &lt;music21.note.Rest rest&gt;
+        {102.5} &lt;music21.note.Note A&gt;
+        {102.75} &lt;music21.note.Rest rest&gt;
+        {104.5} &lt;music21.chord.Chord G#2 C5&gt;
+        {104.8333} &lt;music21.note.Rest rest&gt;
+        {105.0} &lt;music21.note.Note B&gt;
+        {105.25} &lt;music21.note.Rest rest&gt;
+        {106.6667} &lt;music21.note.Note E&gt;
+        {107.9167} &lt;music21.note.Rest rest&gt;
+        {108.5} &lt;music21.chord.Chord C5 A4 E5&gt;
+        {109.5} &lt;music21.note.Rest rest&gt;
+        {111.0} &lt;music21.note.Note E&gt;
+        {112.25} &lt;music21.note.Rest rest&gt;
+        {112.75} &lt;music21.note.Note E&gt;
+        {114.0} &lt;music21.note.Rest rest&gt;
+        {115.25} &lt;music21.note.Note E&gt;
+        {115.9167} &lt;music21.note.Rest rest&gt;
+        {117.25} &lt;music21.chord.Chord F6 D1 F5&gt;
+        {118.75} &lt;music21.note.Note A&gt;
+        {119.75} &lt;music21.note.Rest rest&gt;
+        {120.25} &lt;music21.note.Note A&gt;
+        {120.9167} &lt;music21.note.Rest rest&gt;
+        {121.5} &lt;music21.chord.Chord A5 G1&gt;
+        {122.0} &lt;music21.note.Rest rest&gt;
+        {122.5} &lt;music21.note.Note F&gt;
+        {123.0} &lt;music21.note.Rest rest&gt;
+        {123.75} &lt;music21.note.Note A&gt;
+        {124.0833} &lt;music21.note.Rest rest&gt;
+        {125.6667} &lt;music21.note.Note E&gt;
+        {126.6667} &lt;music21.note.Rest rest&gt;
+        {127.6667} &lt;music21.note.Note B&gt;
+        {128.3333} &lt;music21.note.Note B&gt;
+        {128.5833} &lt;music21.note.Rest rest&gt;
+        {129.75} &lt;music21.note.Note C&gt;
+        {130.0833} &lt;music21.note.Rest rest&gt;
+        {130.75} &lt;music21.note.Note F&gt;
+        {131.75} &lt;music21.note.Rest rest&gt;
+        {134.0} &lt;music21.note.Note E-&gt;
+        {135.3333} &lt;music21.note.Rest rest&gt;
+        {135.5} &lt;music21.note.Note E-&gt;
+        {137.0} &lt;music21.note.Note A&gt;
+        {137.5} &lt;music21.note.Rest rest&gt;
+        {138.0} &lt;music21.note.Note E&gt;
+        {139.0} &lt;music21.note.Rest rest&gt;
+        {140.0} &lt;music21.note.Note B&gt;
+        {141.75} &lt;music21.note.Rest rest&gt;
+        {142.0} &lt;music21.note.Note E&gt;
+        {143.3333} &lt;music21.note.Rest rest&gt;
+        {152.3333} &lt;music21.note.Note C&gt;
+        {152.6667} &lt;music21.note.Rest rest&gt;
+        {154.0} &lt;music21.note.Note C&gt;
+        {154.75} &lt;music21.note.Rest rest&gt;
+        {155.75} &lt;music21.note.Note C&gt;
+        {156.0} &lt;music21.note.Rest rest&gt;
+        {160.6667} &lt;music21.note.Note G#&gt;
+        {161.4167} &lt;music21.note.Rest rest&gt;
+        {163.0} &lt;music21.note.Note G#&gt;
+        {163.3333} &lt;music21.note.Rest rest&gt;
+        {163.75} &lt;music21.note.Note E&gt;
+        {164.0833} &lt;music21.note.Rest rest&gt;
+        {164.75} &lt;music21.note.Note C&gt;
+        {165.0} &lt;music21.note.Rest rest&gt;
+        {165.3333} &lt;music21.note.Note A&gt;
+        {165.5833} &lt;music21.note.Rest rest&gt;
+        {166.5} &lt;music21.note.Note B&gt;
+        {167.25} &lt;music21.note.Rest rest&gt;
+        {168.0} &lt;music21.note.Note A&gt;
+        {168.6667} &lt;music21.note.Rest rest&gt;
+        {168.75} &lt;music21.note.Note A&gt;
+        {169.0} &lt;music21.note.Rest rest&gt;
+        {172.75} &lt;music21.note.Note G#&gt;
+        {173.5} &lt;music21.note.Rest rest&gt;
+        {177.5} &lt;music21.note.Note A&gt;
+        {178.1667} &lt;music21.note.Rest rest&gt;
+        {182.25} &lt;music21.note.Note D&gt;
+        {182.5833} &lt;music21.note.Rest rest&gt;
+        {183.3333} &lt;music21.note.Note G&gt;
+        {183.8333} &lt;music21.note.Rest rest&gt;
+        {184.25} &lt;music21.note.Note A&gt;
+        {184.5} &lt;music21.note.Rest rest&gt;
+        {184.6667} &lt;music21.note.Note E&gt;
+        {184.9167} &lt;music21.note.Rest rest&gt;
+        {185.3333} &lt;music21.chord.Chord G5 E5 C5&gt;
+        {185.8333} &lt;music21.note.Rest rest&gt;
+        {186.0} &lt;music21.note.Note C&gt;
+        {186.6667} &lt;music21.note.Rest rest&gt;
+        {187.0} &lt;music21.note.Note A&gt;
+        {187.5} &lt;music21.note.Rest rest&gt;
+        {187.6667} &lt;music21.note.Note E&gt;
+        {188.3333} &lt;music21.note.Rest rest&gt;
+        {188.6667} &lt;music21.note.Note C&gt;
+        {189.1667} &lt;music21.note.Rest rest&gt;
+        {189.5} &lt;music21.note.Note A&gt;
+        {190.1667} &lt;music21.note.Rest rest&gt;
+        {191.6667} &lt;music21.chord.Chord G#4 D5 E4 G#2&gt;
+        {192.0} &lt;music21.note.Rest rest&gt;
+        {193.0} &lt;music21.note.Note G#&gt;
+        {193.5} &lt;music21.note.Rest rest&gt;
+        {194.5} &lt;music21.note.Note D&gt;
+        {195.1667} &lt;music21.note.Rest rest&gt;
+        {195.6667} &lt;music21.note.Note B&gt;
+        {195.9167} &lt;music21.note.Rest rest&gt;
+        {196.5} &lt;music21.note.Note D&gt;
+        {197.1667} &lt;music21.note.Rest rest&gt;
+        {197.6667} &lt;music21.chord.Chord G#5 E5 D5&gt;
+        {197.9167} &lt;music21.note.Rest rest&gt;
+        {198.25} &lt;music21.note.Note D&gt;
+        {198.75} &lt;music21.note.Rest rest&gt;
+        {200.5} &lt;music21.note.Note A&gt;
+        {200.75} &lt;music21.note.Rest rest&gt;
+        {201.25} &lt;music21.note.Note E&gt;
+        {202.25} &lt;music21.note.Rest rest&gt;
+        {202.3333} &lt;music21.note.Note A&gt;
+        {203.3333} &lt;music21.note.Rest rest&gt;
+        {203.5} &lt;music21.note.Note A&gt;
+        {204.0} &lt;music21.note.Note C&gt;
+        {204.25} &lt;music21.note.Rest rest&gt;
+        {208.3333} &lt;music21.note.Note B&gt;
+        {209.0833} &lt;music21.note.Rest rest&gt;
+        {210.0} &lt;music21.note.Note B&gt;
+        {210.3333} &lt;music21.note.Rest rest&gt;
+        {210.75} &lt;music21.note.Note B&gt;
+        {211.4167} &lt;music21.note.Rest rest&gt;
+        {212.3333} &lt;music21.note.Note B-&gt;
+        {213.3333} &lt;music21.note.Rest rest&gt;
+        {213.75} &lt;music21.note.Note E&gt;
+        {214.75} &lt;music21.note.Rest rest&gt;
+        {216.5} &lt;music21.chord.Chord F4 E5&gt;
+        {216.75} &lt;music21.note.Rest rest&gt;
+        {217.5} &lt;music21.note.Note D&gt;
+        {217.75} &lt;music21.note.Rest rest&gt;
+        {218.3333} &lt;music21.chord.Chord C3 D3&gt;
+        {218.5833} &lt;music21.note.Rest rest&gt;
+        {218.6667} &lt;music21.chord.Chord E4 F4 G4&gt;
+        {218.9167} &lt;music21.note.Rest rest&gt;
+        {219.25} &lt;music21.note.Note C&gt;
+        {219.9167} &lt;music21.note.Rest rest&gt;
+        {220.6667} &lt;music21.note.Note A&gt;
+        {221.6667} &lt;music21.note.Note A&gt;
+        {222.1667} &lt;music21.note.Rest rest&gt;
+        {224.5} &lt;music21.note.Note F&gt;
+        {225.1667} &lt;music21.note.Rest rest&gt;
+        {225.75} &lt;music21.note.Note C&gt;
+        {226.0} &lt;music21.note.Rest rest&gt;
+        {226.6667} &lt;music21.note.Note B&gt;
+        {227.1667} &lt;music21.note.Rest rest&gt;
+        {228.75} &lt;music21.note.Note E&gt;
+        {229.5} &lt;music21.note.Rest rest&gt;
+        {230.5} &lt;music21.note.Note E&gt;
+        {230.75} &lt;music21.note.Rest rest&gt;
+        {231.75} &lt;music21.note.Note G&gt;
+        {232.5} &lt;music21.note.Rest rest&gt;
+        {233.25} &lt;music21.note.Note F&gt;
+        {234.0} &lt;music21.note.Note A&gt;
+        {234.5} &lt;music21.note.Rest rest&gt;
+        {235.6667} &lt;music21.note.Note B&gt;
+        {236.3333} &lt;music21.note.Rest rest&gt;
+        {237.3333} &lt;music21.note.Note A&gt;
+        {237.8333} &lt;music21.note.Rest rest&gt;
+        {238.5} &lt;music21.note.Note B&gt;
+        {239.25} &lt;music21.note.Rest rest&gt;
+        {240.25} &lt;music21.chord.Chord G#3 B4&gt;
+        {241.25} &lt;music21.note.Rest rest&gt;
+        {242.0} &lt;music21.note.Note G#&gt;
+        {243.3333} &lt;music21.note.Rest rest&gt;
+        {244.25} &lt;music21.note.Note D&gt;
+        {244.9167} &lt;music21.note.Rest rest&gt;
+        {245.6667} &lt;music21.chord.Chord G#4 B4&gt;
+        {245.9167} &lt;music21.note.Rest rest&gt;
+        {249.75} &lt;music21.note.Note A&gt;
+        {250.5} &lt;music21.note.Note E&gt;
+        {251.0} &lt;music21.note.Rest rest&gt;
+        {251.5} &lt;music21.note.Note C&gt;
+        {253.25} &lt;music21.note.Rest rest&gt;
+        {254.3333} &lt;music21.note.Note A&gt;
+        {255.5833} &lt;music21.note.Rest rest&gt;
+        {255.75} &lt;music21.note.Note C&gt;
+        {257.0} &lt;music21.note.Rest rest&gt;
+        {257.25} &lt;music21.note.Note B&gt;
+        {258.25} &lt;music21.note.Rest rest&gt;
+        {259.75} &lt;music21.note.Note D&gt;
+        {260.5} &lt;music21.note.Rest rest&gt;
+        {262.0} &lt;music21.note.Note B&gt;
+        {262.3333} &lt;music21.note.Rest rest&gt;
+        {263.25} &lt;music21.note.Note B&gt;
+        {265.0} &lt;music21.note.Note E&gt;
+        {265.25} &lt;music21.note.Rest rest&gt;
+        {266.0} &lt;music21.note.Note B&gt;
+        {266.25} &lt;music21.note.Rest rest&gt;
+        {269.0} &lt;music21.note.Note D&gt;
+        {269.25} &lt;music21.note.Rest rest&gt;
+        {271.0} &lt;music21.note.Note C&gt;
+        {271.75} &lt;music21.note.Note B&gt;
+        {272.75} &lt;music21.note.Rest rest&gt;
+        {274.25} &lt;music21.note.Note F&gt;
+        {275.0} &lt;music21.note.Rest rest&gt;
+        {275.25} &lt;music21.note.Note C&gt;
+        {275.75} &lt;music21.note.Note A&gt;
+        {276.0833} &lt;music21.note.Rest rest&gt;
+        {277.75} &lt;music21.note.Note B&gt;
+        {278.4167} &lt;music21.note.Rest rest&gt;
+        {278.5} &lt;music21.note.Note B&gt;
+        {279.1667} &lt;music21.note.Rest rest&gt;
+        {279.25} &lt;music21.note.Note C&gt;
+        {280.0} &lt;music21.note.Note C&gt;
+        {280.6667} &lt;music21.note.Rest rest&gt;
+        {280.75} &lt;music21.note.Note C&gt;
+        {281.25} &lt;music21.note.Rest rest&gt;
+        {281.5} &lt;music21.note.Note B&gt;
+        {282.1667} &lt;music21.note.Rest rest&gt;
+        {282.3333} &lt;music21.note.Note B&gt;
+        {282.8333} &lt;music21.note.Rest rest&gt;
+        {283.0} &lt;music21.note.Note C&gt;
+        {283.6667} &lt;music21.note.Rest rest&gt;
+        {283.75} &lt;music21.note.Note B&gt;
+        {284.4167} &lt;music21.note.Rest rest&gt;
+        {284.5} &lt;music21.note.Note B&gt;
+        {285.25} &lt;music21.note.Rest rest&gt;
+        {287.6667} &lt;music21.note.Note E&gt;
+        {290.1667} &lt;music21.note.Rest rest&gt;
+        {293.0} &lt;music21.note.Note A&gt;
+        {297.75} &lt;music21.note.Rest rest&gt;
+        {304.25} &lt;music21.note.Note A&gt;
+        {305.0} &lt;music21.note.Rest rest&gt;
+        {305.5} &lt;music21.note.Note E&gt;
+        {306.5} &lt;music21.note.Rest rest&gt;
+        {306.6667} &lt;music21.note.Note A&gt;
+        {307.6667} &lt;music21.note.Rest rest&gt;
+        {308.25} &lt;music21.note.Note G#&gt;
+    {0.0} &lt;music21.stream.Voice 0x12c13da00&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {14.5} &lt;music21.note.Note A&gt;
+        {16.0} &lt;music21.note.Rest rest&gt;
+        {16.25} &lt;music21.note.Note D&gt;
+        {17.25} &lt;music21.note.Rest rest&gt;
+        {18.0} &lt;music21.note.Note C&gt;
+        {19.0} &lt;music21.note.Rest rest&gt;
+        {20.0} &lt;music21.note.Note G#&gt;
+        {21.25} &lt;music21.note.Rest rest&gt;
+        {21.5} &lt;music21.note.Note D&gt;
+        {23.1667} &lt;music21.note.Rest rest&gt;
+        {24.25} &lt;music21.note.Note D&gt;
+        {27.25} &lt;music21.note.Rest rest&gt;
+        {37.6667} &lt;music21.note.Note E&gt;
+        {38.3333} &lt;music21.note.Rest rest&gt;
+        {44.5} &lt;music21.note.Note B&gt;
+        {46.5} &lt;music21.note.Rest rest&gt;
+        {50.0} &lt;music21.note.Note G#&gt;
+        {50.6667} &lt;music21.note.Rest rest&gt;
+        {65.25} &lt;music21.note.Note G#&gt;
+        {67.75} &lt;music21.note.Rest rest&gt;
+        {68.6667} &lt;music21.note.Note A&gt;
+        {69.0} &lt;music21.note.Rest rest&gt;
+        {69.5} &lt;music21.chord.Chord B3 F4&gt;
+        {70.1667} &lt;music21.note.Rest rest&gt;
+        {71.5} &lt;music21.note.Note C&gt;
+        {72.75} &lt;music21.note.Rest rest&gt;
+        {76.5} &lt;music21.note.Note A&gt;
+        {77.8333} &lt;music21.note.Rest rest&gt;
+        {81.0} &lt;music21.note.Note C&gt;
+        {82.0} &lt;music21.note.Rest rest&gt;
+        {83.75} &lt;music21.note.Note A&gt;
+        {84.75} &lt;music21.note.Rest rest&gt;
+        {93.6667} &lt;music21.note.Note B&gt;
+        {94.6667} &lt;music21.note.Rest rest&gt;
+        {96.6667} &lt;music21.note.Note D&gt;
+        {96.9167} &lt;music21.note.Rest rest&gt;
+        {107.0} &lt;music21.note.Note G#&gt;
+        {108.0} &lt;music21.note.Rest rest&gt;
+        {109.3333} &lt;music21.chord.Chord B4 F5&gt;
+        {110.0} &lt;music21.note.Rest rest&gt;
+        {111.3333} &lt;music21.note.Note C#&gt;
+        {112.6667} &lt;music21.note.Rest rest&gt;
+        {113.5} &lt;music21.note.Note F&gt;
+        {114.25} &lt;music21.note.Rest rest&gt;
+        {117.25} &lt;music21.note.Note C&gt;
+        {119.5} &lt;music21.note.Note A&gt;
+        {120.25} &lt;music21.note.Rest rest&gt;
+        {122.75} &lt;music21.note.Note D&gt;
+        {123.5} &lt;music21.note.Rest rest&gt;
+        {123.75} &lt;music21.chord.Chord D6 F5&gt;
+        {124.0833} &lt;music21.note.Rest rest&gt;
+        {131.5} &lt;music21.note.Note F&gt;
+        {132.0} &lt;music21.note.Rest rest&gt;
+        {138.0} &lt;music21.note.Note B&gt;
+        {139.75} &lt;music21.note.Rest rest&gt;
+        {142.0} &lt;music21.note.Note D&gt;
+        {144.5} &lt;music21.note.Rest rest&gt;
+        {163.75} &lt;music21.note.Note G#&gt;
+        {164.0} &lt;music21.note.Rest rest&gt;
+        {183.3333} &lt;music21.chord.Chord C5 E5&gt;
+        {183.8333} &lt;music21.note.Rest rest&gt;
+        {185.5} &lt;music21.note.Note E&gt;
+        {186.1667} &lt;music21.note.Rest rest&gt;
+        {187.0} &lt;music21.note.Note C&gt;
+        {187.3333} &lt;music21.note.Rest rest&gt;
+        {187.75} &lt;music21.note.Note E&gt;
+        {188.4167} &lt;music21.note.Rest rest&gt;
+        {188.75} &lt;music21.note.Note A&gt;
+        {189.0833} &lt;music21.note.Rest rest&gt;
+        {189.6667} &lt;music21.note.Note C&gt;
+        {190.1667} &lt;music21.note.Rest rest&gt;
+        {191.6667} &lt;music21.note.Note D&gt;
+        {192.0} &lt;music21.note.Rest rest&gt;
+        {193.3333} &lt;music21.note.Note B&gt;
+        {193.8333} &lt;music21.note.Rest rest&gt;
+        {195.75} &lt;music21.chord.Chord D3 C3&gt;
+        {196.0} &lt;music21.note.Rest rest&gt;
+        {197.0} &lt;music21.note.Note G#&gt;
+        {197.25} &lt;music21.note.Rest rest&gt;
+        {197.75} &lt;music21.note.Note C&gt;
+        {198.5} &lt;music21.note.Rest rest&gt;
+        {201.3333} &lt;music21.note.Note G&gt;
+        {202.3333} &lt;music21.note.Rest rest&gt;
+        {203.25} &lt;music21.note.Note C&gt;
+        {203.5} &lt;music21.note.Rest rest&gt;
+        {210.0} &lt;music21.note.Note A&gt;
+        {210.6667} &lt;music21.note.Rest rest&gt;
+        {212.3333} &lt;music21.note.Note E&gt;
+        {213.8333} &lt;music21.note.Rest rest&gt;
+        {214.25} &lt;music21.note.Note E&gt;
+        {215.0} &lt;music21.note.Rest rest&gt;
+        {216.6667} &lt;music21.note.Note C#&gt;
+        {217.3333} &lt;music21.note.Rest rest&gt;
+        {218.3333} &lt;music21.chord.Chord E3 F3&gt;
+        {218.5833} &lt;music21.note.Rest rest&gt;
+        {218.6667} &lt;music21.chord.Chord A4 B4&gt;
+        {218.9167} &lt;music21.note.Rest rest&gt;
+        {219.25} &lt;music21.chord.Chord F5 D1&gt;
+        {220.75} &lt;music21.note.Rest rest&gt;
+        {221.0} &lt;music21.note.Note D&gt;
+        {221.6667} &lt;music21.note.Rest rest&gt;
+        {221.75} &lt;music21.note.Note C&gt;
+        {222.25} &lt;music21.note.Rest rest&gt;
+        {224.5} &lt;music21.note.Note C&gt;
+        {225.1667} &lt;music21.note.Rest rest&gt;
+        {227.0} &lt;music21.chord.Chord A5 F5&gt;
+        {227.3333} &lt;music21.note.Rest rest&gt;
+        {229.25} &lt;music21.note.Note G&gt;
+        {230.25} &lt;music21.note.Rest rest&gt;
+        {233.3333} &lt;music21.note.Note A&gt;
+        {233.8333} &lt;music21.note.Rest rest&gt;
+        {238.5} &lt;music21.note.Note E&gt;
+        {239.75} &lt;music21.note.Rest rest&gt;
+        {240.5} &lt;music21.note.Note B&gt;
+        {241.25} &lt;music21.note.Rest rest&gt;
+        {243.0} &lt;music21.note.Note G#&gt;
+        {243.6667} &lt;music21.note.Rest rest&gt;
+        {250.5} &lt;music21.note.Note E&gt;
+        {251.75} &lt;music21.note.Rest rest&gt;
+        {253.0} &lt;music21.note.Note B&gt;
+        {255.3333} &lt;music21.note.Note E&gt;
+        {255.8333} &lt;music21.note.Rest rest&gt;
+        {259.75} &lt;music21.note.Note B&gt;
+        {260.5} &lt;music21.note.Rest rest&gt;
+        {265.0} &lt;music21.note.Note D&gt;
+        {265.25} &lt;music21.note.Rest rest&gt;
+        {266.0} &lt;music21.note.Note B&gt;
+        {266.25} &lt;music21.note.Rest rest&gt;
+        {272.5} &lt;music21.note.Note A&gt;
+        {273.8333} &lt;music21.note.Rest rest&gt;
+        {278.5} &lt;music21.note.Note B&gt;
+        {279.25} &lt;music21.note.Rest rest&gt;
+        {279.6667} &lt;music21.note.Note C&gt;
+        {280.4167} &lt;music21.note.Rest rest&gt;
+        {280.5} &lt;music21.note.Note C&gt;
+        {281.0} &lt;music21.note.Note C&gt;
+        {281.5} &lt;music21.note.Rest rest&gt;
+        {281.6667} &lt;music21.note.Note C&gt;
+        {282.1667} &lt;music21.note.Rest rest&gt;
+        {282.6667} &lt;music21.note.Note B&gt;
+        {283.3333} &lt;music21.note.Note C&gt;
+        {284.0833} &lt;music21.note.Rest rest&gt;
+        {285.0} &lt;music21.note.Note B&gt;
+        {285.3333} &lt;music21.note.Rest rest&gt;
+        {288.0} &lt;music21.note.Note G#&gt;
+        {290.25} &lt;music21.note.Rest rest&gt;
+        {296.25} &lt;music21.chord.Chord F4 F5&gt;
+        {298.25} &lt;music21.note.Rest rest&gt;
+        {304.5} &lt;music21.note.Note C&gt;
+        {305.5} &lt;music21.note.Rest rest&gt;
+        {306.0} &lt;music21.note.Note C&gt;
+        {307.3333} &lt;music21.note.Rest rest&gt;
+    {0.0} &lt;music21.stream.Voice 0x12c1c2b50&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {15.75} &lt;music21.note.Note A&gt;
+        {17.0} &lt;music21.note.Rest rest&gt;
+        {18.75} &lt;music21.note.Note A&gt;
+        {20.25} &lt;music21.note.Rest rest&gt;
+        {20.3333} &lt;music21.note.Note B&gt;
+        {21.3333} &lt;music21.note.Rest rest&gt;
+        {21.6667} &lt;music21.note.Note D&gt;
+        {23.4167} &lt;music21.note.Rest rest&gt;
+        {26.0} &lt;music21.note.Note B-&gt;
+        {29.0} &lt;music21.note.Rest rest&gt;
+        {44.75} &lt;music21.note.Note D&gt;
+        {46.4167} &lt;music21.note.Rest rest&gt;
+        {65.6667} &lt;music21.note.Note B&gt;
+        {67.6667} &lt;music21.note.Rest rest&gt;
+        {68.6667} &lt;music21.note.Note A&gt;
+        {69.6667} &lt;music21.note.Rest rest&gt;
+        {72.0} &lt;music21.note.Note E&gt;
+        {73.5} &lt;music21.note.Rest rest&gt;
+        {84.3333} &lt;music21.note.Note E&gt;
+        {85.0833} &lt;music21.note.Rest rest&gt;
+        {107.25} &lt;music21.note.Note B&gt;
+        {108.0} &lt;music21.note.Rest rest&gt;
+        {111.75} &lt;music21.note.Note E&gt;
+        {113.0} &lt;music21.note.Rest rest&gt;
+        {119.25} &lt;music21.note.Note D&gt;
+        {120.0} &lt;music21.note.Rest rest&gt;
+        {131.6667} &lt;music21.note.Note C&gt;
+        {132.0} &lt;music21.note.Rest rest&gt;
+        {138.6667} &lt;music21.note.Note B&gt;
+        {140.3333} &lt;music21.note.Rest rest&gt;
+        {142.6667} &lt;music21.note.Note B&gt;
+        {144.9167} &lt;music21.note.Rest rest&gt;
+        {186.0} &lt;music21.note.Note E&gt;
+        {186.75} &lt;music21.note.Rest rest&gt;
+        {189.0} &lt;music21.chord.Chord C5 E5&gt;
+        {189.25} &lt;music21.note.Rest rest&gt;
+        {190.0} &lt;music21.note.Note C&gt;
+        {190.6667} &lt;music21.note.Rest rest&gt;
+        {191.75} &lt;music21.note.Note B&gt;
+        {192.0} &lt;music21.note.Rest rest&gt;
+        {193.3333} &lt;music21.chord.Chord B3 D5&gt;
+        {194.0833} &lt;music21.note.Rest rest&gt;
+        {197.0} &lt;music21.note.Note B&gt;
+        {197.5} &lt;music21.note.Rest rest&gt;
+        {210.0} &lt;music21.note.Note A&gt;
+        {210.75} &lt;music21.note.Rest rest&gt;
+        {212.75} &lt;music21.note.Note C#&gt;
+        {214.0} &lt;music21.note.Rest rest&gt;
+        {219.25} &lt;music21.chord.Chord D2 F#1&gt;
+        {221.25} &lt;music21.note.Note A&gt;
+        {221.75} &lt;music21.note.Rest rest&gt;
+        {222.0} &lt;music21.note.Note G&gt;
+        {222.25} &lt;music21.note.Rest rest&gt;
+        {241.0} &lt;music21.note.Note B&gt;
+        {241.75} &lt;music21.note.Rest rest&gt;
+        {243.0} &lt;music21.chord.Chord B4 D4&gt;
+        {243.6667} &lt;music21.note.Rest rest&gt;
+        {279.0} &lt;music21.note.Note B&gt;
+        {279.75} &lt;music21.note.Rest rest&gt;
+        {282.0} &lt;music21.note.Note B&gt;
+        {282.5} &lt;music21.note.Rest rest&gt;
+        {284.0} &lt;music21.note.Note B&gt;
+        {284.75} &lt;music21.note.Rest rest&gt;
+        {288.3333} &lt;music21.note.Note B&gt;
+        {290.5833} &lt;music21.note.Rest rest&gt;
+        {304.75} &lt;music21.note.Note E&gt;
+        {305.75} &lt;music21.note.Rest rest&gt;
+        {307.25} &lt;music21.note.Note E&gt;
+        {308.5} &lt;music21.note.Rest rest&gt;
+    {0.0} &lt;music21.stream.Voice 0x12c20a130&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {23.0} &lt;music21.note.Note G#&gt;
+        {25.3333} &lt;music21.note.Rest rest&gt;
+        {45.6667} &lt;music21.note.Note E&gt;
+        {46.6667} &lt;music21.note.Rest rest&gt;
+        {66.5} &lt;music21.note.Note E&gt;
+        {67.8333} &lt;music21.note.Rest rest&gt;
+        {68.6667} &lt;music21.chord.Chord C4 F4&gt;
+        {69.6667} &lt;music21.note.Rest rest&gt;
+        {107.3333} &lt;music21.note.Note D&gt;
+        {108.5833} &lt;music21.note.Rest rest&gt;
+        {119.3333} &lt;music21.note.Note F&gt;
+        {120.3333} &lt;music21.note.Rest rest&gt;
+        {131.6667} &lt;music21.chord.Chord A5 A4&gt;
+        {132.3333} &lt;music21.note.Rest rest&gt;
+        {186.0} &lt;music21.note.Note G&gt;
+        {187.25} &lt;music21.note.Rest rest&gt;
+        {190.0} &lt;music21.note.Note A&gt;
+        {190.5} &lt;music21.note.Rest rest&gt;
+        {193.3333} &lt;music21.note.Note E&gt;
+        {195.0} &lt;music21.note.Rest rest&gt;
+        {213.0} &lt;music21.note.Note E&gt;
+        {214.0} &lt;music21.note.Rest rest&gt;
+        {222.0} &lt;music21.note.Note A&gt;
+        {222.75} &lt;music21.note.Rest rest&gt;
+        {288.6667} &lt;music21.note.Note D&gt;
+        {293.1667} &lt;music21.note.Rest rest&gt;
+    {0.0} &lt;music21.stream.Voice 0x12c219a90&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {66.75} &lt;music21.note.Note G#&gt;
+        {68.75} &lt;music21.note.Rest rest&gt;
+        {107.5} &lt;music21.note.Note G#&gt;
+        {108.75} &lt;music21.note.Rest rest&gt;
+        {119.6667} &lt;music21.note.Note C&gt;
+        {120.4167} &lt;music21.note.Rest rest&gt;
+        {131.6667} &lt;music21.note.Note F&gt;
+        {132.4167} &lt;music21.note.Rest rest&gt;
+        {289.3333} &lt;music21.note.Note B&gt;
+        {294.5833} &lt;music21.note.Rest rest&gt;
+    {0.0} &lt;music21.stream.Voice 0x12c22a370&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {107.75} &lt;music21.note.Note B&gt;
+        {108.75} &lt;music21.note.Rest rest&gt;
+        {289.75} &lt;music21.note.Note D&gt;
+        {294.75} &lt;music21.note.Rest rest&gt;
+    {0.0} &lt;music21.stream.Voice 0x12c22a5e0&gt;
+        {107.75} &lt;music21.note.Note D&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see a single score can take some time to process and analyse.
+So before we process every file from our dataset we should take a look at a subset to watch out for any patterns.</p>
+<p>Also it is worth making some research so we can reduce the amount of data we need to process.
+From the <a class="reference external" href="https://en.wikipedia.org/wiki/General_MIDI#Percussive">wikipedia article on General MIDI (GM)</a> we can see that percussive tracks should be on channel 10.
+So lets write a parser function wihch only return the notes that are assigned to channel 10.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">music21</span> <span class="kn">import</span> <span class="n">midi</span><span class="p">,</span> <span class="n">stream</span>
+
+<span class="k">def</span> <span class="nf">parse_midi</span><span class="p">(</span><span class="n">midi_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">only_drums</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function uses the MIDI parser of music21 to filter out the drum sounds</span>
+<span class="sd">    that are assigned to channel 10.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mf</span> <span class="o">=</span> <span class="n">midi</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">()</span>
+    <span class="n">mf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">midi_path</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">midi</span><span class="o">.</span><span class="n">MidiException</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Encountered invalid MIDI File </span><span class="si">{</span><span class="n">midi_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">mf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">only_drums</span><span class="p">:</span>
+        <span class="c1"># we dont want to change anything we are iterating over</span>
+        <span class="c1"># so we use non-pythonic index for</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">)):</span>
+            <span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">ev</span> <span class="k">for</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">events</span> <span class="k">if</span> <span class="n">ev</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">midi</span><span class="o">.</span><span class="n">translate</span><span class="o">.</span><span class="n">midiFileToStream</span><span class="p">(</span><span class="n">midi</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dennis Scheiba<br/>
+        
+            &copy; Copyright 2021, Dennis Scheiba.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

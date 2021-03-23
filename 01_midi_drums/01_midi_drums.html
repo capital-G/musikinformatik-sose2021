@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysing drum patterns from MIDI files &#8212; Musikinformatik SoSe2021</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/thebelab-helper.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Data types" href="../00_python_basics/00_01-data-types.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Course information
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/setup.html">
+   Environment setup
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Basics of Python
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../00_python_basics/00_01-data-types.html">
+   Data types
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Lesson 1
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Analysing drum patterns from MIDI files
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/01_midi_drums/01_midi_drums.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#getting-the-dataset">
+   Getting the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parsing-the-dataset">
+   Parsing the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inspecting-the-data">
+   Inspecting the data
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="analysing-drum-patterns-from-midi-files">
+<h1>Analysing drum patterns from MIDI files<a class="headerlink" href="#analysing-drum-patterns-from-midi-files" title="Permalink to this headline">¶</a></h1>
+<p>In our first lesson we want to get to know how to work with datasets so we can</p>
+<ul class="simple">
+<li><p>parse a dataset</p></li>
+<li><p>analyse the dataset so it matches our expectations and we did not screw up during parsing</p></li>
+</ul>
+<p>After this is done we want to take a look at how we can generate new drum patterns from the existing one.
+But in order to do this we want to take a look at the quantisation (?) of our patterns.</p>
+<p>The cleaning of the dataset and setting the data up properly takes the most time in such experiments but if one makes errors here those errors will propagate through our system - so its good to spend some time at this task.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># makes the randomness deterministic</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getting-the-dataset">
+<h2>Getting the dataset<a class="headerlink" href="#getting-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>As our methods rely on data we need a way to obtain such data.
+Of course we start to get into difficult teritory here from a copyright point of view - so for now we will rely on public domain datasets?</p>
+</div>
+<div class="section" id="parsing-the-dataset">
+<h2>Parsing the dataset<a class="headerlink" href="#parsing-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>When working with large sets of files the unix utility <a class="reference external" href="https://en.wikipedia.org/wiki/Glob_(programming)">glob</a> comes in handy as we can describe the pattern of the file paths we want to match instead of listing all files.</p>
+<p>When we take a quick look at the data set we see that there are two occurences of common file pattens:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">midi_dataset</span><span class="o">/</span><span class="n">C</span><span class="o">/</span><span class="n">Celine</span> <span class="n">Dion</span> <span class="o">-</span> <span class="p">(</span><span class="n">If</span><span class="o">-</span><span class="n">There</span><span class="o">-</span><span class="n">Was</span><span class="p">)</span> <span class="n">Any</span> <span class="n">Other</span> <span class="n">Way</span><span class="o">.</span><span class="n">mid</span>
+<span class="n">midi_dataset</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">A</span> <span class="n">AH</span><span class="o">.</span><span class="n">The</span> <span class="n">living</span> <span class="n">daylights</span><span class="o">.</span><span class="n">mid</span>
+</pre></div>
+</div>
+<p>So we have either</p>
+<ul class="simple">
+<li><p>a single character folder in which <code class="docutils literal notranslate"><span class="pre">.mid</span></code> files are</p></li>
+<li><p>a single character folder with another single character folder in which <code class="docutils literal notranslate"><span class="pre">.mid</span></code> files are</p></li>
+</ul>
+<p>Some googling for <em>glob any depth only extension</em> reveals <a class="reference external" href="https://stackoverflow.com/a/14798263/3475778">this stack overflow answer</a> from which we can now deduce our glob pattern to match the files.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GLOB_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;../datasets/midi_dataset/**/*.mid&#39;</span>
+<span class="n">midi_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">GLOB_PATTERN</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 39712 midi files in dataset
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select 5 random files</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;../datasets/midi_dataset/A/A/ArminVanBuuren_-_ComingHome__karimstar95_20120526025524.mid&#39;,
+       &#39;../datasets/midi_dataset/R/R/RevolutionsOverture.mid&#39;,
+       &#39;../datasets/midi_dataset/P/P/pink-dont_let_me_get_me.mid&#39;,
+       &#39;../datasets/midi_dataset/S/S/Sixpence_None_The_Richer_Kiss_Me.mid&#39;,
+       &#39;../datasets/midi_dataset/T/T/The_Everly_Brothers_-_Bye_Bye_Love.mid&#39;],
+      dtype=&#39;&lt;U265&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>But how are sure that we matched every midi file in our folder?
+We can simply match every file in our dataset directory and show us the differences by using <a class="reference external" href="https://realpython.com/python-sets/">sets</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missed_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/midi_dataset/**/*.*&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> files&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Did not match 765 files
+</pre></div>
+</div>
+</div>
+</div>
+<p>It turns out that we missed some files.
+Lets take a look at them using <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html">random.choice</a> from the numpy library.
+But as this function does not work with sets we need to transform the set to a list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">missed_files</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&quot;../datasets/midi_dataset/S/S/STATUS QUO.What you&#39;re proposin&#39;.MID&quot;,
+       &#39;../datasets/midi_dataset/T/T/THE SPARKS.When i kiss you.MID&#39;,
+       &#39;../datasets/midi_dataset/M/M/Music of the Third Kind (061114).MID&#39;,
+       &#39;../datasets/midi_dataset/T/T/THE ARCHIES.Sugar sugar.MID&#39;,
+       &#39;../datasets/midi_dataset/S/S/STING.This cowboy song.MID&#39;],
+      dtype=&#39;&lt;U114&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It seems there are files missing that have a capitalized file extension <code class="docutils literal notranslate"><span class="pre">.MID</span></code>.</p>
+<p>But lets not rely on the few examples, lets use a <a class="reference external" href="https://realpython.com/list-comprehension-python/">list comprehension</a> to filter out all examples that are not ending in a capitalized manner.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.MID&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid&#39;,
+ &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
+ &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;,
+ &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
+ &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;,
+ &#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
+ &#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
+ &#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that we are still missing the files that have <code class="docutils literal notranslate"><span class="pre">.Mid</span></code>, <code class="docutils literal notranslate"><span class="pre">.midi</span></code> and <code class="docutils literal notranslate"><span class="pre">.MIDi</span></code> as extension.
+If we include these we will now have matched all files of our dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;MID&#39;</span><span class="p">,</span> <span class="s1">&#39;Mid&#39;</span><span class="p">,</span> <span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;MIDi&#39;</span><span class="p">]:</span>
+    <span class="n">MID_GLOB_PATTERN</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;../datasets/midi_dataset/**/*.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">midi_files</span> <span class="o">+=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">MID_GLOB_PATTERN</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 40477 midi files in dataset
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missed_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/midi_dataset/**/*.*&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> files&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Did not match 0 files
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course we could have just matched every file in the directory but then we would not have those exercises and one will at one point work with <em>dirty</em> datasets so its good to have at least some experience on how to inspect just the files of our dataset.</p>
+<p>Also it is always a good idea to only include such files into the dataset that we expect because having an unexpected file in the dataset needs to be avoided because this can mess up our results.</p>
+</div>
+<div class="section" id="inspecting-the-data">
+<h2>Inspecting the data<a class="headerlink" href="#inspecting-the-data" title="Permalink to this headline">¶</a></h2>
+<p>Now as we have all file paths available it is a good practice to take a first look at the data.
+We need to understand how the information we are interested in is accessible and also that it is probably not standardized - as we have seen above with the filenames already.</p>
+<p>To parse the midi files we will use the python library <a class="reference external" href="https://web.mit.edu/music21/">music21</a> from the MIT.
+The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html">docs</a> reveal that <code class="docutils literal notranslate"><span class="pre">music21.converter</span></code> seems to be the proper package.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">music21</span> <span class="kn">import</span> <span class="n">converter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_midi_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Selected </span><span class="si">{</span><span class="n">example_midi_file</span><span class="si">}</span><span class="s1"> as example MIDI file&#39;</span><span class="p">)</span>
+<span class="n">example_score</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">example_midi_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected ../datasets/midi_dataset/A/A/AreYouAfraidOfTheDark.mid as example MIDI file
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a small hack so we can capture the output of</span>
+<span class="c1"># music21 and shorten it so our notebook does not</span>
+<span class="c1"># get spammed</span>
+<span class="c1"># from https://stackoverflow.com/a/16571630/3475778</span>
+
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span> 
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">Capturing</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span>    <span class="c1"># free up some memory</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stdout</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Capturing</span><span class="p">()</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+    <span class="n">example_score</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">...&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x10c07ed30&gt;
+    {0.0} &lt;music21.instrument.Piano &#39;Theme from Love Story: piano&#39;&gt;
+    {0.0} &lt;music21.key.Key of C major&gt;
+    {0.0} &lt;music21.stream.Voice 0x126b2e970&gt;
+        {0.0} &lt;music21.note.Rest rest&gt;
+        {8.0} &lt;music21.note.Note A&gt;
+        {8.75} &lt;music21.note.Note C&gt;
+        {9.0} &lt;music21.note.Note E&gt;
+        {9.25} &lt;music21.note.Rest rest&gt;
+        {9.3333} &lt;music21.note.Note A&gt; 
+...
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see a single score can take some time to process and analyse.
+So before we process every file from our dataset we should take a look at a subset to watch out for any patterns.</p>
+<p>Also it is worth making some research so we can reduce the amount of data we need to process.
+From the <a class="reference external" href="https://en.wikipedia.org/wiki/General_MIDI#Percussive">wikipedia article on General MIDI (GM)</a> we can see that percussive tracks should be on channel 10.
+So lets write a parser function wihch only return the notes that are assigned to channel 10.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">music21</span> <span class="kn">import</span> <span class="n">midi</span><span class="p">,</span> <span class="n">stream</span>
+
+<span class="k">def</span> <span class="nf">parse_midi</span><span class="p">(</span><span class="n">midi_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">only_drums</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function uses the MIDI parser of music21 to filter out the drum sounds</span>
+<span class="sd">    that are assigned to channel 10.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mf</span> <span class="o">=</span> <span class="n">midi</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">()</span>
+    <span class="n">mf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">midi_path</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">midi</span><span class="o">.</span><span class="n">MidiException</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Encountered invalid MIDI File </span><span class="si">{</span><span class="n">midi_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">mf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">only_drums</span><span class="p">:</span>
+        <span class="c1"># we dont want to change anything we are iterating over</span>
+        <span class="c1"># so we use non-pythonic index for</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">)):</span>
+            <span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">ev</span> <span class="k">for</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">events</span> <span class="k">if</span> <span class="n">ev</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">midi</span><span class="o">.</span><span class="n">translate</span><span class="o">.</span><span class="n">midiFileToStream</span><span class="p">(</span><span class="n">midi</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="../00_python_basics/00_01-data-types.html" title="previous page">Data types</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dennis Scheiba<br/>
+        
+            &copy; Copyright 2021, Dennis Scheiba.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
