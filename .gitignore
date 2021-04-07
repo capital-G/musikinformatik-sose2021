@@ -4,6 +4,7 @@ datasets/
 _build/
 _static/
 _templates/
+*/dask-worker-space/
 
 
 # Byte-compiled / optimized / DLL files
