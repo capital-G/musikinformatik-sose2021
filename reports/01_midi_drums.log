@@ -17,18 +17,32 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# select 5 random files
-np.random.choice(midi_files, 5)
+import os
+import glob
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from helpers.helpers import *
+
+np.random.seed(42)  # makes the randomness deterministic
+
+%matplotlib inline
+# todo: try %matplotlib widget
+plt.rcParams['figure.figsize'] = (15, 5)
+plt.rcParams['axes.grid'] = True
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValueError[0m                                Traceback (most recent call last)
-[0;32m<ipython-input-3-f0993117107c>[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;31m# select 5 random files[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 2[0;31m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mchoice[0m[0;34m([0m[0mmidi_files[0m[0;34m,[0m [0;36m5[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m
-[0;32mmtrand.pyx[0m in [0;36mnumpy.random.mtrand.RandomState.choice[0;34m()[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m<ipython-input-1-8ca94888daf3>[0m in [0;36m<module>[0;34m[0m
+[1;32m      6[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0;34m[0m[0m
+[0;32m----> 8[0;31m [0;32mfrom[0m [0mhelpers[0m[0;34m.[0m[0mhelpers[0m [0;32mimport[0m [0;34m*[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      9[0m [0;34m[0m[0m
+[1;32m     10[0m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mseed[0m[0;34m([0m[0;36m42[0m[0;34m)[0m  [0;31m# makes the randomness deterministic[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mValueError[0m: 'a' cannot be empty unless no samples are taken
-ValueError: 'a' cannot be empty unless no samples are taken
+[0;31mModuleNotFoundError[0m: No module named 'helpers'
+ModuleNotFoundError: No module named 'helpers'
 

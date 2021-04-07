@@ -226,7 +226,14 @@ But in order to do this we want to take a look at the quantisation (?) of our pa
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
+<span class="kn">from</span> <span class="nn">helpers.helpers</span> <span class="kn">import</span> <span class="o">*</span>
+
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># makes the randomness deterministic</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># todo: try %matplotlib widget</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.grid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </div>
@@ -307,11 +314,11 @@ But as this function does not work with sets we need to transform the set to a l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&quot;../datasets/midi_dataset/S/S/STATUS QUO.What you&#39;re proposin&#39;.MID&quot;,
-       &#39;../datasets/midi_dataset/T/T/THE SPARKS.When i kiss you.MID&#39;,
-       &#39;../datasets/midi_dataset/M/M/Music of the Third Kind (061114).MID&#39;,
-       &#39;../datasets/midi_dataset/T/T/THE ARCHIES.Sugar sugar.MID&#39;,
-       &#39;../datasets/midi_dataset/S/S/STING.This cowboy song.MID&#39;],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;../datasets/midi_dataset/H/H/HAIDUCII.Dragostea din tei K.MID&#39;,
+       &#39;../datasets/midi_dataset/T/T/THE TROGGS.Wild thing K.MID&#39;,
+       &#39;../datasets/midi_dataset/F/F/Fermoy_Lasses_the_Gravel_Walk.MID&#39;,
+       &#39;../datasets/midi_dataset/C/C/CREEDENCE C.R.Tombstone shadow K.MID&#39;,
+       &#39;../datasets/midi_dataset/U/U/Unbreak-tonibraxton.MID&#39;],
       dtype=&#39;&lt;U114&#39;)
 </pre></div>
 </div>
@@ -326,14 +333,14 @@ But as this function does not work with sets we need to transform the set to a l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid&#39;,
- &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
- &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;,
- &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
- &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;,
- &#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;,
  &#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
- &#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;]
+ &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
+ &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
+ &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;,
+ &#39;../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid&#39;,
+ &#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
+ &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;]
 </pre></div>
 </div>
 </div>
@@ -375,8 +382,7 @@ If we include these we will now have matched all files of our dataset.</p>
 <h2>Inspecting the data<a class="headerlink" href="#inspecting-the-data" title="Permalink to this headline">¶</a></h2>
 <p>Now as we have all file paths available it is a good practice to take a first look at the data.
 We need to understand how the information we are interested in is accessible and also that it is probably not standardized - as we have seen above with the filenames already.</p>
-<p>To parse the midi files we will use the python library <a class="reference external" href="https://web.mit.edu/music21/">music21</a> from the MIT.
-The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html">docs</a> reveal that <code class="docutils literal notranslate"><span class="pre">music21.converter</span></code> seems to be the proper package.</p>
+<p>To work with music notation we will use the python library <a class="reference external" href="https://web.mit.edu/music21/">music21</a> from the MIT and <a class="reference external" href="https://github.com/craffel/pretty-midi">pretty_midi</a> to inspect the MIDI files.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">music21</span> <span class="kn">import</span> <span class="n">converter</span>
@@ -386,9 +392,9 @@ The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleRe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_midi_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_midi_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Selected </span><span class="si">{</span><span class="n">example_midi_file</span><span class="si">}</span><span class="s1"> as example MIDI file&#39;</span><span class="p">)</span>
-<span class="n">example_score</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">example_midi_file</span><span class="p">)</span>
+<span class="n">example_stream</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">example_midi_file</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -400,49 +406,21 @@ The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleRe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a small hack so we can capture the output of</span>
-<span class="c1"># music21 and shorten it so our notebook does not</span>
-<span class="c1"># get spammed</span>
-<span class="c1"># from https://stackoverflow.com/a/16571630/3475778</span>
-
-<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span> 
-<span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="k">class</span> <span class="nc">Capturing</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span>
-    
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span>    <span class="c1"># free up some memory</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stdout</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Capturing</span><span class="p">()</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
-    <span class="n">example_score</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">...&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">stream_string</span><span class="p">(</span><span class="n">example_stream</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x10c07ed30&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x102e6c730&gt;
     {0.0} &lt;music21.instrument.Piano &#39;Theme from Love Story: piano&#39;&gt;
     {0.0} &lt;music21.key.Key of C major&gt;
-    {0.0} &lt;music21.stream.Voice 0x126b2e970&gt;
+    {0.0} &lt;music21.stream.Voice 0x14d8e4190&gt;
         {0.0} &lt;music21.note.Rest rest&gt;
         {8.0} &lt;music21.note.Note A&gt;
         {8.75} &lt;music21.note.Note C&gt;
         {9.0} &lt;music21.note.Note E&gt;
         {9.25} &lt;music21.note.Rest rest&gt;
-        {9.3333} &lt;music21.note.Note A&gt; 
-...
+        {9.3333} &lt;music21.note.Note A&gt;
 </pre></div>
 </div>
 </div>
@@ -450,40 +428,708 @@ The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleRe
 <p>As we can see a single score can take some time to process and analyse.
 So before we process every file from our dataset we should take a look at a subset to watch out for any patterns.</p>
 <p>Also it is worth making some research so we can reduce the amount of data we need to process.
-From the <a class="reference external" href="https://en.wikipedia.org/wiki/General_MIDI#Percussive">wikipedia article on General MIDI (GM)</a> we can see that percussive tracks should be on channel 10.
-So lets write a parser function wihch only return the notes that are assigned to channel 10.</p>
+From the <a class="reference external" href="https://en.wikipedia.org/wiki/General_MIDI#Percussive">wikipedia article on General MIDI (GM)</a> we can see that percussive tracks should be on channel 10.</p>
+<p>music21 has <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleMidi.html">a build in MIDI library</a> but it is rather difficult and slow to extract the drums using music21 which is why we use <em>pretty_midi</em> for this task.</p>
+<p>The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html">docs</a> reveal that <code class="docutils literal notranslate"><span class="pre">music21.converter</span></code> seems to be the proper package.</p>
+<p>We also start annotating our dataset using <a class="reference external" href="https://pandas.pydata.org/">pandas</a> which is a library for data analysis and manipulation to keep track of any metadata the files have.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">music21</span> <span class="kn">import</span> <span class="n">midi</span><span class="p">,</span> <span class="n">stream</span>
-
-<span class="k">def</span> <span class="nf">parse_midi</span><span class="p">(</span><span class="n">midi_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">only_drums</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function uses the MIDI parser of music21 to filter out the drum sounds</span>
-<span class="sd">    that are assigned to channel 10.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">mf</span> <span class="o">=</span> <span class="n">midi</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">()</span>
-    <span class="n">mf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">midi_path</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">mf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="k">except</span> <span class="n">midi</span><span class="o">.</span><span class="n">MidiException</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Encountered invalid MIDI File </span><span class="si">{</span><span class="n">midi_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">mf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">only_drums</span><span class="p">:</span>
-        <span class="c1"># we dont want to change anything we are iterating over</span>
-        <span class="c1"># so we use non-pythonic index for</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">)):</span>
-            <span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">ev</span> <span class="k">for</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">mf</span><span class="o">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">events</span> <span class="k">if</span> <span class="n">ev</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">10</span><span class="p">]</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">midi</span><span class="o">.</span><span class="n">translate</span><span class="o">.</span><span class="n">midiFileToStream</span><span class="p">(</span><span class="n">midi</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-        <span class="k">return</span>
+<span class="n">midi_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;file_path&#39;</span><span class="p">:</span> <span class="n">midi_files</span><span class="p">})</span>
+<span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>file_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16262</th>
+      <td>../datasets/midi_dataset/A/A/another_30624700.mid</td>
+    </tr>
+    <tr>
+      <th>36924</th>
+      <td>../datasets/midi_dataset/P/P/Pokemon RedBlueYe...</td>
+    </tr>
+    <tr>
+      <th>36978</th>
+      <td>../datasets/midi_dataset/P/P/puff_daddy-come_w...</td>
+    </tr>
+    <tr>
+      <th>32078</th>
+      <td>../datasets/midi_dataset/B/B/BB_King_-_Sweet_S...</td>
+    </tr>
+    <tr>
+      <th>15292</th>
+      <td>../datasets/midi_dataset/A/A/Aqua - Lollipop C...</td>
+    </tr>
+    <tr>
+      <th>22177</th>
+      <td>../datasets/midi_dataset/M/M/Madonna_-_Express...</td>
+    </tr>
+    <tr>
+      <th>8920</th>
+      <td>../datasets/midi_dataset/T/T/The Legend of Zel...</td>
+    </tr>
+    <tr>
+      <th>17983</th>
+      <td>../datasets/midi_dataset/F/F/FITZGERALD.Over t...</td>
+    </tr>
+    <tr>
+      <th>29692</th>
+      <td>../datasets/midi_dataset/4/4_11_If_You_Open_Yo...</td>
+    </tr>
+    <tr>
+      <th>23153</th>
+      <td>../datasets/midi_dataset/J/J/John-Brown's-Body...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pretty_midi</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">from</span> <span class="nn">mido</span> <span class="kn">import</span> <span class="n">KeySignatureError</span>
+
+<span class="k">def</span> <span class="nf">parse_midi</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sound</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1"># those are errors that were popping up when the whole dataset was parsed</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="n">KeySignatureError</span><span class="p">,</span> <span class="ne">EOFError</span><span class="p">,</span> <span class="ne">ZeroDivisionError</span><span class="p">):</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">row</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;beat_start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sound</span><span class="o">.</span><span class="n">estimate_beat_start</span><span class="p">()</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;tempo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sound</span><span class="o">.</span><span class="n">estimate_tempo</span><span class="p">()</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;end_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sound</span><span class="o">.</span><span class="n">get_end_time</span><span class="p">()</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;drums&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">is_drum</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sound</span><span class="o">.</span><span class="n">instruments</span><span class="p">])</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;resolution&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sound</span><span class="o">.</span><span class="n">resolution</span>
+        <span class="c1"># row[&#39;pitch_class_hist&#39;] = sound.get_pitch_class_histogram()</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;instrument_names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sound</span><span class="o">.</span><span class="n">instruments</span><span class="p">]</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;num_time_signature_changes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sound</span><span class="o">.</span><span class="n">time_signature_changes</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># ValueError: Can&#39;t estimate beat start when there are no notes.</span>
+        <span class="c1"># ValueError: Can&#39;t provide a global tempo estimate when there are fewer than two notes.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not parse MIDI file </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">row</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use <a class="reference external" href="https://github.com/jmcarpenter2/swifter">swifter</a> to paralellize the analysis of our MIDI files.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">swifter</span>
+
+<span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df_sub</span><span class="o">.</span><span class="n">swifter</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">parse_midi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/swifter/swifter.py</span> in <span class="ni">apply</span><span class="nt">(self, func, axis, raw, result_type, args, **kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">339</span>             <span class="k">with</span> <span class="n">suppress_stdout_stderr_logging</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">340</span>                 <span class="n">tmp_df</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">341</span>                 <span class="n">sample_df</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span> <span class="n">result_type</span><span class="o">=</span><span class="n">result_type</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">&lt;ipython-input-13-62844c87b183&gt;</span> in <span class="ni">parse_midi</span><span class="nt">(row)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">----&gt; </span><span class="mi">6</span>         <span class="n">sound</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="n">row</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pretty_midi/pretty_midi.py</span> in <span class="ni">__init__</span><span class="nt">(self, midi_file, resolution, initial_tempo)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span>                 <span class="c1"># Otherwise, try passing it in as a file pointer</span>
+<span class="ne">---&gt; </span><span class="mi">63</span>                 <span class="n">midi_data</span> <span class="o">=</span> <span class="n">mido</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span> 
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">__init__</span><span class="nt">(self, filename, file, type, ticks_per_beat, charset, debug, clip)</span>
+<span class="g g-Whitespace">    </span><span class="mi">312</span>         <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">313</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">314</span>         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">_load</span><span class="nt">(self, infile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">339</span>              <span class="n">num_tracks</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">340</span>              <span class="bp">self</span><span class="o">.</span><span class="n">ticks_per_beat</span><span class="p">)</span> <span class="o">=</span> <span class="n">read_file_header</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">341</span> 
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_file_header</span><span class="nt">(infile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span> <span class="k">def</span> <span class="nf">read_file_header</span><span class="p">(</span><span class="n">infile</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">108</span>     <span class="n">name</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">read_chunk_header</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">109</span> 
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_chunk_header</span><span class="nt">(infile)</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="k">def</span> <span class="nf">read_chunk_header</span><span class="p">(</span><span class="n">infile</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">98</span>     <span class="n">header</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/generic.py</span> in <span class="ni">__getattr__</span><span class="nt">(self, name)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5464</span>                 <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<span class="ne">-&gt; </span><span class="mi">5465</span>             <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5466</span> 
+
+<span class="ne">AttributeError</span>: &#39;Series&#39; object has no attribute &#39;read&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="mi">04</span><span class="n">dbcc88d598</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df_sub</span><span class="o">.</span><span class="n">swifter</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">parse_midi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/swifter/swifter.py</span> in <span class="ni">apply</span><span class="nt">(self, func, axis, raw, result_type, args, **kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">347</span>         <span class="k">except</span> <span class="n">ERRORS_TO_HANDLE</span><span class="p">:</span>  <span class="c1"># if can&#39;t vectorize, estimate time to pandas apply</span>
+<span class="g g-Whitespace">    </span><span class="mi">348</span>             <span class="n">wrapped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapped_apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span> <span class="n">result_type</span><span class="o">=</span><span class="n">result_type</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">349</span>             <span class="n">timed</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">N_REPEATS</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">350</span>             <span class="n">sample_proc_est</span> <span class="o">=</span> <span class="n">timed</span> <span class="o">/</span> <span class="n">N_REPEATS</span>
+<span class="g g-Whitespace">    </span><span class="mi">351</span>             <span class="n">est_apply_duration</span> <span class="o">=</span> <span class="n">sample_proc_est</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SAMPLE_SIZE</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nn">/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/timeit.py</span> in <span class="ni">timeit</span><span class="nt">(stmt, setup, timer, number, globals)</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span>            <span class="n">number</span><span class="o">=</span><span class="n">default_number</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">231</span>     <span class="sd">&quot;&quot;&quot;Convenience function to create Timer object and call timeit method.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">232</span>     <span class="k">return</span> <span class="n">Timer</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">setup</span><span class="p">,</span> <span class="n">timer</span><span class="p">,</span> <span class="nb">globals</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">233</span> 
+<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="s2">&quot;pass&quot;</span><span class="p">,</span> <span class="n">setup</span><span class="o">=</span><span class="s2">&quot;pass&quot;</span><span class="p">,</span> <span class="n">timer</span><span class="o">=</span><span class="n">default_timer</span><span class="p">,</span>
+
+<span class="nn">/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/timeit.py</span> in <span class="ni">timeit</span><span class="nt">(self, number)</span>
+<span class="g g-Whitespace">    </span><span class="mi">174</span>         <span class="n">gc</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">175</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">176</span>             <span class="n">timing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">177</span>         <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">178</span>             <span class="k">if</span> <span class="n">gcold</span><span class="p">:</span>
+
+<span class="nn">/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/timeit.py</span> in <span class="ni">inner</span><span class="nt">(_it, _timer, _stmt)</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/swifter/swifter.py</span> in <span class="ni">wrapped</span><span class="nt">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span>         <span class="k">def</span> <span class="nf">wrapped</span><span class="p">():</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span>             <span class="k">with</span> <span class="n">suppress_stdout_stderr_logging</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">248</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SAMPLE_SIZE</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span>                     <span class="n">func</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span> <span class="n">result_type</span><span class="o">=</span><span class="n">result_type</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span>                 <span class="p">)</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/frame.py</span> in <span class="ni">apply</span><span class="nt">(self, func, axis, raw, result_type, args, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">7766</span>             <span class="n">kwds</span><span class="o">=</span><span class="n">kwds</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">7767</span>         <span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">7768</span>         <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">7769</span> 
+<span class="g g-Whitespace">   </span><span class="mi">7770</span>     <span class="k">def</span> <span class="nf">applymap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">na_action</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/apply.py</span> in <span class="ni">get_result</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_raw</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">184</span> 
+<span class="ne">--&gt; </span><span class="mi">185</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_standard</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span> 
+<span class="g g-Whitespace">    </span><span class="mi">187</span>     <span class="k">def</span> <span class="nf">apply_empty_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/apply.py</span> in <span class="ni">apply_standard</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">274</span> 
+<span class="g g-Whitespace">    </span><span class="mi">275</span>     <span class="k">def</span> <span class="nf">apply_standard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">276</span>         <span class="n">results</span><span class="p">,</span> <span class="n">res_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_series_generator</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">277</span> 
+<span class="g g-Whitespace">    </span><span class="mi">278</span>         <span class="c1"># wrap results</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/apply.py</span> in <span class="ni">apply_series_generator</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">288</span>             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">series_gen</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">289</span>                 <span class="c1"># ignore SettingWithCopy here in case the user mutates</span>
+<span class="ne">--&gt; </span><span class="mi">290</span>                 <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">291</span>                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ABCSeries</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">292</span>                     <span class="c1"># If we have a view on v, we need to make a copy because</span>
+
+<span class="nn">&lt;ipython-input-13-62844c87b183&gt;</span> in <span class="ni">parse_midi</span><span class="nt">(row)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">def</span> <span class="nf">parse_midi</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">----&gt; </span><span class="mi">6</span>         <span class="n">sound</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="n">row</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="c1"># those are errors that were popping up when the whole dataset was parsed</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pretty_midi/pretty_midi.py</span> in <span class="ni">__init__</span><span class="nt">(self, midi_file, resolution, initial_tempo)</span>
+<span class="g g-Whitespace">     </span><span class="mi">58</span>             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">59</span>                 <span class="c1"># If a string was given, pass it as the string filename</span>
+<span class="ne">---&gt; </span><span class="mi">60</span>                 <span class="n">midi_data</span> <span class="o">=</span> <span class="n">mido</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">midi_file</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span>             <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span>                 <span class="c1"># Otherwise, try passing it in as a file pointer</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">__init__</span><span class="nt">(self, filename, file, type, ticks_per_beat, charset, debug, clip)</span>
+<span class="g g-Whitespace">    </span><span class="mi">314</span>         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">315</span>             <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">316</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">317</span> 
+<span class="g g-Whitespace">    </span><span class="mi">318</span>     <span class="k">def</span> <span class="nf">add_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">_load</span><span class="nt">(self, infile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">349</span>                     <span class="n">_dbg</span><span class="p">(</span><span class="s1">&#39;Track </span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">350</span> 
+<span class="ne">--&gt; </span><span class="mi">351</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_track</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span>                                               <span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">353</span>                                               <span class="n">clip</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clip</span><span class="p">))</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_track</span><span class="nt">(infile, debug, clip)</span>
+<span class="g g-Whitespace">    </span><span class="mi">218</span>             <span class="n">msg</span> <span class="o">=</span> <span class="n">read_sysex</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">219</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">220</span>             <span class="n">msg</span> <span class="o">=</span> <span class="n">read_message</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">status_byte</span><span class="p">,</span> <span class="n">peek_data</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">clip</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">221</span> 
+<span class="g g-Whitespace">    </span><span class="mi">222</span>         <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_message</span><span class="nt">(infile, status_byte, peek_data, delta, clip)</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span>                 <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;data byte must be in range 0..127&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">137</span> 
+<span class="ne">--&gt; </span><span class="mi">138</span>     <span class="k">return</span> <span class="n">Message</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">([</span><span class="n">status_byte</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_bytes</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">delta</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span> 
+<span class="g g-Whitespace">    </span><span class="mi">140</span> 
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/messages/messages.py</span> in <span class="ni">from_bytes</span><span class="nt">(cl, data, time)</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span><span class="s2">         msg = cl.__new__(cl)</span>
+<span class="ne">--&gt; </span><span class="mi">124</span><span class="s2">         msgdict = decode_message(data, time=time)</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span><span class="s2">         if &#39;data&#39; in msgdict:</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span><span class="s2">             msgdict[&#39;data&#39;] = SysexData(msgdict[&#39;data&#39;])</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/messages/decode.py</span> in <span class="ni">decode_message</span><span class="nt">(msg_bytes, time, check)</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span><span class="s2"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span><span class="s2">     if check:</span>
+<span class="ne">---&gt; </span><span class="mi">99</span><span class="s2">         check_data(data)</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span><span class="s2">     if status_byte in _SPECIAL_CASES:</span>
+
+<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/messages/checks.py</span> in <span class="ni">check_data</span><span class="nt">(data_bytes)</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span><span class="s2"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span><span class="s2"> </span>
+<span class="ne">---&gt; </span><span class="mi">35</span><span class="s2"> def check_data(data_bytes):</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span><span class="s2">     for byte in convert_py2_bytes(data_bytes):</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span><span class="s2">         check_data_byte(byte)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets examine the extracted metadata of those files.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">midi_error</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">logy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of faulty MIDI files&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_26_0.png" src="../_images/01_midi_drums_26_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">drums</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of MIDI files that contain drums&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_27_0.png" src="../_images/01_midi_drums_27_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../_images/01_midi_drums_28_1.png" src="../_images/01_midi_drums_28_1.png" />
+</div>
+</div>
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">end_time</span></code> has some extreme values that are probably wrong - lets inspect those examples closer to see if we can see a pattern.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>28128</th>
+      <td>1.200000</td>
+      <td>True</td>
+      <td>8076.648605</td>
+      <td>../datasets/midi_dataset/D/D/DION.Move any mou...</td>
+      <td>[Room2/Chorus3, Room2/Chorus3, Room2/Chorus3, ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>231.740783</td>
+    </tr>
+    <tr>
+      <th>4909</th>
+      <td>1.999998</td>
+      <td>True</td>
+      <td>6100.739733</td>
+      <td>../datasets/midi_dataset/G/G/Give a Little Bea...</td>
+      <td>[temp piano, new piano, , sax solo part 1, sax...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>174.986064</td>
+    </tr>
+    <tr>
+      <th>22934</th>
+      <td>5.641020</td>
+      <td>True</td>
+      <td>3721.089187</td>
+      <td>../datasets/midi_dataset/J/J/Jean-Michel-Jarre...</td>
+      <td>[SYNTH 1, SYNTH 1, SYNTH 1, SYNTH 2, SYNTH 2, ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>195.528695</td>
+    </tr>
+    <tr>
+      <th>32700</th>
+      <td>3.692304</td>
+      <td>True</td>
+      <td>2230.586534</td>
+      <td>../datasets/midi_dataset/B/B/BeatlesForSAleALB...</td>
+      <td>[No Reply, No Reply, No Reply, No Reply, No Re...</td>
+      <td>False</td>
+      <td>14.0</td>
+      <td>96.0</td>
+      <td>215.963289</td>
+    </tr>
+    <tr>
+      <th>7214</th>
+      <td>3.010272</td>
+      <td>False</td>
+      <td>1887.996191</td>
+      <td>../datasets/midi_dataset/T/T/Terranigma - Over...</td>
+      <td>[Acoustic Bass, String Ensemble 1, Trombone, T...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>1024.0</td>
+      <td>204.211097</td>
+    </tr>
+    <tr>
+      <th>39234</th>
+      <td>4.288861</td>
+      <td>False</td>
+      <td>1869.334012</td>
+      <td>../datasets/midi_dataset/W/W/WarioWare Smooth ...</td>
+      <td>[SmartMusic SoftSynth]</td>
+      <td>False</td>
+      <td>121.0</td>
+      <td>1024.0</td>
+      <td>212.127846</td>
+    </tr>
+    <tr>
+      <th>12698</th>
+      <td>2.068964</td>
+      <td>True</td>
+      <td>1629.273648</td>
+      <td>../datasets/midi_dataset/S/S/SPREENGSTEEN.Tent...</td>
+      <td>[, , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>240.0</td>
+      <td>232.675124</td>
+    </tr>
+    <tr>
+      <th>29729</th>
+      <td>4.800000</td>
+      <td>True</td>
+      <td>1476.141632</td>
+      <td>../datasets/midi_dataset/X/X/x_japan-art_of_li...</td>
+      <td>[Gtr1, Gtr2, Gtr3, Bass, Keyboard&lt;R&gt;, Keyboard...</td>
+      <td>False</td>
+      <td>41.0</td>
+      <td>480.0</td>
+      <td>177.355756</td>
+    </tr>
+    <tr>
+      <th>7750</th>
+      <td>0.416666</td>
+      <td>False</td>
+      <td>1472.191436</td>
+      <td>../datasets/midi_dataset/T/T/The-9th-Symphony.mid</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>197.0</td>
+      <td>240.0</td>
+      <td>228.889697</td>
+    </tr>
+    <tr>
+      <th>32208</th>
+      <td>10.300991</td>
+      <td>False</td>
+      <td>1260.871022</td>
+      <td>../datasets/midi_dataset/B/B/beethoven-sonata1...</td>
+      <td>[No Name, No Name, No Name, No Name, No Name]</td>
+      <td>False</td>
+      <td>3.0</td>
+      <td>480.0</td>
+      <td>220.802042</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Regarding this it seems we should filter out those really long pieces as those are most probably wrong files.</p>
+<p>Those errors could be caused by our parsing or by the MIDI files itself - but as we have a big enough corpora it is justifiable by not including those outliers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">beat_start</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_32_0.png" src="../_images/01_midi_drums_32_0.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">beat_start</span></code> looks ok, although we also should include some filtering here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">tempo</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_34_0.png" src="../_images/01_midi_drums_34_0.png" />
+</div>
+</div>
+<p>It is interesting to see that 95% of our examples are in the 200 bpm range - maybe they were transcribed in half time or we have a skewed dataset towards fast music which would be an interesting exploration what kind of music gets transcribed to MIDI files.</p>
+<p>We need to inspect this further as drumming is closely related to the tempo of a song and we do not want to interpret the massive amount of data in a wrong way.</p>
+<p>It is important to have an understanding and feeling for the data.
+We have an expectation of our data which can help us to see if the data makes sense and if we parsed it correctly but can also always be problematic because we project certain expectations on an projection and simplification of our data.</p>
+<p><strong>TODO</strong> Flesh this out</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">resolution</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_36_0.png" src="../_images/01_midi_drums_36_0.png" />
+</div>
+</div>
+<p>Resolution corresponds to the <a class="reference external" href="https://en.wikipedia.org/wiki/Pulses_per_quarter_note">PPQN</a> of the MIDI file.
+Everything above 1000 should be suspicious, so lets take a look at those examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;resolution&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>37148</th>
+      <td>0.882352</td>
+      <td>False</td>
+      <td>6.948522</td>
+      <td>../datasets/midi_dataset/P/P/Push_-_TranzyStat...</td>
+      <td>[Melody, Bassline]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>272.000290</td>
+    </tr>
+    <tr>
+      <th>20991</th>
+      <td>0.647481</td>
+      <td>False</td>
+      <td>13.812928</td>
+      <td>../datasets/midi_dataset/M/M/MacJ_-_Nightware_...</td>
+      <td>[SubTractor 1]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>278.000436</td>
+    </tr>
+    <tr>
+      <th>30014</th>
+      <td>1.510789</td>
+      <td>False</td>
+      <td>56.978328</td>
+      <td>../datasets/midi_dataset/E/E/estuera__tales_fr...</td>
+      <td>[Guitar, Strings]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>170.387364</td>
+    </tr>
+    <tr>
+      <th>11567</th>
+      <td>14.047605</td>
+      <td>False</td>
+      <td>30.476160</td>
+      <td>../datasets/midi_dataset/S/S/SteveAngelloThird...</td>
+      <td>[Stuff, Lead]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>157.500158</td>
+    </tr>
+    <tr>
+      <th>34643</th>
+      <td>2.888886</td>
+      <td>False</td>
+      <td>28.444416</td>
+      <td>../datasets/midi_dataset/K/K/Kai_Tracid_-_Life...</td>
+      <td>[SubTractor 1, , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>270.000270</td>
+    </tr>
+    <tr>
+      <th>35670</th>
+      <td>0.888888</td>
+      <td>False</td>
+      <td>28.444416</td>
+      <td>../datasets/midi_dataset/L/L/lolo__sunset__amb...</td>
+      <td>[Main Melody]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>270.000270</td>
+    </tr>
+    <tr>
+      <th>22861</th>
+      <td>1.086955</td>
+      <td>False</td>
+      <td>6.956512</td>
+      <td>../datasets/midi_dataset/J/J/joop__the_world__...</td>
+      <td>[Main Melody, Low Bass]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>241.500338</td>
+    </tr>
+    <tr>
+      <th>3726</th>
+      <td>0.839160</td>
+      <td>False</td>
+      <td>12.587400</td>
+      <td>../datasets/midi_dataset/N/N/Nitromethane_-_Ti...</td>
+      <td>[Malstrom 1]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>85.800086</td>
+    </tr>
+    <tr>
+      <th>6790</th>
+      <td>0.218978</td>
+      <td>False</td>
+      <td>28.248162</td>
+      <td>../datasets/midi_dataset/T/T/TonTB_-_Electroni...</td>
+      <td>[SubTractor 1]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>274.000128</td>
+    </tr>
+    <tr>
+      <th>17374</th>
+      <td>1.901407</td>
+      <td>False</td>
+      <td>13.521120</td>
+      <td>../datasets/midi_dataset/F/F/filo_peri__i95__d...</td>
+      <td>[Bass, Piano, Strings]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>284.000142</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </div>
 </div>

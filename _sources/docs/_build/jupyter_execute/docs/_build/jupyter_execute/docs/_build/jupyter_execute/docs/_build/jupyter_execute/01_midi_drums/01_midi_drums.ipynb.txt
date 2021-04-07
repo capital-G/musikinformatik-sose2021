@@ -581,7 +581,7 @@
      },
      "metadata": {
       "filenames": {
-       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_26_0.png"
+       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_26_0.png"
       },
       "needs_background": "light"
      },
@@ -607,7 +607,7 @@
      },
      "metadata": {
       "filenames": {
-       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_27_0.png"
+       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_27_0.png"
       },
       "needs_background": "light"
      },
@@ -643,7 +643,7 @@
      },
      "metadata": {
       "filenames": {
-       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_28_1.png"
+       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_28_1.png"
       },
       "needs_background": "light"
      },
@@ -905,7 +905,7 @@
      },
      "metadata": {
       "filenames": {
-       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_32_0.png"
+       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_32_0.png"
       },
       "needs_background": "light"
      },
@@ -937,7 +937,7 @@
      },
      "metadata": {
       "filenames": {
-       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_34_0.png"
+       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_34_0.png"
       },
       "needs_background": "light"
      },
@@ -976,7 +976,7 @@
      },
      "metadata": {
       "filenames": {
-       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_36_0.png"
+       "image/png": "/Users/scheiba/github/musikinformatik_sose2021/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/docs/_build/jupyter_execute/01_midi_drums/01_midi_drums_36_0.png"
       },
       "needs_background": "light"
      },
