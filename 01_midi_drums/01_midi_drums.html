@@ -25,8 +25,8 @@
     href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -38,12 +38,15 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/thebelab-helper.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Data types" href="../00_python_basics/00_01-data-types.html" />
@@ -195,6 +198,16 @@
    Inspecting the data
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filter-and-extract-the-data">
+   Filter and extract the data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -314,11 +327,11 @@ But as this function does not work with sets we need to transform the set to a l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;../datasets/midi_dataset/H/H/HAIDUCII.Dragostea din tei K.MID&#39;,
-       &#39;../datasets/midi_dataset/T/T/THE TROGGS.Wild thing K.MID&#39;,
-       &#39;../datasets/midi_dataset/F/F/Fermoy_Lasses_the_Gravel_Walk.MID&#39;,
-       &#39;../datasets/midi_dataset/C/C/CREEDENCE C.R.Tombstone shadow K.MID&#39;,
-       &#39;../datasets/midi_dataset/U/U/Unbreak-tonibraxton.MID&#39;],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&quot;../datasets/midi_dataset/T/T/THE HOLLIES.Blowin&#39; in the wind.MID&quot;,
+       &#39;../datasets/midi_dataset/G/G/GREENDAY.Boulevard of broken K.MID&#39;,
+       &quot;../datasets/midi_dataset/D/D/D.RIO.Walkin&#39; away.MID&quot;,
+       &quot;../datasets/midi_dataset/G/G/GREENDAY.Macy&#39;s day parade  K.MID&quot;,
+       &#39;../datasets/midi_dataset/C/C/C.COREA.View from the outside.MID&#39;],
       dtype=&#39;&lt;U114&#39;)
 </pre></div>
 </div>
@@ -333,14 +346,14 @@ But as this function does not work with sets we need to transform the set to a l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;,
- &#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
- &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
- &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
  &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;,
+ &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
+ &#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
+ &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;,
+ &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
  &#39;../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid&#39;,
- &#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
- &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;]
+ &#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;]
 </pre></div>
 </div>
 </div>
@@ -411,10 +424,10 @@ We need to understand how the information we are interested in is accessible and
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x102e6c730&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x10ef6ca60&gt;
     {0.0} &lt;music21.instrument.Piano &#39;Theme from Love Story: piano&#39;&gt;
     {0.0} &lt;music21.key.Key of C major&gt;
-    {0.0} &lt;music21.stream.Voice 0x14d8e4190&gt;
+    {0.0} &lt;music21.stream.Voice 0x1198d8190&gt;
         {0.0} &lt;music21.note.Rest rest&gt;
         {8.0} &lt;music21.note.Note A&gt;
         {8.75} &lt;music21.note.Note C&gt;
@@ -431,89 +444,22 @@ So before we process every file from our dataset we should take a look at a subs
 From the <a class="reference external" href="https://en.wikipedia.org/wiki/General_MIDI#Percussive">wikipedia article on General MIDI (GM)</a> we can see that percussive tracks should be on channel 10.</p>
 <p>music21 has <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleMidi.html">a build in MIDI library</a> but it is rather difficult and slow to extract the drums using music21 which is why we use <em>pretty_midi</em> for this task.</p>
 <p>The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html">docs</a> reveal that <code class="docutils literal notranslate"><span class="pre">music21.converter</span></code> seems to be the proper package.</p>
-<p>We also start annotating our dataset using <a class="reference external" href="https://pandas.pydata.org/">pandas</a> which is a library for data analysis and manipulation to keep track of any metadata the files have.</p>
+<p>We also start annotating our dataset using <a class="reference external" href="https://pandas.pydata.org/">pandas</a> which is a library for data analysis and manipulation to keep track of any metadata the files have.
+Especially the <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html">apply</a> method comes in handy here as we start with a list of MIDI file paths (see <code class="docutils literal notranslate"><span class="pre">load_midi_df</span></code>) and then we want to extend this list with some information from our MIDI file by applying the <code class="docutils literal notranslate"><span class="pre">parse_midi</span></code> function to all rows of our list.</p>
+<p>Additionally we will use <a class="reference external" href="https://en.wikipedia.org/wiki/Cache_(computing)">caching</a> because the meta-analyis of our MIDI files takes about 40 minutes on my MacBook.
+Caching means that we will store the results on the hard drive so once we calculated them we do not need to re-calculate them because we will just load the files from the hard drive.
+It is a common practice in data science to write a function which either loads the data from a file or generates the file we are using as generating or calculating the data is a step which takes often a long time.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">midi_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;file_path&#39;</span><span class="p">:</span> <span class="n">midi_files</span><span class="p">})</span>
-<span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>file_path</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>16262</th>
-      <td>../datasets/midi_dataset/A/A/another_30624700.mid</td>
-    </tr>
-    <tr>
-      <th>36924</th>
-      <td>../datasets/midi_dataset/P/P/Pokemon RedBlueYe...</td>
-    </tr>
-    <tr>
-      <th>36978</th>
-      <td>../datasets/midi_dataset/P/P/puff_daddy-come_w...</td>
-    </tr>
-    <tr>
-      <th>32078</th>
-      <td>../datasets/midi_dataset/B/B/BB_King_-_Sweet_S...</td>
-    </tr>
-    <tr>
-      <th>15292</th>
-      <td>../datasets/midi_dataset/A/A/Aqua - Lollipop C...</td>
-    </tr>
-    <tr>
-      <th>22177</th>
-      <td>../datasets/midi_dataset/M/M/Madonna_-_Express...</td>
-    </tr>
-    <tr>
-      <th>8920</th>
-      <td>../datasets/midi_dataset/T/T/The Legend of Zel...</td>
-    </tr>
-    <tr>
-      <th>17983</th>
-      <td>../datasets/midi_dataset/F/F/FITZGERALD.Over t...</td>
-    </tr>
-    <tr>
-      <th>29692</th>
-      <td>../datasets/midi_dataset/4/4_11_If_You_Open_Yo...</td>
-    </tr>
-    <tr>
-      <th>23153</th>
-      <td>../datasets/midi_dataset/J/J/John-Brown's-Body...</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pretty_midi</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">pretty_midi</span> <span class="k">as</span> <span class="nn">pm</span>
 <span class="kn">from</span> <span class="nn">mido</span> <span class="kn">import</span> <span class="n">KeySignatureError</span>
+<span class="kn">import</span> <span class="nn">swifter</span>
 
 <span class="k">def</span> <span class="nf">parse_midi</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds information about the MIDI file to a DataFrame row</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">sound</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
         <span class="n">row</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
@@ -537,197 +483,46 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not parse MIDI file </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">row</span>
+
+<span class="k">def</span> <span class="nf">load_midi_df</span><span class="p">(</span>
+    <span class="n">save_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span><span class="s1">&#39;midi_df.parquet&#39;</span><span class="p">,</span>
+    <span class="n">dataset_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;../datasets/midi_dataset&#39;</span><span class="p">,</span>
+    <span class="n">force_reload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads a dataframe with all available MIDI files in a folder</span>
+<span class="sd">    and all </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force_reload</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load dataframe from </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load data to new dataframe&#39;</span><span class="p">)</span>
+    <span class="n">midi_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;mid&#39;</span><span class="p">,</span> <span class="s1">&#39;MID&#39;</span><span class="p">,</span> <span class="s1">&#39;Mid&#39;</span><span class="p">,</span> <span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;MIDi&#39;</span><span class="p">]:</span>
+        <span class="c1"># maybe os.walk would be better?</span>
+        <span class="n">midi_files</span> <span class="o">+=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s1">/**/*.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in folder </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+    <span class="n">midi_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;file_path&#39;</span><span class="p">:</span> <span class="n">midi_files</span><span class="p">})</span>
+    <span class="n">midi_df</span> <span class="o">=</span> <span class="n">midi_df</span><span class="o">.</span><span class="n">swifter</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">parse_midi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">midi_df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved dataframe in </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">midi_df</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>We use <a class="reference external" href="https://github.com/jmcarpenter2/swifter">swifter</a> to paralellize the analysis of our MIDI files.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">swifter</span>
-
-<span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
-<span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df_sub</span><span class="o">.</span><span class="n">swifter</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">parse_midi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span> <span class="o">=</span> <span class="n">load_midi_df</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/swifter/swifter.py</span> in <span class="ni">apply</span><span class="nt">(self, func, axis, raw, result_type, args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">339</span>             <span class="k">with</span> <span class="n">suppress_stdout_stderr_logging</span><span class="p">():</span>
-<span class="ne">--&gt; </span><span class="mi">340</span>                 <span class="n">tmp_df</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">341</span>                 <span class="n">sample_df</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span> <span class="n">result_type</span><span class="o">=</span><span class="n">result_type</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-
-<span class="nn">&lt;ipython-input-13-62844c87b183&gt;</span> in <span class="ni">parse_midi</span><span class="nt">(row)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">----&gt; </span><span class="mi">6</span>         <span class="n">sound</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="n">row</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pretty_midi/pretty_midi.py</span> in <span class="ni">__init__</span><span class="nt">(self, midi_file, resolution, initial_tempo)</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span>                 <span class="c1"># Otherwise, try passing it in as a file pointer</span>
-<span class="ne">---&gt; </span><span class="mi">63</span>                 <span class="n">midi_data</span> <span class="o">=</span> <span class="n">mido</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">midi_file</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">64</span> 
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">__init__</span><span class="nt">(self, filename, file, type, ticks_per_beat, charset, debug, clip)</span>
-<span class="g g-Whitespace">    </span><span class="mi">312</span>         <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">313</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">314</span>         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">_load</span><span class="nt">(self, infile)</span>
-<span class="g g-Whitespace">    </span><span class="mi">339</span>              <span class="n">num_tracks</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">340</span>              <span class="bp">self</span><span class="o">.</span><span class="n">ticks_per_beat</span><span class="p">)</span> <span class="o">=</span> <span class="n">read_file_header</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">341</span> 
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_file_header</span><span class="nt">(infile)</span>
-<span class="g g-Whitespace">    </span><span class="mi">107</span> <span class="k">def</span> <span class="nf">read_file_header</span><span class="p">(</span><span class="n">infile</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">108</span>     <span class="n">name</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">read_chunk_header</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">109</span> 
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_chunk_header</span><span class="nt">(infile)</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="k">def</span> <span class="nf">read_chunk_header</span><span class="p">(</span><span class="n">infile</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">98</span>     <span class="n">header</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/generic.py</span> in <span class="ni">__getattr__</span><span class="nt">(self, name)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5464</span>                 <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-<span class="ne">-&gt; </span><span class="mi">5465</span>             <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5466</span> 
-
-<span class="ne">AttributeError</span>: &#39;Series&#39; object has no attribute &#39;read&#39;
-
-<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
-
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="mi">04</span><span class="n">dbcc88d598</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">midi_df_sub</span> <span class="o">=</span> <span class="n">midi_df_sub</span><span class="o">.</span><span class="n">swifter</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">parse_midi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/swifter/swifter.py</span> in <span class="ni">apply</span><span class="nt">(self, func, axis, raw, result_type, args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">347</span>         <span class="k">except</span> <span class="n">ERRORS_TO_HANDLE</span><span class="p">:</span>  <span class="c1"># if can&#39;t vectorize, estimate time to pandas apply</span>
-<span class="g g-Whitespace">    </span><span class="mi">348</span>             <span class="n">wrapped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapped_apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span> <span class="n">result_type</span><span class="o">=</span><span class="n">result_type</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">349</span>             <span class="n">timed</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">N_REPEATS</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">350</span>             <span class="n">sample_proc_est</span> <span class="o">=</span> <span class="n">timed</span> <span class="o">/</span> <span class="n">N_REPEATS</span>
-<span class="g g-Whitespace">    </span><span class="mi">351</span>             <span class="n">est_apply_duration</span> <span class="o">=</span> <span class="n">sample_proc_est</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SAMPLE_SIZE</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="nn">/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/timeit.py</span> in <span class="ni">timeit</span><span class="nt">(stmt, setup, timer, number, globals)</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span>            <span class="n">number</span><span class="o">=</span><span class="n">default_number</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span>     <span class="sd">&quot;&quot;&quot;Convenience function to create Timer object and call timeit method.&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">232</span>     <span class="k">return</span> <span class="n">Timer</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">setup</span><span class="p">,</span> <span class="n">timer</span><span class="p">,</span> <span class="nb">globals</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">233</span> 
-<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="s2">&quot;pass&quot;</span><span class="p">,</span> <span class="n">setup</span><span class="o">=</span><span class="s2">&quot;pass&quot;</span><span class="p">,</span> <span class="n">timer</span><span class="o">=</span><span class="n">default_timer</span><span class="p">,</span>
-
-<span class="nn">/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/timeit.py</span> in <span class="ni">timeit</span><span class="nt">(self, number)</span>
-<span class="g g-Whitespace">    </span><span class="mi">174</span>         <span class="n">gc</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">175</span>         <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">176</span>             <span class="n">timing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">177</span>         <span class="k">finally</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span>             <span class="k">if</span> <span class="n">gcold</span><span class="p">:</span>
-
-<span class="nn">/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/timeit.py</span> in <span class="ni">inner</span><span class="nt">(_it, _timer, _stmt)</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/swifter/swifter.py</span> in <span class="ni">wrapped</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span>         <span class="k">def</span> <span class="nf">wrapped</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">247</span>             <span class="k">with</span> <span class="n">suppress_stdout_stderr_logging</span><span class="p">():</span>
-<span class="ne">--&gt; </span><span class="mi">248</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SAMPLE_SIZE</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">249</span>                     <span class="n">func</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span> <span class="n">result_type</span><span class="o">=</span><span class="n">result_type</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span>
-<span class="g g-Whitespace">    </span><span class="mi">250</span>                 <span class="p">)</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/frame.py</span> in <span class="ni">apply</span><span class="nt">(self, func, axis, raw, result_type, args, **kwds)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7766</span>             <span class="n">kwds</span><span class="o">=</span><span class="n">kwds</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">7767</span>         <span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">7768</span>         <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">7769</span> 
-<span class="g g-Whitespace">   </span><span class="mi">7770</span>     <span class="k">def</span> <span class="nf">applymap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">na_action</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/apply.py</span> in <span class="ni">get_result</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">183</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_raw</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">184</span> 
-<span class="ne">--&gt; </span><span class="mi">185</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_standard</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">186</span> 
-<span class="g g-Whitespace">    </span><span class="mi">187</span>     <span class="k">def</span> <span class="nf">apply_empty_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/apply.py</span> in <span class="ni">apply_standard</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">274</span> 
-<span class="g g-Whitespace">    </span><span class="mi">275</span>     <span class="k">def</span> <span class="nf">apply_standard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">276</span>         <span class="n">results</span><span class="p">,</span> <span class="n">res_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_series_generator</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">277</span> 
-<span class="g g-Whitespace">    </span><span class="mi">278</span>         <span class="c1"># wrap results</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pandas/core/apply.py</span> in <span class="ni">apply_series_generator</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">288</span>             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">series_gen</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">289</span>                 <span class="c1"># ignore SettingWithCopy here in case the user mutates</span>
-<span class="ne">--&gt; </span><span class="mi">290</span>                 <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">291</span>                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ABCSeries</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">292</span>                     <span class="c1"># If we have a view on v, we need to make a copy because</span>
-
-<span class="nn">&lt;ipython-input-13-62844c87b183&gt;</span> in <span class="ni">parse_midi</span><span class="nt">(row)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">def</span> <span class="nf">parse_midi</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">----&gt; </span><span class="mi">6</span>         <span class="n">sound</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="n">row</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="c1"># those are errors that were popping up when the whole dataset was parsed</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/pretty_midi/pretty_midi.py</span> in <span class="ni">__init__</span><span class="nt">(self, midi_file, resolution, initial_tempo)</span>
-<span class="g g-Whitespace">     </span><span class="mi">58</span>             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">59</span>                 <span class="c1"># If a string was given, pass it as the string filename</span>
-<span class="ne">---&gt; </span><span class="mi">60</span>                 <span class="n">midi_data</span> <span class="o">=</span> <span class="n">mido</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">midi_file</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">61</span>             <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span>                 <span class="c1"># Otherwise, try passing it in as a file pointer</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">__init__</span><span class="nt">(self, filename, file, type, ticks_per_beat, charset, debug, clip)</span>
-<span class="g g-Whitespace">    </span><span class="mi">314</span>         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">315</span>             <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">316</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">317</span> 
-<span class="g g-Whitespace">    </span><span class="mi">318</span>     <span class="k">def</span> <span class="nf">add_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">_load</span><span class="nt">(self, infile)</span>
-<span class="g g-Whitespace">    </span><span class="mi">349</span>                     <span class="n">_dbg</span><span class="p">(</span><span class="s1">&#39;Track </span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">350</span> 
-<span class="ne">--&gt; </span><span class="mi">351</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_track</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">352</span>                                               <span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">353</span>                                               <span class="n">clip</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clip</span><span class="p">))</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_track</span><span class="nt">(infile, debug, clip)</span>
-<span class="g g-Whitespace">    </span><span class="mi">218</span>             <span class="n">msg</span> <span class="o">=</span> <span class="n">read_sysex</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">219</span>         <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">220</span>             <span class="n">msg</span> <span class="o">=</span> <span class="n">read_message</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">status_byte</span><span class="p">,</span> <span class="n">peek_data</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">clip</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">221</span> 
-<span class="g g-Whitespace">    </span><span class="mi">222</span>         <span class="n">track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/midifiles/midifiles.py</span> in <span class="ni">read_message</span><span class="nt">(infile, status_byte, peek_data, delta, clip)</span>
-<span class="g g-Whitespace">    </span><span class="mi">136</span>                 <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;data byte must be in range 0..127&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">137</span> 
-<span class="ne">--&gt; </span><span class="mi">138</span>     <span class="k">return</span> <span class="n">Message</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">([</span><span class="n">status_byte</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_bytes</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">delta</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">139</span> 
-<span class="g g-Whitespace">    </span><span class="mi">140</span> 
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/messages/messages.py</span> in <span class="ni">from_bytes</span><span class="nt">(cl, data, time)</span>
-<span class="g g-Whitespace">    </span><span class="mi">122</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span><span class="s2">         msg = cl.__new__(cl)</span>
-<span class="ne">--&gt; </span><span class="mi">124</span><span class="s2">         msgdict = decode_message(data, time=time)</span>
-<span class="g g-Whitespace">    </span><span class="mi">125</span><span class="s2">         if &#39;data&#39; in msgdict:</span>
-<span class="g g-Whitespace">    </span><span class="mi">126</span><span class="s2">             msgdict[&#39;data&#39;] = SysexData(msgdict[&#39;data&#39;])</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/messages/decode.py</span> in <span class="ni">decode_message</span><span class="nt">(msg_bytes, time, check)</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span><span class="s2"> </span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span><span class="s2">     if check:</span>
-<span class="ne">---&gt; </span><span class="mi">99</span><span class="s2">         check_data(data)</span>
-<span class="g g-Whitespace">    </span><span class="mi">100</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">101</span><span class="s2">     if status_byte in _SPECIAL_CASES:</span>
-
-<span class="nn">~/github/musikinformatik_sose2021/venv/lib/python3.8/site-packages/mido/messages/checks.py</span> in <span class="ni">check_data</span><span class="nt">(data_bytes)</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span><span class="s2"> </span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span><span class="s2"> </span>
-<span class="ne">---&gt; </span><span class="mi">35</span><span class="s2"> def check_data(data_bytes):</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span><span class="s2">     for byte in convert_py2_bytes(data_bytes):</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span><span class="s2">         check_data_byte(byte)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Load dataframe from midi_df.parquet
 </pre></div>
 </div>
 </div>
@@ -735,8 +530,29 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
 <p>Lets examine the extracted metadata of those files.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">midi_error</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">logy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">midi_error</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">logy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of faulty MIDI files&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_24_0.png" src="../_images/01_midi_drums_24_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">drums</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of MIDI files that contain drums&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_25_0.png" src="../_images/01_midi_drums_25_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -744,34 +560,10 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
 <img alt="../_images/01_midi_drums_26_0.png" src="../_images/01_midi_drums_26_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">drums</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of MIDI files that contain drums&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_27_0.png" src="../_images/01_midi_drums_27_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
-</pre></div>
-</div>
-<img alt="../_images/01_midi_drums_28_1.png" src="../_images/01_midi_drums_28_1.png" />
-</div>
-</div>
 <p>We see that the <code class="docutils literal notranslate"><span class="pre">end_time</span></code> has some extreme values that are probably wrong - lets inspect those examples closer to see if we can see a pattern.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -806,6 +598,18 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>18490</th>
+      <td>3.044301</td>
+      <td>True</td>
+      <td>14337.531639</td>
+      <td>../datasets/midi_dataset/O/O/O-Little-Town-Of-...</td>
+      <td>[, , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>190.305001</td>
+    </tr>
     <tr>
       <th>28128</th>
       <td>1.200000</td>
@@ -831,6 +635,18 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
       <td>174.986064</td>
     </tr>
     <tr>
+      <th>4581</th>
+      <td>1.200000</td>
+      <td>False</td>
+      <td>4159.858340</td>
+      <td>../datasets/midi_dataset/G/G/GoldbergVariation...</td>
+      <td>[Solo Harpsichord with 2 Manuals, ------------...</td>
+      <td>False</td>
+      <td>28.0</td>
+      <td>480.0</td>
+      <td>194.206702</td>
+    </tr>
+    <tr>
       <th>22934</th>
       <td>5.641020</td>
       <td>True</td>
@@ -843,88 +659,64 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
       <td>195.528695</td>
     </tr>
     <tr>
-      <th>32700</th>
-      <td>3.692304</td>
+      <th>34903</th>
+      <td>0.750000</td>
       <td>True</td>
-      <td>2230.586534</td>
-      <td>../datasets/midi_dataset/B/B/BeatlesForSAleALB...</td>
-      <td>[No Reply, No Reply, No Reply, No Reply, No Re...</td>
+      <td>3011.975000</td>
+      <td>../datasets/midi_dataset/L/L/LED ZEPPELIN.Than...</td>
+      <td>[acoustic embellishment, main acoustic, hammon...</td>
       <td>False</td>
-      <td>14.0</td>
-      <td>96.0</td>
-      <td>215.963289</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>161.616162</td>
     </tr>
     <tr>
-      <th>7214</th>
-      <td>3.010272</td>
+      <th>34998</th>
+      <td>0.750000</td>
+      <td>True</td>
+      <td>3011.975000</td>
+      <td>../datasets/midi_dataset/L/L/Led_Zeppelin_Than...</td>
+      <td>[acoustic embellishment, main acoustic, hammon...</td>
       <td>False</td>
-      <td>1887.996191</td>
-      <td>../datasets/midi_dataset/T/T/Terranigma - Over...</td>
-      <td>[Acoustic Bass, String Ensemble 1, Trombone, T...</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>161.616162</td>
+    </tr>
+    <tr>
+      <th>6898</th>
+      <td>5.871094</td>
+      <td>False</td>
+      <td>2812.520833</td>
+      <td>../datasets/midi_dataset/T/T/TILLOTSON.11 Pian...</td>
+      <td>[PIANO]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>204.285192</td>
+    </tr>
+    <tr>
+      <th>11505</th>
+      <td>3.505880</td>
+      <td>False</td>
+      <td>2762.016084</td>
+      <td>../datasets/midi_dataset/S/S/Super Robot Taise...</td>
+      <td>[Marimba, Acoustic Guitar, Piano, Violin, Bass...</td>
       <td>False</td>
       <td>1.0</td>
       <td>1024.0</td>
-      <td>204.211097</td>
+      <td>232.714309</td>
     </tr>
     <tr>
-      <th>39234</th>
-      <td>4.288861</td>
+      <th>10375</th>
+      <td>3.505880</td>
       <td>False</td>
-      <td>1869.334012</td>
-      <td>../datasets/midi_dataset/W/W/WarioWare Smooth ...</td>
-      <td>[SmartMusic SoftSynth]</td>
-      <td>False</td>
-      <td>121.0</td>
-      <td>1024.0</td>
-      <td>212.127846</td>
-    </tr>
-    <tr>
-      <th>12698</th>
-      <td>2.068964</td>
-      <td>True</td>
-      <td>1629.273648</td>
-      <td>../datasets/midi_dataset/S/S/SPREENGSTEEN.Tent...</td>
-      <td>[, , , , , , ]</td>
+      <td>2762.016084</td>
+      <td>../datasets/midi_dataset/S/S/Super Robot Taise...</td>
+      <td>[Marimba, Acoustic Guitar, Piano, Violin, Bass...</td>
       <td>False</td>
       <td>1.0</td>
-      <td>240.0</td>
-      <td>232.675124</td>
-    </tr>
-    <tr>
-      <th>29729</th>
-      <td>4.800000</td>
-      <td>True</td>
-      <td>1476.141632</td>
-      <td>../datasets/midi_dataset/X/X/x_japan-art_of_li...</td>
-      <td>[Gtr1, Gtr2, Gtr3, Bass, Keyboard&lt;R&gt;, Keyboard...</td>
-      <td>False</td>
-      <td>41.0</td>
-      <td>480.0</td>
-      <td>177.355756</td>
-    </tr>
-    <tr>
-      <th>7750</th>
-      <td>0.416666</td>
-      <td>False</td>
-      <td>1472.191436</td>
-      <td>../datasets/midi_dataset/T/T/The-9th-Symphony.mid</td>
-      <td>[]</td>
-      <td>False</td>
-      <td>197.0</td>
-      <td>240.0</td>
-      <td>228.889697</td>
-    </tr>
-    <tr>
-      <th>32208</th>
-      <td>10.300991</td>
-      <td>False</td>
-      <td>1260.871022</td>
-      <td>../datasets/midi_dataset/B/B/beethoven-sonata1...</td>
-      <td>[No Name, No Name, No Name, No Name, No Name]</td>
-      <td>False</td>
-      <td>3.0</td>
-      <td>480.0</td>
-      <td>220.802042</td>
+      <td>1024.0</td>
+      <td>232.544595</td>
     </tr>
   </tbody>
 </table>
@@ -934,23 +726,23 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
 <p>Those errors could be caused by our parsing or by the MIDI files itself - but as we have a big enough corpora it is justifiable by not including those outliers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">beat_start</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">beat_start</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_32_0.png" src="../_images/01_midi_drums_32_0.png" />
+<img alt="../_images/01_midi_drums_30_0.png" src="../_images/01_midi_drums_30_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">beat_start</span></code> looks ok, although we also should include some filtering here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">tempo</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">tempo</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_34_0.png" src="../_images/01_midi_drums_34_0.png" />
+<img alt="../_images/01_midi_drums_32_0.png" src="../_images/01_midi_drums_32_0.png" />
 </div>
 </div>
 <p>It is interesting to see that 95% of our examples are in the 200 bpm range - maybe they were transcribed in half time or we have a skewed dataset towards fast music which would be an interesting exploration what kind of music gets transcribed to MIDI files.</p>
@@ -960,19 +752,19 @@ We have an expectation of our data which can help us to see if the data makes se
 <p><strong>TODO</strong> Flesh this out</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">resolution</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">resolution</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_36_0.png" src="../_images/01_midi_drums_36_0.png" />
+<img alt="../_images/01_midi_drums_34_0.png" src="../_images/01_midi_drums_34_0.png" />
 </div>
 </div>
 <p>Resolution corresponds to the <a class="reference external" href="https://en.wikipedia.org/wiki/Pulses_per_quarter_note">PPQN</a> of the MIDI file.
 Everything above 1000 should be suspicious, so lets take a look at those examples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df_sub</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;resolution&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;resolution&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1008,129 +800,1342 @@ Everything above 1000 should be suspicious, so lets take a look at those example
   </thead>
   <tbody>
     <tr>
-      <th>37148</th>
-      <td>0.882352</td>
+      <th>32259</th>
+      <td>2.000000</td>
       <td>False</td>
-      <td>6.948522</td>
-      <td>../datasets/midi_dataset/P/P/Push_-_TranzyStat...</td>
-      <td>[Melody, Bassline]</td>
+      <td>135.368840</td>
+      <td>../datasets/midi_dataset/B/B/beethovenalladanz...</td>
+      <td>[, , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>25000.0</td>
+      <td>239.221606</td>
+    </tr>
+    <tr>
+      <th>22942</th>
+      <td>3.628112</td>
+      <td>False</td>
+      <td>14.512448</td>
+      <td>../datasets/midi_dataset/J/J/Josh_Gallahan_-_1...</td>
+      <td>[Combinator 1, Thor 2]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>272.000290</td>
+      <td>185.220302</td>
     </tr>
     <tr>
-      <th>20991</th>
-      <td>0.647481</td>
+      <th>18750</th>
+      <td>2.482758</td>
       <td>False</td>
-      <td>13.812928</td>
-      <td>../datasets/midi_dataset/M/M/MacJ_-_Nightware_...</td>
-      <td>[SubTractor 1]</td>
+      <td>6.310343</td>
+      <td>../datasets/midi_dataset/O/O/Overload_-_The_An...</td>
+      <td>[]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>278.000436</td>
+      <td>257.777842</td>
     </tr>
     <tr>
-      <th>30014</th>
-      <td>1.510789</td>
+      <th>3788</th>
+      <td>1.935483</td>
       <td>False</td>
-      <td>56.978328</td>
-      <td>../datasets/midi_dataset/E/E/estuera__tales_fr...</td>
-      <td>[Guitar, Strings]</td>
+      <td>20.403217</td>
+      <td>../datasets/midi_dataset/N/N/Nore_-_LEHHHGOOO_...</td>
+      <td>[Redrum 1, Phastday MOD, RAW, Combinator 1]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>170.387364</td>
+      <td>186.000084</td>
     </tr>
     <tr>
-      <th>11567</th>
-      <td>14.047605</td>
+      <th>11202</th>
+      <td>11.691164</td>
       <td>False</td>
-      <td>30.476160</td>
-      <td>../datasets/midi_dataset/S/S/SteveAngelloThird...</td>
-      <td>[Stuff, Lead]</td>
+      <td>112.941056</td>
+      <td>../datasets/midi_dataset/S/S/Spaceline_-_sumer...</td>
+      <td>[virus sin, virus gytare]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>157.500158</td>
+      <td>222.545692</td>
     </tr>
     <tr>
-      <th>34643</th>
-      <td>2.888886</td>
+      <th>1149</th>
+      <td>2.065215</td>
       <td>False</td>
-      <td>28.444416</td>
-      <td>../datasets/midi_dataset/K/K/Kai_Tracid_-_Life...</td>
-      <td>[SubTractor 1, , ]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>270.000270</td>
-    </tr>
-    <tr>
-      <th>35670</th>
-      <td>0.888888</td>
-      <td>False</td>
-      <td>28.444416</td>
-      <td>../datasets/midi_dataset/L/L/lolo__sunset__amb...</td>
+      <td>27.608657</td>
+      <td>../datasets/midi_dataset/R/R/Rah_-_Wave__Ambia...</td>
       <td>[Main Melody]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>270.000270</td>
+      <td>249.290672</td>
     </tr>
     <tr>
-      <th>22861</th>
-      <td>1.086955</td>
+      <th>28944</th>
+      <td>1.241379</td>
       <td>False</td>
-      <td>6.956512</td>
-      <td>../datasets/midi_dataset/J/J/joop__the_world__...</td>
-      <td>[Main Melody, Low Bass]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>241.500338</td>
-    </tr>
-    <tr>
-      <th>3726</th>
-      <td>0.839160</td>
-      <td>False</td>
-      <td>12.587400</td>
-      <td>../datasets/midi_dataset/N/N/Nitromethane_-_Ti...</td>
-      <td>[Malstrom 1]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>85.800086</td>
-    </tr>
-    <tr>
-      <th>6790</th>
-      <td>0.218978</td>
-      <td>False</td>
-      <td>28.248162</td>
-      <td>../datasets/midi_dataset/T/T/TonTB_-_Electroni...</td>
+      <td>13.241376</td>
+      <td>../datasets/midi_dataset/D/D/dj_tibby__eternit...</td>
       <td>[SubTractor 1]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>274.000128</td>
+      <td>290.000073</td>
     </tr>
     <tr>
-      <th>17374</th>
-      <td>1.901407</td>
+      <th>26966</th>
+      <td>2.142855</td>
       <td>False</td>
-      <td>13.521120</td>
-      <td>../datasets/midi_dataset/F/F/filo_peri__i95__d...</td>
-      <td>[Bass, Piano, Strings]</td>
+      <td>13.553558</td>
+      <td>../datasets/midi_dataset/D/D/Dj_Cyglas_-_Brain...</td>
+      <td>[Combinator 1]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>280.000280</td>
+    </tr>
+    <tr>
+      <th>14143</th>
+      <td>0.845070</td>
+      <td>False</td>
+      <td>13.516719</td>
+      <td>../datasets/midi_dataset/A/A/alphazone__rockin...</td>
+      <td>[SYNTH, BASS]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
       <td>284.000142</td>
     </tr>
+    <tr>
+      <th>14129</th>
+      <td>0.206897</td>
+      <td>False</td>
+      <td>26.379304</td>
+      <td>../datasets/midi_dataset/A/A/andy_ling__fixati...</td>
+      <td>[SubTractor 1, SubTractor 2]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>255.513577</td>
+    </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="p">[</span><span class="s1">&#39;num_time_signature_changes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">logx</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_37_0.png" src="../_images/01_midi_drums_37_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;num_time_signature_changes&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>17123</th>
+      <td>7.400000</td>
+      <td>True</td>
+      <td>1548.530277</td>
+      <td>../datasets/midi_dataset/F/F/FortunaImperatrix...</td>
+      <td>[- Carmina Burana (1936), , Sequenced by, Rash...</td>
+      <td>False</td>
+      <td>223.0</td>
+      <td>120.0</td>
+      <td>215.422062</td>
+    </tr>
+    <tr>
+      <th>17808</th>
+      <td>7.000000</td>
+      <td>True</td>
+      <td>1585.133592</td>
+      <td>../datasets/midi_dataset/F/F/Fortuna-Imperatri...</td>
+      <td>[STRINGS, PIZZICATO, STRINGS, FLUTE, FLUTE, OB...</td>
+      <td>False</td>
+      <td>223.0</td>
+      <td>384.0</td>
+      <td>216.869880</td>
+    </tr>
+    <tr>
+      <th>7750</th>
+      <td>0.416666</td>
+      <td>False</td>
+      <td>1472.191436</td>
+      <td>../datasets/midi_dataset/T/T/The-9th-Symphony.mid</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>197.0</td>
+      <td>240.0</td>
+      <td>228.889697</td>
+    </tr>
+    <tr>
+      <th>25871</th>
+      <td>4.625717</td>
+      <td>False</td>
+      <td>381.390677</td>
+      <td>../datasets/midi_dataset/C/C/Chopin_Polonaise_...</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>184.0</td>
+      <td>1024.0</td>
+      <td>192.891986</td>
+    </tr>
+    <tr>
+      <th>40123</th>
+      <td>3.607587</td>
+      <td>True</td>
+      <td>547.593732</td>
+      <td>../datasets/midi_dataset/M/M/METHENY.The first...</td>
+      <td>[The First Circle, The First Circle, The First...</td>
+      <td>False</td>
+      <td>173.0</td>
+      <td>96.0</td>
+      <td>168.527028</td>
+    </tr>
+    <tr>
+      <th>31675</th>
+      <td>0.900000</td>
+      <td>True</td>
+      <td>195.862500</td>
+      <td>../datasets/midi_dataset/B/B/BattleStarGalacti...</td>
+      <td>[Piccolo, SoundTrack, SynBrass1, Trombone, Dee...</td>
+      <td>False</td>
+      <td>165.0</td>
+      <td>240.0</td>
+      <td>195.342528</td>
+    </tr>
+    <tr>
+      <th>10428</th>
+      <td>4.500000</td>
+      <td>True</td>
+      <td>175.500000</td>
+      <td>../datasets/midi_dataset/S/S/sheryl_crow-stron...</td>
+      <td>[Guitar 1, Guitar 2, Guitar 3, Guitar 3 (Bend)...</td>
+      <td>False</td>
+      <td>154.0</td>
+      <td>192.0</td>
+      <td>161.471748</td>
+    </tr>
+    <tr>
+      <th>30576</th>
+      <td>1.588234</td>
+      <td>False</td>
+      <td>211.764600</td>
+      <td>../datasets/midi_dataset/E/E/elitesyncopations...</td>
+      <td>[Instrument 1, Instrument2, Instrument3]</td>
+      <td>False</td>
+      <td>151.0</td>
+      <td>1024.0</td>
+      <td>168.053519</td>
+    </tr>
+    <tr>
+      <th>2494</th>
+      <td>2.857140</td>
+      <td>False</td>
+      <td>277.472373</td>
+      <td>../datasets/midi_dataset/I/I/II-glorification_...</td>
+      <td>[Ch  1]</td>
+      <td>False</td>
+      <td>150.0</td>
+      <td>240.0</td>
+      <td>239.161377</td>
+    </tr>
+    <tr>
+      <th>15136</th>
+      <td>4.067256</td>
+      <td>False</td>
+      <td>193.872536</td>
+      <td>../datasets/midi_dataset/A/A/Aladdin(PrinceAli...</td>
+      <td>[BrassSection   Arranged by..., SynthVoice  .....</td>
+      <td>False</td>
+      <td>144.0</td>
+      <td>240.0</td>
+      <td>170.708093</td>
+    </tr>
+    <tr>
+      <th>36753</th>
+      <td>7.052083</td>
+      <td>True</td>
+      <td>259.000000</td>
+      <td>../datasets/midi_dataset/P/P/P.FLOYD.Money K.mid</td>
+      <td>[, , , , , , , , ]</td>
+      <td>False</td>
+      <td>137.0</td>
+      <td>384.0</td>
+      <td>174.734561</td>
+    </tr>
+    <tr>
+      <th>33351</th>
+      <td>2.250000</td>
+      <td>True</td>
+      <td>520.500000</td>
+      <td>../datasets/midi_dataset/B/B/Burzum-Jesus Tod ...</td>
+      <td>[Guitar 1, Guitar 2, Drums]</td>
+      <td>False</td>
+      <td>137.0</td>
+      <td>480.0</td>
+      <td>160.000000</td>
+    </tr>
+    <tr>
+      <th>12305</th>
+      <td>0.789473</td>
+      <td>False</td>
+      <td>440.280071</td>
+      <td>../datasets/midi_dataset/S/S/somewhereintime.m...</td>
+      <td>[Contrabass, Harp, Clarinet, Flute, Slo Vln, V...</td>
+      <td>False</td>
+      <td>136.0</td>
+      <td>1024.0</td>
+      <td>125.156665</td>
+    </tr>
+    <tr>
+      <th>37048</th>
+      <td>7.118636</td>
+      <td>True</td>
+      <td>386.126082</td>
+      <td>../datasets/midi_dataset/P/P/pink_floyd-money.mid</td>
+      <td>[, , , , , , , , , , , , , , , , , , , , ]</td>
+      <td>False</td>
+      <td>133.0</td>
+      <td>240.0</td>
+      <td>201.178534</td>
+    </tr>
+    <tr>
+      <th>14228</th>
+      <td>3.409090</td>
+      <td>True</td>
+      <td>1078.835489</td>
+      <td>../datasets/midi_dataset/A/A/A change of seaso...</td>
+      <td>[Vocal, Keyboards, Keyboards, Keyboards, Keybo...</td>
+      <td>False</td>
+      <td>130.0</td>
+      <td>192.0</td>
+      <td>216.333673</td>
+    </tr>
+    <tr>
+      <th>39234</th>
+      <td>4.288861</td>
+      <td>False</td>
+      <td>1869.334012</td>
+      <td>../datasets/midi_dataset/W/W/WarioWare Smooth ...</td>
+      <td>[SmartMusic SoftSynth]</td>
+      <td>False</td>
+      <td>121.0</td>
+      <td>1024.0</td>
+      <td>212.127846</td>
+    </tr>
+    <tr>
+      <th>20582</th>
+      <td>3.818178</td>
+      <td>True</td>
+      <td>473.181345</td>
+      <td>../datasets/midi_dataset/M/M/Master-Of-The-Pup...</td>
+      <td>[Voice, Guitar 1, Guitar 2, Guitar 3, Guitar S...</td>
+      <td>False</td>
+      <td>119.0</td>
+      <td>120.0</td>
+      <td>214.649922</td>
+    </tr>
+    <tr>
+      <th>22510</th>
+      <td>3.818178</td>
+      <td>True</td>
+      <td>473.181345</td>
+      <td>../datasets/midi_dataset/M/M/METALLICA.Master ...</td>
+      <td>[, , , , , , ]</td>
+      <td>False</td>
+      <td>119.0</td>
+      <td>120.0</td>
+      <td>214.649922</td>
+    </tr>
+    <tr>
+      <th>20790</th>
+      <td>2.205907</td>
+      <td>True</td>
+      <td>465.543723</td>
+      <td>../datasets/midi_dataset/M/M/Master-Of-The-Pup...</td>
+      <td>[SYN BASS 1, FRETLESS, DISTORTION, OVERDRIVE, ...</td>
+      <td>False</td>
+      <td>119.0</td>
+      <td>384.0</td>
+      <td>222.749016</td>
+    </tr>
+    <tr>
+      <th>21199</th>
+      <td>3.818178</td>
+      <td>True</td>
+      <td>473.181345</td>
+      <td>../datasets/midi_dataset/M/M/Metallica - Maste...</td>
+      <td>[Vocals (left), Vocals (right), Guitar 1, Guit...</td>
+      <td>False</td>
+      <td>119.0</td>
+      <td>120.0</td>
+      <td>216.377883</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We observe that some tracks have an excessive amount of time signature changes.
+Some such as <em>Money</em> by <em>Pink Floyd</em> can be explained by the <span class="math notranslate nohighlight">\(\frac{7}{4}\)</span> time signature which can also be written as an alternating between <span class="math notranslate nohighlight">\(\frac{3}{4}\)</span> and <span class="math notranslate nohighlight">\(\frac{4}{4}\)</span>.
+To keep things simple for now we should maybe allow only songs without any time signature change.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">num_time_signature_changes</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">();</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Tracks without time signature changes&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_midi_drums_40_0.png" src="../_images/01_midi_drums_40_0.png" />
+</div>
+</div>
+<p>We can also take a look at the most common instrument names in our dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;instrument_names&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">instrument_names</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              55743
+Bass           4526
+Piano          4384
+Drums          3510
+DRUMS          3377
+untitled       2684
+Strings        1922
+MELODY         1863
+Guitar         1827
+STRINGS        1764
+A.PIANO 1      1660
+MIDI out       1484
+Melody         1406
+HitBit         1132
+STEEL GTR      1112
+MIDI           1029
+FINGERDBAS      978
+bass            891
+-               874
+ACOU BASS       851
+Name: instrument_names, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Its also good to make some sanity checks on our data.
+One assumption would be that every file in which we did not detect a drum track also does not contain an instrument with the name <em>drums</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explodeded_df</span> <span class="o">=</span> <span class="n">midi_df</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;instrument_names&#39;</span><span class="p">)</span>
+<span class="n">explodeded_df</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">explodeded_df</span><span class="p">[</span><span class="s1">&#39;instrument_names&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;drums&#39;</span><span class="p">,</span> <span class="s1">&#39;drum&#39;</span><span class="p">]))</span><span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">explodeded_df</span><span class="p">[</span><span class="s1">&#39;drums&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span>
+<span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file_path&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>file_path</th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>../datasets/midi_dataset/A/A/Auf-Hoher-See-(Me...</td>
+      <td>3.199920</td>
+      <td>False</td>
+      <td>132.327247</td>
+      <td>DRUMS</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>384.0</td>
+      <td>226.453749</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>../datasets/midi_dataset/B/B/Bump_-_Im_Rushing...</td>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>838.123047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>181.677419</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>../datasets/midi_dataset/B/B/Buy_Now_-_For_Sal...</td>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>26.248047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>160.914286</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>../datasets/midi_dataset/C/C/charlie-willnotcr...</td>
+      <td>12.499995</td>
+      <td>False</td>
+      <td>175.564166</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>144.000058</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>../datasets/midi_dataset/D/D/Disney_Themes_-_A...</td>
+      <td>1.454544</td>
+      <td>False</td>
+      <td>145.454400</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>178.505517</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>../datasets/midi_dataset/E/E/ENYA.Memory of Tr...</td>
+      <td>26.250000</td>
+      <td>False</td>
+      <td>253.119792</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>191.219512</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>../datasets/midi_dataset/E/E/Evermore_-_Its_To...</td>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>26.248047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>193.794393</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>../datasets/midi_dataset/F/F/from_a_distance.mid</td>
+      <td>0.909090</td>
+      <td>False</td>
+      <td>284.007707</td>
+      <td>drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>191.384782</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>../datasets/midi_dataset/G/G/GABRIEL.Humdrum.mid</td>
+      <td>4.038461</td>
+      <td>False</td>
+      <td>213.389395</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>240.0</td>
+      <td>208.457171</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>../datasets/midi_dataset/G/G/Gran_Turismo_-_Th...</td>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>26.248047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>188.235294</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>../datasets/midi_dataset/H/H/HereThereAndEvery...</td>
+      <td>2.010425</td>
+      <td>False</td>
+      <td>153.611880</td>
+      <td>drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>175.895765</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>../datasets/midi_dataset/H/H/Hoxton_Whores_-_F...</td>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>26.248047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>184.000000</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>../datasets/midi_dataset/L/L/Lang-Zal-Hij-Leve...</td>
+      <td>4.444400</td>
+      <td>False</td>
+      <td>26.689548</td>
+      <td>DRUMS</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>384.0</td>
+      <td>142.028818</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>../datasets/midi_dataset/L/L/LullabyOfBroadway...</td>
+      <td>3.210000</td>
+      <td>False</td>
+      <td>155.736667</td>
+      <td>DRUMS</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>226.014166</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>../datasets/midi_dataset/L/L/led_zeppelin-blac...</td>
+      <td>2.363634</td>
+      <td>False</td>
+      <td>267.454278</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>168.113376</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>../datasets/midi_dataset/M/M/M.A.N.D.Y. VS Boo...</td>
+      <td>2.812500</td>
+      <td>False</td>
+      <td>7.498047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>210.823529</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>../datasets/midi_dataset/N/N/Nine_Inch_Nails_N...</td>
+      <td>1.348314</td>
+      <td>False</td>
+      <td>199.452157</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>182.144758</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>../datasets/midi_dataset/N/N/new-rigged-ship.mid</td>
+      <td>0.185185</td>
+      <td>False</td>
+      <td>35.493792</td>
+      <td>drum</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>162.000162</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>../datasets/midi_dataset/R/R/Rent-AnotherDay04...</td>
+      <td>0.827586</td>
+      <td>False</td>
+      <td>268.034416</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>248.055425</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>../datasets/midi_dataset/R/R/Royksopp_-_What_E...</td>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>26.248047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>170.666667</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>../datasets/midi_dataset/R/R/rem-loosing_my_re...</td>
+      <td>2.880000</td>
+      <td>False</td>
+      <td>267.602606</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>224.063597</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>../datasets/midi_dataset/S/S/Sander_Van_Doorn_...</td>
+      <td>1.000000</td>
+      <td>False</td>
+      <td>16.000000</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>240.000000</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>../datasets/midi_dataset/S/S/Skrillex_-_FirstO...</td>
+      <td>1.655172</td>
+      <td>False</td>
+      <td>13.241376</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>228.484906</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>../datasets/midi_dataset/S/S/SmokeOnTheWater2.mid</td>
+      <td>5.739129</td>
+      <td>False</td>
+      <td>322.543398</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>228.841244</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>../datasets/midi_dataset/S/S/Steve_Lawler_-_Th...</td>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>26.248047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>180.705882</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>../datasets/midi_dataset/S/S/searching_for_lov...</td>
+      <td>5.597514</td>
+      <td>False</td>
+      <td>201.869019</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>206.218950</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>../datasets/midi_dataset/S/S/strollingthruthep...</td>
+      <td>4.705880</td>
+      <td>False</td>
+      <td>117.151902</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>156.268185</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>../datasets/midi_dataset/T/T/Terranova__Austin...</td>
+      <td>0.937500</td>
+      <td>False</td>
+      <td>7.498047</td>
+      <td>Drum</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>480.0</td>
+      <td>219.428571</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>../datasets/midi_dataset/T/T/TheMemoryOfTrees.mid</td>
+      <td>27.500000</td>
+      <td>False</td>
+      <td>253.119792</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>240.0</td>
+      <td>191.219512</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>../datasets/midi_dataset/U/U/UnchainedMelody3.mid</td>
+      <td>11.999988</td>
+      <td>False</td>
+      <td>213.553358</td>
+      <td>drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>218.459582</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>../datasets/midi_dataset/W/W/Wavetraxx_-_Stay(...</td>
+      <td>25.588208</td>
+      <td>False</td>
+      <td>361.872776</td>
+      <td>drum</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>256.078322</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>../datasets/midi_dataset/W/W/WhenAMAnLovesAWom...</td>
+      <td>4.363636</td>
+      <td>False</td>
+      <td>264.409069</td>
+      <td>Drums</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>167.140954</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>../datasets/midi_dataset/W/W/Whiskey-Before-Br...</td>
+      <td>2.231370</td>
+      <td>False</td>
+      <td>142.777340</td>
+      <td>DRUMS</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>241.847710</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Listening to those examples reveal that some of them use another instrument than drums for their drums - either by artistic choice or by mistake.
+As this only applies to 32 files we can live with this error and ignore the files were we did not detect the drum track.</p>
+</div>
+<div class="section" id="filter-and-extract-the-data">
+<h2>Filter and extract the data<a class="headerlink" href="#filter-and-extract-the-data" title="Permalink to this headline">¶</a></h2>
+<p>After inspecting all availabe files we should filter out some <em>noisy</em> files that are either not interesting to us (they lack a drum track) or the parsing of the MIDI files did not work as expected.
+With the analysis above we can verify borders of data we want to allow.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_midi_df</span> <span class="o">=</span> <span class="n">midi_df</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">drums</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">midi_error</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">800</span><span class="p">))</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">num_time_signature_changes</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">beat_start</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">tempo</span> <span class="o">&lt;=</span> <span class="mi">500</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">filtered_midi_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.771427</td>
+      <td>True</td>
+      <td>191.371349</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Feuer_F...</td>
+      <td>[FEUER FREI, Begin, untitled, untitled, untitl...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>174.319388</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.333330</td>
+      <td>True</td>
+      <td>263.333070</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Wilder_...</td>
+      <td>[, , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>144.000144</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.582524</td>
+      <td>True</td>
+      <td>37.281536</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Strippe...</td>
+      <td>[Guitar 1, Guitar 1, Bass, Keyboard, Keyboard,...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>206.000096</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2.999997</td>
+      <td>True</td>
+      <td>241.714044</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Sehnsuc...</td>
+      <td>[Keyboard, Gitarre, Gitarre, Voice, Voice, Voi...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>276.801683</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.480000</td>
+      <td>True</td>
+      <td>247.620000</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Das_Mod...</td>
+      <td>[, , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>248.904881</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>40469</th>
+      <td>11.314543</td>
+      <td>True</td>
+      <td>255.182233</td>
+      <td>../datasets/midi_dataset/S/S/S.ROGERS BAND.Alz...</td>
+      <td>[, , , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>234.768362</td>
+    </tr>
+    <tr>
+      <th>40470</th>
+      <td>0.930232</td>
+      <td>True</td>
+      <td>304.030825</td>
+      <td>../datasets/midi_dataset/W/W/Wollt ihr das bet...</td>
+      <td>[Noise1, Noise2, Synth, Drums, Wood, Gtr, Bass...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>257.422650</td>
+    </tr>
+    <tr>
+      <th>40472</th>
+      <td>4.520833</td>
+      <td>True</td>
+      <td>142.000000</td>
+      <td>../datasets/midi_dataset/S/S/standbyyourman.midi</td>
+      <td>[Piano (Melody), Piano (Melody Doubled), Piano...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>240.335799</td>
+    </tr>
+    <tr>
+      <th>40474</th>
+      <td>7.846146</td>
+      <td>True</td>
+      <td>217.845936</td>
+      <td>../datasets/midi_dataset/M/M/MM-personal jesus...</td>
+      <td>[, , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>194.855643</td>
+    </tr>
+    <tr>
+      <th>40475</th>
+      <td>5.806455</td>
+      <td>True</td>
+      <td>183.871075</td>
+      <td>../datasets/midi_dataset/L/L/littlebrownjug.midi</td>
+      <td>[Jazz Kit, Jazz Bass, Piano, Alto Sax 1, Alto ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>239.287342</td>
+    </tr>
+  </tbody>
+</table>
+<p>21316 rows × 9 columns</p>
+</div></div></div>
+</div>
+<p>We now filtered half of our available examples by just looking at the metadata of the MIDI files.
+The next step is to extract the drum track of each MIDI filtered MIDI file and save the extracted MIDI file so we can analyse the patterns in of those drum patterns in the next step.</p>
+<p>As this part is also computational quite heavy we will again use caching here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_drums</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">extract_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;../datasets/midi_dataset_drums_extracted&#39;</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extract_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">]</span>
+    
+    <span class="n">extracted_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">extract_path</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">.mid&#39;</span>
+    <span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">extract_path</span><span class="p">):</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;extracted_file_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extracted_path</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sound</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="n">sound</span><span class="o">.</span><span class="n">instruments</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sound</span><span class="o">.</span><span class="n">instruments</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">is_drum</span><span class="p">]</span>
+            <span class="n">sound</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">extracted_path</span><span class="p">)</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;extracted_file_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extracted_path</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Failed to extract </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;fail_extract&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">row</span>
+
+<span class="k">def</span> <span class="nf">load_extracted_drums_df</span><span class="p">(</span>
+    <span class="n">filtered_midi_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span><span class="s1">&#39;extracted_drums_df.parquet&#39;</span><span class="p">,</span>
+    <span class="n">force_reload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force_reload</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load dataframe from </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_midi_df</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Loaded dataframe does not match filtered - consider rebuild of cache&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">filtered_midi_df</span><span class="o">.</span><span class="n">swifter</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">extract_drums</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved dataframe in </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extract_drums_df</span> <span class="o">=</span> <span class="n">load_extracted_drums_df</span><span class="p">(</span><span class="n">filtered_midi_df</span><span class="p">)</span>
+<span class="n">extract_drums_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Load dataframe from extracted_drums_df.parquet
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+      <th>extracted_file_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.771427</td>
+      <td>True</td>
+      <td>191.371349</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Feuer_F...</td>
+      <td>[FEUER FREI, Begin, untitled, untitled, untitl...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>174.319388</td>
+      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.333330</td>
+      <td>True</td>
+      <td>263.333070</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Wilder_...</td>
+      <td>[, , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>144.000144</td>
+      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.582524</td>
+      <td>True</td>
+      <td>37.281536</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Strippe...</td>
+      <td>[Guitar 1, Guitar 1, Bass, Keyboard, Keyboard,...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>206.000096</td>
+      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2.999997</td>
+      <td>True</td>
+      <td>241.714044</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Sehnsuc...</td>
+      <td>[Keyboard, Gitarre, Gitarre, Voice, Voice, Voi...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>276.801683</td>
+      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.480000</td>
+      <td>True</td>
+      <td>247.620000</td>
+      <td>../datasets/midi_dataset/R/Rammstein - Das_Mod...</td>
+      <td>[, , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>248.904881</td>
+      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>40469</th>
+      <td>11.314543</td>
+      <td>True</td>
+      <td>255.182233</td>
+      <td>../datasets/midi_dataset/S/S/S.ROGERS BAND.Alz...</td>
+      <td>[, , , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>234.768362</td>
+      <td>../datasets/midi_dataset_drums_extracted/S.ROG...</td>
+    </tr>
+    <tr>
+      <th>40470</th>
+      <td>0.930232</td>
+      <td>True</td>
+      <td>304.030825</td>
+      <td>../datasets/midi_dataset/W/W/Wollt ihr das bet...</td>
+      <td>[Noise1, Noise2, Synth, Drums, Wood, Gtr, Bass...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>257.422650</td>
+      <td>../datasets/midi_dataset_drums_extracted/Wollt...</td>
+    </tr>
+    <tr>
+      <th>40472</th>
+      <td>4.520833</td>
+      <td>True</td>
+      <td>142.000000</td>
+      <td>../datasets/midi_dataset/S/S/standbyyourman.midi</td>
+      <td>[Piano (Melody), Piano (Melody Doubled), Piano...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>240.335799</td>
+      <td>../datasets/midi_dataset_drums_extracted/stand...</td>
+    </tr>
+    <tr>
+      <th>40474</th>
+      <td>7.846146</td>
+      <td>True</td>
+      <td>217.845936</td>
+      <td>../datasets/midi_dataset/M/M/MM-personal jesus...</td>
+      <td>[, , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>194.855643</td>
+      <td>../datasets/midi_dataset_drums_extracted/MM-pe...</td>
+    </tr>
+    <tr>
+      <th>40475</th>
+      <td>5.806455</td>
+      <td>True</td>
+      <td>183.871075</td>
+      <td>../datasets/midi_dataset/L/L/littlebrownjug.midi</td>
+      <td>[Jazz Kit, Jazz Bass, Piano, Alto Sax 1, Alto ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>239.287342</td>
+      <td>../datasets/midi_dataset_drums_extracted/littl...</td>
+    </tr>
+  </tbody>
+</table>
+<p>21316 rows × 10 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>We now filtered out all unwanted parts of our dataset and isolated the drum track to a new MIDI file.</p>
+<p>In the next step we will start to analyse the drum patterns that we extracted.</p>
 </div>
 </div>
 
