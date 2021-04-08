@@ -5,6 +5,8 @@ _build/
 _static/
 _templates/
 */dask-worker-space/
+01_midi_drums/midi_df.parquet
+01_midi_drums/extracted_drums_df.parquet
 
 
 # Byte-compiled / optimized / DLL files
