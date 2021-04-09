@@ -25,8 +25,8 @@
     href="../../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
@@ -38,12 +38,11 @@
     <script src="../../../../_static/jquery.js"></script>
     <script src="../../../../_static/underscore.js"></script>
     <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/language_data.js"></script>
     <script src="../../../../_static/togglebutton.js"></script>
     <script src="../../../../_static/thebelab-helper.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script src="../../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
@@ -340,11 +339,11 @@ But as this function does not work with sets we need to transform the set to a l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&quot;../datasets/midi_dataset/T/T/THE HOLLIES.Blowin&#39; in the wind.MID&quot;,
-       &#39;../datasets/midi_dataset/G/G/GREENDAY.Boulevard of broken K.MID&#39;,
-       &quot;../datasets/midi_dataset/D/D/D.RIO.Walkin&#39; away.MID&quot;,
-       &quot;../datasets/midi_dataset/G/G/GREENDAY.Macy&#39;s day parade  K.MID&quot;,
-       &#39;../datasets/midi_dataset/C/C/C.COREA.View from the outside.MID&#39;],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;../datasets/midi_dataset/J/J/J.CLIFF.I can see clearly now.MID&#39;,
+       &#39;../datasets/midi_dataset/A/A/ARMSTRONG.On the sun K.MID&#39;,
+       &#39;../datasets/midi_dataset/V/V/VANNELLI.Wheels of life.MID&#39;,
+       &#39;../datasets/midi_dataset/D/D/DIRE STRAITS.Heavy fuel K.MID&#39;,
+       &#39;../datasets/midi_dataset/G/G/GREENDAY.Minority.MID&#39;],
       dtype=&#39;&lt;U114&#39;)
 </pre></div>
 </div>
@@ -359,14 +358,14 @@ But as this function does not work with sets we need to transform the set to a l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
- &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;,
- &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
- &#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
  &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;,
  &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
+ &#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;,
+ &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
  &#39;../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid&#39;,
- &#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;]
+ &#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;,
+ &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;]
 </pre></div>
 </div>
 </div>
@@ -437,10 +436,10 @@ We need to understand how the information we are interested in is accessible and
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x10ef6ca60&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x1089b6370&gt;
     {0.0} &lt;music21.instrument.Piano &#39;Theme from Love Story: piano&#39;&gt;
     {0.0} &lt;music21.key.Key of C major&gt;
-    {0.0} &lt;music21.stream.Voice 0x1198d8190&gt;
+    {0.0} &lt;music21.stream.Voice 0x152f5b190&gt;
         {0.0} &lt;music21.note.Rest rest&gt;
         {8.0} &lt;music21.note.Note A&gt;
         {8.75} &lt;music21.note.Note C&gt;

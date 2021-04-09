@@ -1,0 +1,63 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "black-commission",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "-> 42"
+     ]
+    }
+   ],
+   "source": [
+    "~foo = 42;"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "advanced-cleanup",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "-> CmdPeriod"
+     ]
+    }
+   ],
+   "source": [
+    "."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "warming-translator",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "SuperCollider",
+   "language": "",
+   "name": "sc_kernel"
+  },
+  "language_info": {
+   "file_extension": ".scd",
+   "mimetype": "text/x-sclang",
+   "name": "smalltalk",
+   "pygments_lexer": "supercollider"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

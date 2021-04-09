@@ -161,11 +161,11 @@
     {
      "data": {
       "text/plain": [
-       "array([\"../datasets/midi_dataset/T/T/THE HOLLIES.Blowin' in the wind.MID\",\n",
-       "       '../datasets/midi_dataset/G/G/GREENDAY.Boulevard of broken K.MID',\n",
-       "       \"../datasets/midi_dataset/D/D/D.RIO.Walkin' away.MID\",\n",
-       "       \"../datasets/midi_dataset/G/G/GREENDAY.Macy's day parade  K.MID\",\n",
-       "       '../datasets/midi_dataset/C/C/C.COREA.View from the outside.MID'],\n",
+       "array(['../datasets/midi_dataset/J/J/J.CLIFF.I can see clearly now.MID',\n",
+       "       '../datasets/midi_dataset/A/A/ARMSTRONG.On the sun K.MID',\n",
+       "       '../datasets/midi_dataset/V/V/VANNELLI.Wheels of life.MID',\n",
+       "       '../datasets/midi_dataset/D/D/DIRE STRAITS.Heavy fuel K.MID',\n",
+       "       '../datasets/midi_dataset/G/G/GREENDAY.Minority.MID'],\n",
        "      dtype='<U114')"
       ]
      },
@@ -195,14 +195,14 @@
     {
      "data": {
       "text/plain": [
-       "['../datasets/midi_dataset/M/M/mike_koglin_&_dj_uto__time__zoik.midi',\n",
-       " '../datasets/midi_dataset/L/L/littlebrownjug.midi',\n",
-       " '../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi',\n",
-       " '../datasets/midi_dataset/S/S/standbyyourman.midi',\n",
+       "['../datasets/midi_dataset/S/S/standbyyourman.midi',\n",
        " '../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid',\n",
        " '../datasets/midi_dataset/M/M/MM-personal jesus.midi',\n",
+       " '../datasets/midi_dataset/M/M/mike_koglin_&_dj_uto__time__zoik.midi',\n",
+       " '../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi',\n",
        " '../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid',\n",
-       " '../datasets/midi_dataset/R/R/rhapsodyinblue.midi']"
+       " '../datasets/midi_dataset/R/R/rhapsodyinblue.midi',\n",
+       " '../datasets/midi_dataset/L/L/littlebrownjug.midi']"
       ]
      },
      "execution_count": 6,
@@ -318,10 +318,10 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "{0.0} <music21.stream.Part 0x10ef6ca60>\n",
+      "{0.0} <music21.stream.Part 0x1089b6370>\n",
       "    {0.0} <music21.instrument.Piano 'Theme from Love Story: piano'>\n",
       "    {0.0} <music21.key.Key of C major>\n",
-      "    {0.0} <music21.stream.Voice 0x1198d8190>\n",
+      "    {0.0} <music21.stream.Voice 0x152f5b190>\n",
       "        {0.0} <music21.note.Rest rest>\n",
       "        {8.0} <music21.note.Note A>\n",
       "        {8.75} <music21.note.Note C>\n",

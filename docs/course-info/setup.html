@@ -25,8 +25,8 @@
     href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
@@ -38,15 +38,12 @@
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script src="../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Data types" href="../../00_python_basics/00_01-data-types.html" />
@@ -185,20 +182,30 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#python">
-   Python
+  <a class="reference internal nav-link" href="#supercollider-setup">
+   SuperCollider setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-setup">
+   Python setup
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#docker">
-     Docker
+    <a class="reference internal nav-link" href="#start-jupyter">
+     Start Jupyter
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#supercollider">
-   Supercollider
+  <a class="reference internal nav-link" href="#setup-via-docker">
+   Setup via Docker
   </a>
  </li>
 </ul>
@@ -215,10 +222,29 @@
                 
   <div class="section" id="environment-setup">
 <h1>Environment setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h1>
-<p>In order to run the notebooks you will need to install Python on your local machine.</p>
-<div class="section" id="python">
-<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
-<p>Please make sure you have installed Python 3.8 and pip on your machine as well as <cite>virtualenv</cite>.</p>
+<p>In order to run and edit the course material on a local machine one needs to install</p>
+<ul class="simple">
+<li><p>Python 3.8 with pip3 - a good instruction can be found <a class="reference external" href="https://realpython.com/installing-python">here</a></p></li>
+<li><p><a class="reference external" href="https://supercollider.github.io/download">SuperCollider</a></p></li>
+</ul>
+<div class="section" id="supercollider-setup">
+<h2>SuperCollider setup<a class="headerlink" href="#supercollider-setup" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you have SuperCollider setup before one continues with the setup of python because
+we will rely on SuperCollider for that step.</p>
+</div>
+<div class="section" id="python-setup">
+<h2>Python setup<a class="headerlink" href="#python-setup" title="Permalink to this headline">¶</a></h2>
+<p>Please make sure you have installed <em>Python 3.8</em>, <em>pip3</em> and <em>virtualenv</em> on your machine</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 --version
+<span class="c1"># Python 3.8.2</span>
+
+pip3 --version
+<span class="c1"># pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip</span>
+
+virtualenv --version
+<span class="c1"># virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py</span>
+</pre></div>
+</div>
 <ul>
 <li><p>Create a new virtual environment in the folder <cite>venv</cite> by executing</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>virtualenv venv
@@ -228,17 +254,31 @@
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
 </pre></div>
 </div>
+<p>A virtual environment serves as a isolated environment for all the dependencies that are needed for this project.
+Creating a new virtual environment for each project is a good practice as project <em>a</em> relies on dependency <em>x</em> in
+version 0.7, but project <em>b</em> relies on the same dependency but in version 2.2.
+Welcome to <a class="reference external" href="https://en.wikipedia.org/wiki/Dependency_hell">dependency hell</a>.</p>
+<p>But this also forces us to always activate the virtual environment when we start our project.</p>
 </li>
 <li><p>Install all necessary dependencies by executing</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements.txt
 </pre></div>
 </div>
 </li>
-<li><p>Register your created environment in the Jupyter Lab instance</p>
-<p>..code-block:: shell</p>
-<blockquote>
-<div><p>ipython kernel install –user –name=musikinformatik_sose2021</p>
-</div></blockquote>
+<li><p>Register your created environment in the <em>Jupyter Lab</em> instance</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ipython kernel install --user --name<span class="o">=</span>musikinformatik_sose2021
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="section" id="start-jupyter">
+<h3>Start Jupyter<a class="headerlink" href="#start-jupyter" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Make sure one has activated the virtual environment by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
+</pre></div>
+</div>
+<p>while being in the root directory of this repository.</p>
 </li>
 <li><p>Start <em>Jupyter Lab</em> by executing</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jupyter lab
@@ -246,17 +286,33 @@
 </div>
 </li>
 </ul>
-<div class="section" id="docker">
-<h3>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>In order to build the documentation locally one also needs to install its dependencies via</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements-docs.txt
+</pre></div>
+</div>
+<p>After this the documentation can be build by executing the shell script</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./build_docs.sh
+</pre></div>
+</div>
+<p>from the root directory of this repository.</p>
+</div>
+</div>
+<div class="section" id="setup-via-docker">
+<h2>Setup via Docker<a class="headerlink" href="#setup-via-docker" title="Permalink to this headline">¶</a></h2>
 <p>Alternatively, if one has <a class="reference external" href="https://www.docker.com">Docker</a> installed, one can also run the notebooks in a docker container by executing</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker build -t musikinformatik . <span class="o">&amp;&amp;</span> docker run -p <span class="m">8888</span>:8888 -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/home/musikinformatik musikinformatik
 </pre></div>
 </div>
 <p>and click on the appearing link.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Currently it is difficult to run SuperCollider in an headless environment such as Docker,
+therefore SuperCollider is omitted in the docker image.</p>
+<p>Any help on this is appreciated.</p>
 </div>
-</div>
-<div class="section" id="supercollider">
-<h2>Supercollider<a class="headerlink" href="#supercollider" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
