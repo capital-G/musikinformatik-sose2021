@@ -1,12 +1,28 @@
 Environment setup
 =================
 
-In order to run the notebooks you will need to install Python on your local machine.
+In order to run and edit the course material on a local machine one needs to install
 
-Python
-------
+* Python 3.8 with pip3 - a good instruction can be found `here <https://realpython.com/installing-python>`_
+* `SuperCollider <https://supercollider.github.io/download>`_
 
-Please make sure you have installed Python 3.8 and pip on your machine as well as `virtualenv`.
+
+Python setup
+------------
+
+Please make sure you have installed *Python 3.8*, *pip3* and *virtualenv* on your machine
+
+.. code-block:: shell
+
+  python3 --version
+  # Python 3.8.2
+
+  pip3 --version
+  # pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip
+
+  virtualenv --version
+  # virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py
+
 
 * Create a new virtual environment in the folder `venv` by executing
   
@@ -27,9 +43,9 @@ Please make sure you have installed Python 3.8 and pip on your machine as well a
     
     pip install -r requirements.txt
 
-* Register your created environment in the Jupyter Lab instance
+* Register your created environment in the *Jupyter Lab* instance
 
-  ..code-block:: shell
+  .. code-block:: shell
 
     ipython kernel install --user --name=musikinformatik_sose2021
 
@@ -40,8 +56,11 @@ Please make sure you have installed Python 3.8 and pip on your machine as well a
     jupyter lab
 
 
+Supercollider
+-------------
+
 Docker
-^^^^^^
+------
 
 Alternatively, if one has `Docker <https://www.docker.com>`_ installed, one can also run the notebooks in a docker container by executing
 
@@ -52,5 +71,7 @@ Alternatively, if one has `Docker <https://www.docker.com>`_ installed, one can 
 
 and click on the appearing link.
 
-Supercollider
--------------
+.. todo::
+
+  Currently it is difficult to run SuperCollider in an headless environment such as Docker.
+  Any help on this is appreciated.

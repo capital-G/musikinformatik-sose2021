@@ -64,3 +64,5 @@ html_static_path = ['docs/_static']
 # custom
 
 html_title = "Musikinformatik SoSe2021"
+
+todo_include_todos = True
