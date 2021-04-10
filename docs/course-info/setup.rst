@@ -4,30 +4,84 @@ Environment setup
 In order to run and edit the course material on a local machine one needs to install
 
 * Python 3.8 with pip3 - a good instruction can be found `here <https://realpython.com/installing-python>`_
-* `SuperCollider <https://supercollider.github.io/download>`_
+
+Repository setup
+----------------
+
+To copy the course material to the local machine we will use `git <https://git-scm.com/>`_.
+For the install procedure please refer to the `official website <https://git-scm.com/downloads>`_.
+
+After one has setup git we now need to `clone <https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone>`_
+the `repository <https://github.com/capital-G/musikinformatik-sose2021>`_ by opening a new shell window and head to a
+directory in which you want to copy the course material and execute the command
+
+.. code-block:: shell
+
+  git clone https://github.com/capital-G/musikinformatik-sose2021.git
+
+If you know what *SSH*, have a GitHub account and you want to practicipate in the creation of the course
+one should use SSH instead so the command becomes
+
+.. code-block:: shell
+
+  git clone git@github.com:capital-G/musikinformatik-sose2021.git
+
+Now as we have cloned the course material to a local directory we want to switch to the directory which we just
+created by cloning the repository
+
+.. code-block:: shell
+
+  cd musikinformatik_sose2021
+
+
+.. admonition:: Convention
+
+   We will refer to this folder as *the root folder of the repository*.
+   Most commands will be executed in this folder and we will always work relative
+   to this path.
+   
+   Please make sure if you e.g. re-start *Jupyter Lab* or you activate the 
+   virtual environment you are in this directory before entering the commands.
 
 SuperCollider setup
 -------------------
 
-Make sure you have SuperCollider setup before one continues with the setup of python because
-we will rely on SuperCollider for that step.
+Please refer to the `SuperCollider download page <https://supercollider.github.io/download>`_
+for the install instructions of SuperCollider.
 
 Python setup
 ------------
 
-Please make sure you have installed *Python 3.8*, *pip3* and *virtualenv* on your machine
+Please make sure you have installed *Python >=3.7*, *pip3* and *virtualenv* on your machine.
+A good guide on how to install *Python* on your machine can be found `here <https://realpython.com/installing-python/>`_.
+
+After a sucessful installation please check that you have the following versions.
+
+.. warning::
+
+  Please refrain from *Python 3.9* as this is `not supported by Tensorflow yet <https://github.com/tensorflow/tensorflow/issues/44485>`_.
+  If you use `Homebrew <https://brew.sh/>`_ on OS X you can install *Python 3.8* via
+
+  .. code-block:: shell
+
+    brew install python@3.8
 
 .. code-block:: shell
 
   python3 --version
-  # Python 3.8.2
+  # Python 3.8.2 - should be Python3 and 3.7 at least
 
   pip3 --version
   # pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip
+  # just about any pip3 version will be fine
 
   virtualenv --version
   # virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py
+  # just about any virtualenv version will be fine - make sure that it refers to your
+  # python3 folder from above and not to e.g. python2
 
+* Go to the root folder of the repository (see :ref:`Repository setup`) with a shell and execute
+  the following commands in this folder.
 
 * Create a new virtual environment in the folder `venv` by executing
   
@@ -64,6 +118,9 @@ Please make sure you have installed *Python 3.8*, *pip3* and *virtualenv* on you
 Start *Jupyter Lab*
 ^^^^^^^^^^^^^^^^^^^
 
+* Go to the root directory of the repository (see :ref:`Repository setup`) with a shell window
+  and execute the following commands in this folder.
+
 * Make sure one has activated the virtual environment by executing
 
   .. code-block:: shell
@@ -86,7 +143,8 @@ Start *Jupyter Lab*
 Documentation
 ^^^^^^^^^^^^^
 
-In order to build the documentation locally one also needs to install its dependencies via
+In order to build the documentation locally one also needs to install its dependencies by executing the
+following command in the root directory of the repository (see :ref:`Repository setup`)
 
 .. code-block:: shell
 
@@ -99,6 +157,19 @@ After this the documentation can be build by executing the shell script
   ./build_docs.sh
 
 from the root directory of this repository.
+
+.. admonition:: Convention
+
+  If you want to open the documentation in a browser after it has been build you can set the
+  environment variable
+
+  .. code-block:: shell
+
+    export OPEN_BROWSER_AFTER_TEST=true
+  
+  when using the ``./build_docs.sh`` script.
+
+  Remember that this has to be set every time you open a shell or you add it to your ``~/.zshrc`` or else.
 
 Setup via Docker
 ----------------

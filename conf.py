@@ -28,6 +28,7 @@ release = 'SoSe 2021'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
     'myst_nb',
     'jupyter_sphinx',
