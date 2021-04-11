@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf docs/_build/html
+rm -rf docs/_build
 
 pip install --quiet -r requirements-docs.txt
 
