@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Environment setup &#8212; Musikinformatik SoSe2021</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data types" href="../../00_python_basics/00_01-data-types.html" />
+    <link rel="prev" title="Musikinformatik SoSe2021" href="../../index.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Course information
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Environment setup
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Basics of Python
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../00_python_basics/00_01-data-types.html">
+   Data types
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Lesson 1
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../01_midi_drums/01_midi_drums.html">
+   Analysing drum patterns from MIDI files
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/docs/course-info/setup.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repository-setup">
+   Repository setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supercollider-setup">
+   SuperCollider setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-setup">
+   Python setup
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#start-jupyter-lab">
+     Start
+     <em>
+      Jupyter Lab
+     </em>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-via-docker">
+   Setup via Docker
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="environment-setup">
+<h1>Environment setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h1>
+<p>This document will lead you through the setup so one can run the code on a local machine.</p>
+<div class="section" id="repository-setup">
+<h2>Repository setup<a class="headerlink" href="#repository-setup" title="Permalink to this headline">¶</a></h2>
+<p>To copy the course material to the local machine we will use <a class="reference external" href="https://git-scm.com/">git</a>.
+For the install procedure please refer to the <a class="reference external" href="https://git-scm.com/downloads">official website</a>.</p>
+<p>After one has setup git we now need to <a class="reference external" href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone">clone</a>
+the <a class="reference external" href="https://github.com/capital-G/musikinformatik-sose2021">repository</a> by opening a new shell window and head to a
+directory in which you want to copy the course material and execute the command</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/capital-G/musikinformatik-sose2021.git
+</pre></div>
+</div>
+<p>If you know what <em>SSH</em>, have a GitHub account and you want to practicipate in the creation of the course
+one should use SSH instead so the command becomes</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:capital-G/musikinformatik-sose2021.git
+</pre></div>
+</div>
+<p>Now as we have cloned the course material to a local directory we want to switch to the directory which we just
+created by cloning the repository</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> musikinformatik_sose2021
+</pre></div>
+</div>
+<div class="admonition-convention admonition">
+<p class="admonition-title">Convention</p>
+<p>We will refer to this folder as <em>the root folder of the repository</em>.
+Most commands will be executed in this folder and we will always work relative
+to this path.</p>
+<p>Please make sure if you e.g. re-start <em>Jupyter Lab</em> or you activate the
+virtual environment you are in this directory before entering the commands.</p>
+</div>
+</div>
+<div class="section" id="supercollider-setup">
+<h2>SuperCollider setup<a class="headerlink" href="#supercollider-setup" title="Permalink to this headline">¶</a></h2>
+<p>Please refer to the <a class="reference external" href="https://supercollider.github.io/download">SuperCollider download page</a>
+for the install instructions of SuperCollider.</p>
+</div>
+<div class="section" id="python-setup">
+<h2>Python setup<a class="headerlink" href="#python-setup" title="Permalink to this headline">¶</a></h2>
+<p>Please make sure you have installed <em>Python &gt;=3.7</em>, <em>pip3</em> and <em>virtualenv</em> on your machine.
+A good guide on how to install <em>Python</em> on your machine can be found <a class="reference external" href="https://realpython.com/installing-python/">here</a>.</p>
+<p>After a sucessful installation please check that you have the following versions.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please refrain from <em>Python 3.9</em> as this is <a class="reference external" href="https://github.com/tensorflow/tensorflow/issues/44485">not supported by Tensorflow yet</a>.
+If you use <a class="reference external" href="https://brew.sh/">Homebrew</a> on OS X you can install <em>Python 3.8</em> via</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>brew install python@3.8
+</pre></div>
+</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 --version
+<span class="c1"># Python 3.8.2 - should be Python3 and 3.7 at least</span>
+
+pip3 --version
+<span class="c1"># pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip</span>
+<span class="c1"># just about any pip3 version will be fine</span>
+
+virtualenv --version
+<span class="c1"># virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py</span>
+<span class="c1"># just about any virtualenv version will be fine - make sure that it refers to your</span>
+<span class="c1"># python3 folder from above and not to e.g. python2</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Go to the root folder of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>) with a shell and execute
+the following commands in this folder.</p></li>
+<li><p>Create a new virtual environment in the folder <cite>venv</cite> by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>virtualenv venv
+</pre></div>
+</div>
+<p>and activate the environment by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
+</pre></div>
+</div>
+<p>A virtual environment serves as a isolated environment for all the dependencies that are needed for this project.
+Creating a new virtual environment for each project is a good practice as project <em>a</em> relies on dependency <em>x</em> in
+version 0.7, but project <em>b</em> relies on the same dependency but in version 2.2.
+Welcome to <a class="reference external" href="https://en.wikipedia.org/wiki/Dependency_hell">dependency hell</a>.</p>
+<p>But this also forces us to always activate the virtual environment when we start our project.</p>
+</li>
+<li><p>Install all necessary dependencies by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements.txt
+</pre></div>
+</div>
+</li>
+<li><p>Register your created environment in the <em>Jupyter Lab</em> instance</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ipython kernel install --user --name<span class="o">=</span>musikinformatik_sose2021
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="section" id="start-jupyter-lab">
+<h3>Start <em>Jupyter Lab</em><a class="headerlink" href="#start-jupyter-lab" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Go to the root directory of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>) with a shell window
+and execute the following commands in this folder.</p></li>
+<li><p>Make sure one has activated the virtual environment by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
+</pre></div>
+</div>
+<p>while being in the root directory of this repository.</p>
+</li>
+<li><p>Start <em>Jupyter Lab</em> by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jupyter lab
+</pre></div>
+</div>
+</li>
+<li><p>To shut down the <em>Jupyter Lab</em> server enter the keyboard combination of <cite>&lt;Ctrl&gt; + c</cite>
+in the shell window in which the Jupyter server is running.
+A prompt will appear in which one has to verify that one wants to shut down the
+server by entering <cite>y</cite>.</p></li>
+</ul>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>In order to build the documentation locally one also needs to install its dependencies by executing the
+following command in the root directory of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements-docs.txt
+</pre></div>
+</div>
+<p>After this the documentation can be build by executing the shell script</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./build_docs.sh
+</pre></div>
+</div>
+<p>from the root directory of this repository.</p>
+<div class="admonition-convention admonition">
+<p class="admonition-title">Convention</p>
+<p>If you want to open the documentation in a browser after it has been build you can set the
+environment variable</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">OPEN_BROWSER_AFTER_TEST</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+<p>when using the <code class="docutils literal notranslate"><span class="pre">./build_docs.sh</span></code> script.</p>
+<p>Remember that this has to be set every time you open a shell or you add it to your <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code> or else.</p>
+</div>
+</div>
+</div>
+<div class="section" id="setup-via-docker">
+<h2>Setup via Docker<a class="headerlink" href="#setup-via-docker" title="Permalink to this headline">¶</a></h2>
+<p>Alternatively, if one has <a class="reference external" href="https://www.docker.com">Docker</a> installed, one can also run the notebooks in a docker container by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker build -t musikinformatik . <span class="o">&amp;&amp;</span> docker run -p <span class="m">8888</span>:8888 -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/home/musikinformatik musikinformatik
+</pre></div>
+</div>
+<p>while being in the root directory of the repository and click on the appearing link.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Currently it is difficult to run SuperCollider in an headless environment such as Docker,
+therefore SuperCollider is omitted in the docker image.</p>
+<p>Any help on this is appreciated.</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="../../index.html" title="previous page">Musikinformatik SoSe2021</a>
+    <a class='right-next' id="next-link" href="../../00_python_basics/00_01-data-types.html" title="next page">Data types</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dennis Scheiba<br/>
+        
+            &copy; Copyright 2021, Dennis Scheiba.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
