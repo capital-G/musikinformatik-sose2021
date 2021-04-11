@@ -182,6 +182,11 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#binder">
+   Binder
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#repository-setup">
    Repository setup
   </a>
@@ -231,6 +236,25 @@
   <div class="section" id="environment-setup">
 <h1>Environment setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h1>
 <p>This document will lead you through the setup so one can run the code on a local machine.</p>
+<div class="section" id="binder">
+<h2>Binder<a class="headerlink" href="#binder" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://mybinder.org/">Binder</a> is a service in which lets you use
+computational resources from big tech companies free of charge and
+without any registering or setup.
+Click <a class="reference external" href="https://mybinder.org/v2/gh/capital-G/musikinformatik-sose2021/main?urlpath=lab">here</a> to
+use a <em>Binder</em> instance where everything is set up for you.</p>
+<p>Please have in mind that these machines are free of charge and
+therefore the resources are quite limited and some computations
+will not work because we will rely on some heavy computation.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Currently SuperCollider is not working in this environment as
+this requires a headless version of SuperCollider in Docker
+which is not trivial at this point.</p>
+<p>If somebody knows how to set this up please open a Pull Request.</p>
+</div>
+<p>If you prefer to use your own machine, please continue with this document.</p>
+</div>
 <div class="section" id="repository-setup">
 <h2>Repository setup<a class="headerlink" href="#repository-setup" title="Permalink to this headline">¶</a></h2>
 <p>To copy the course material to the local machine we will use <a class="reference external" href="https://git-scm.com/">git</a>.
@@ -372,7 +396,7 @@ environment variable</p>
 </pre></div>
 </div>
 <p>while being in the root directory of the repository and click on the appearing link.</p>
-<div class="admonition-todo admonition" id="id1">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Currently it is difficult to run SuperCollider in an headless environment such as Docker,
 therefore SuperCollider is omitted in the docker image.</p>
