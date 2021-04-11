@@ -1,9 +1,7 @@
 Environment setup
 =================
 
-In order to run and edit the course material on a local machine one needs to install
-
-* Python 3.8 with pip3 - a good instruction can be found `here <https://realpython.com/installing-python>`_
+This document will lead you through the setup so one can run the code on a local machine.
 
 Repository setup
 ----------------
@@ -53,7 +51,7 @@ Python setup
 ------------
 
 Please make sure you have installed *Python >=3.7*, *pip3* and *virtualenv* on your machine.
-A good guide on how to install *Python* on your machine can be found `here <https://realpython.com/installing-python/>`_.
+A good guide on how to install *Python* on your machine can be found `here <https://realpython.com/installing-python/>`__.
 
 After a sucessful installation please check that you have the following versions.
 
