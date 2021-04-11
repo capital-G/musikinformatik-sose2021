@@ -3,6 +3,29 @@ Environment setup
 
 This document will lead you through the setup so one can run the code on a local machine.
 
+Binder
+------
+
+`Binder <https://mybinder.org/>`__ is a service in which lets you use 
+computational resources from big tech companies free of charge and
+without any registering or setup.
+Click `here <https://mybinder.org/v2/gh/capital-G/musikinformatik-sose2021/main?urlpath=lab>`__ to
+use a *Binder* instance where everything is set up for you.
+
+Please have in mind that these machines are free of charge and
+therefore the resources are quite limited and some computations
+will not work because we will rely on some heavy computation.
+
+.. todo::
+
+  Currently SuperCollider is not working in this environment as
+  this requires a headless version of SuperCollider in Docker
+  which is not trivial at this point.
+
+  If somebody knows how to set this up please open a Pull Request.
+
+If you prefer to use your own machine, please continue with this document.
+
 Repository setup
 ----------------
 
