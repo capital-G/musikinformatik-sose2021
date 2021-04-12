@@ -67,3 +67,15 @@ html_static_path = ['docs/_static']
 html_title = "Musikinformatik SoSe2021"
 
 todo_include_todos = True
+
+html_theme_options = {
+    "use_edit_page_button": True,
+    "github_url": "https://github.com/capital-G/musikinformatik-sose2021",
+}
+
+html_context = {
+    "github_user": "capital-G",
+    "github_repo": "musikinformatik-sose2021",
+    "github_version": "main",
+    "doc_path": "",
+}
