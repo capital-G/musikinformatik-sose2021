@@ -30,9 +30,9 @@ generating sounds.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Basics of Python
+   :caption: Basics
 
-   00_python_basics/00_01-data-types.ipynb
+   docs/basics/python.rst
 
 .. toctree::
    :maxdepth: 2
