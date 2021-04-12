@@ -5,49 +5,49 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data types &#8212; Musikinformatik SoSe2021</title>
+    <title>Python basics &#8212; Musikinformatik SoSe2021</title>
     
-  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
     
   <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     
       
   <link rel="stylesheet"
-    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
   <link rel="stylesheet"
-    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
-    <script src="../_static/thebelab-helper.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Analysing drum patterns from MIDI files" href="../01_midi_drums/01_midi_drums.html" />
-    <link rel="prev" title="Environment setup" href="../docs/course-info/setup.html" />
+    <script src="../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Analysing drum patterns from MIDI files" href="../../01_midi_drums/01_midi_drums.html" />
+    <link rel="prev" title="Environment setup" href="../course-info/setup.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -64,13 +64,13 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../index.html">
+<a class="navbar-brand text-wrap" href="../../index.html">
   
   
   <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
   
 </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form>
@@ -82,20 +82,20 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../docs/course-info/setup.html">
+  <a class="reference internal" href="../course-info/setup.html">
    Environment setup
   </a>
  </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
-  Basics of Python
+  Basics
  </span>
 </p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Data types
+   Python basics
   </a>
  </li>
 </ul>
@@ -106,7 +106,7 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../01_midi_drums/01_midi_drums.html">
+  <a class="reference internal" href="../../01_midi_drums/01_midi_drums.html">
    Analysing drum patterns from MIDI files
   </a>
  </li>
@@ -150,9 +150,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/00_python_basics/00_01-data-types.ipynb.txt"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/docs/basics/python.rst.txt"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.rst</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -183,8 +183,29 @@
         
               <div>
                 
-  <div class="section" id="data-types">
-<h1>Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="python-basics">
+<h1>Python basics<a class="headerlink" href="#python-basics" title="Permalink to this headline">¶</a></h1>
+<p>To not exceed the scope of this course we will refer to external
+resources to learn <em>Python</em>.
+As we are focussing on local experiments we do not need to
+rely on advanced software engineering skills, although some fundamentals
+are required such as</p>
+<ul class="simple">
+<li><p>Functions</p></li>
+<li><p>Scope of variables</p></li>
+<li><p>Control flows (<code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">for</span></code>)</p></li>
+<li><p>Basic understanding of object oriented programming</p></li>
+</ul>
+<p>Here is a list of online resources that are worth checking out:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://capital-g.github.io/programmierkurs/">Programmierkurs &#64; RSH Düsseldorf</a>
+is a course in german where the basic fundaments of programming are taught using
+the programming language Python.</p></li>
+<li><p><a class="reference external" href="https://realpython.com/">realpython.com</a> is a good website which covers basic
+and advanced topics.</p></li>
+<li><p>The <a class="reference external" href="https://docs.python.org/3/tutorial/index.html">official tutorial</a> is also worth
+checking out.</p></li>
+</ul>
 </div>
 
 
@@ -193,8 +214,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../docs/course-info/setup.html" title="previous page">Environment setup</a>
-    <a class='right-next' id="next-link" href="../01_midi_drums/01_midi_drums.html" title="next page">Analysing drum patterns from MIDI files</a>
+    <a class='left-prev' id="prev-link" href="../course-info/setup.html" title="previous page">Environment setup</a>
+    <a class='right-next' id="next-link" href="../../01_midi_drums/01_midi_drums.html" title="next page">Analysing drum patterns from MIDI files</a>
 
         </div>
         
@@ -217,7 +238,7 @@
     </div>
 
     
-  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
 
 
     
