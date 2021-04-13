@@ -32,6 +32,7 @@ generating sounds.
    :maxdepth: 2
    :caption: Basics
 
+   docs/basics/math.rst
    docs/basics/python.rst
 
 .. toctree::
