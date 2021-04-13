@@ -81,11 +81,30 @@ After a sucessful installation please check that you have the following versions
 .. warning::
 
   Please refrain from *Python 3.9* as this is `not supported by Tensorflow yet <https://github.com/tensorflow/tensorflow/issues/44485>`_.
-  If you use `Homebrew <https://brew.sh/>`_ on OS X you can install *Python 3.8* via
+  If you use `Homebrew <https://brew.sh/>`_ on macOS the complete setup procedure looks like
 
   .. code-block:: shell
-
+    
+    # install python 3.8 via homebrew
     brew install python@3.8
+    # check if python 3.8 was installed properly - if it worked the version will be shown
+    /usr/local/opt/python@3.8/bin/python3 --version
+    # install virtualenv on the system
+    pip3 install virtualenv
+    # assuming git is installed - skip if you already done this
+    git clone https://github.com/capital-G/musikinformatik-sose2021.git
+    # access the created folder
+    cd musikinformatik_sose2021
+    # lets make sure we start with a clean venv
+    rm -rf venv
+    # now lets create a new venv with the specified python executable
+    virtualenv --python=/usr/local/opt/python@3.8/bin/python3 venv
+    # activate the venv - something like (venv) will appear in the command line
+    source venv/bin/activate
+    # install dependencies into virtual environment
+    pip3 install -r requirements.txt
+    # start jupyter lab from virtual environment
+    jupyter lab
 
 .. code-block:: shell
 
@@ -129,12 +148,6 @@ After a sucessful installation please check that you have the following versions
   .. code-block:: shell
     
     pip3 install -r requirements.txt
-
-* Register your created environment in the *Jupyter Lab* instance
-
-  .. code-block:: shell
-
-    ipython kernel install --user --name=musikinformatik_sose2021
 
 Start *Jupyter Lab*
 ^^^^^^^^^^^^^^^^^^^

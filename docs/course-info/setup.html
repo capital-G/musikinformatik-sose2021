@@ -302,8 +302,27 @@ A good guide on how to install <em>Python</em> on your machine can be found <a c
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please refrain from <em>Python 3.9</em> as this is <a class="reference external" href="https://github.com/tensorflow/tensorflow/issues/44485">not supported by Tensorflow yet</a>.
-If you use <a class="reference external" href="https://brew.sh/">Homebrew</a> on OS X you can install <em>Python 3.8</em> via</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>brew install python@3.8
+If you use <a class="reference external" href="https://brew.sh/">Homebrew</a> on macOS the complete setup procedure looks like</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install python 3.8 via homebrew</span>
+brew install python@3.8
+<span class="c1"># check if python 3.8 was installed properly - if it worked the version will be shown</span>
+/usr/local/opt/python@3.8/bin/python3 --version
+<span class="c1"># install virtualenv on the system</span>
+pip3 install virtualenv
+<span class="c1"># assuming git is installed - skip if you already done this</span>
+git clone https://github.com/capital-G/musikinformatik-sose2021.git
+<span class="c1"># access the created folder</span>
+<span class="nb">cd</span> musikinformatik_sose2021
+<span class="c1"># lets make sure we start with a clean venv</span>
+rm -rf venv
+<span class="c1"># now lets create a new venv with the specified python executable</span>
+virtualenv --python<span class="o">=</span>/usr/local/opt/python@3.8/bin/python3 venv
+<span class="c1"># activate the venv - something like (venv) will appear in the command line</span>
+<span class="nb">source</span> venv/bin/activate
+<span class="c1"># install dependencies into virtual environment</span>
+pip3 install -r requirements.txt
+<span class="c1"># start jupyter lab from virtual environment</span>
+jupyter lab
 </pre></div>
 </div>
 </div>
@@ -339,11 +358,6 @@ Welcome to <a class="reference external" href="https://en.wikipedia.org/wiki/Dep
 </li>
 <li><p>Install all necessary dependencies by executing</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements.txt
-</pre></div>
-</div>
-</li>
-<li><p>Register your created environment in the <em>Jupyter Lab</em> instance</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ipython kernel install --user --name<span class="o">=</span>musikinformatik_sose2021
 </pre></div>
 </div>
 </li>
