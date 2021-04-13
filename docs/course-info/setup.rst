@@ -130,12 +130,6 @@ After a sucessful installation please check that you have the following versions
     
     pip3 install -r requirements.txt
 
-* Register your created environment in the *Jupyter Lab* instance
-
-  .. code-block:: shell
-
-    ipython kernel install --user --name=musikinformatik_sose2021
-
 Start *Jupyter Lab*
 ^^^^^^^^^^^^^^^^^^^
 
