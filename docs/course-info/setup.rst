@@ -24,8 +24,6 @@ will not work because we will rely on some heavy computation.
 
   If somebody knows how to set this up please open a Pull Request.
 
-If you prefer to use your own machine, please continue with this document.
-
 Repository setup
 ----------------
 
@@ -73,62 +71,64 @@ for the install instructions of SuperCollider.
 Python setup
 ------------
 
-Please make sure you have installed *Python >=3.7*, *pip3* and *virtualenv* on your machine.
+Please make sure you have installed *Python 3.8*, *pip3* and *virtualenv* on your machine.
 A good guide on how to install *Python* on your machine can be found `here <https://realpython.com/installing-python/>`__.
-
-After a sucessful installation please check that you have the following versions.
 
 .. warning::
 
   Please refrain from *Python 3.9* as this is `not supported by Tensorflow yet <https://github.com/tensorflow/tensorflow/issues/44485>`_.
-  If you use `Homebrew <https://brew.sh/>`_ on macOS the complete setup procedure looks like
+  The default homebrew setup will install the latest Python version which is 3.9 which will not work for our experiments.
+  If you use `Homebrew <https://brew.sh/>`_ on macOS you can install version 3.8 by executing 
 
   .. code-block:: shell
     
-    # install python 3.8 via homebrew
     brew install python@3.8
-    # check if python 3.8 was installed properly - if it worked the version will be shown
-    /usr/local/opt/python@3.8/bin/python3 --version
-    # install virtualenv on the system
+
+* Install *virtualenv* by running
+
+  .. code-block:: shell
+
     pip3 install virtualenv
-    # assuming git is installed - skip if you already done this
-    git clone https://github.com/capital-G/musikinformatik-sose2021.git
-    # access the created folder
-    cd musikinformatik_sose2021
-    # lets make sure we start with a clean venv
-    rm -rf venv
-    # now lets create a new venv with the specified python executable
-    virtualenv --python=/usr/local/opt/python@3.8/bin/python3 venv
-    # activate the venv - something like (venv) will appear in the command line
-    source venv/bin/activate
-    # install dependencies into virtual environment
-    pip3 install -r requirements.txt
-    # start jupyter lab from virtual environment
-    jupyter lab
+  
+  in a terminal.
+  A virtual environment will allow us to have a separate installation of Python for
+  every project.
 
-.. code-block:: shell
+* After a successful installation please check that you have the following 
 
-  python3 --version
-  # Python 3.8.2 - should be Python3 and 3.7 at least
+  .. code-block:: shell
 
-  pip3 --version
-  # pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip
-  # just about any pip3 version will be fine
+    python3 --version
+    # Python 3.8.x
+    # macOS users who installed python 3.8 via homebrew should check
+    # /usr/local/opt/python@3.8/bin/python3 --version
 
-  virtualenv --version
-  # virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py
-  # just about any virtualenv version will be fine - make sure that it refers to your
-  # python3 folder from above and not to e.g. python2
+    pip3 --version
+    # pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip
+    # just about any pip3 version will be fine
+
+    virtualenv --version
+    # virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py
+    # just about any virtualenv version will be fine - make sure that it refers to your
+    # python3 folder from above and not to e.g. python2
 
 * Go to the root folder of the repository (see :ref:`Repository setup`) with a shell and execute
   the following commands in this folder.
+  This step is crucial as otherwise the next commands will do not what is intended.
 
 * Create a new virtual environment in the folder `venv` by executing
   
   .. code-block:: shell
 
     virtualenv venv
-  
+
+  .. warning::
+
+    macOS users who installed python 3.8 with homebrew should instead call
+    
+    .. code-block:: shell
+      
+      virtualenv --python=/usr/local/opt/python@3.8/bin/python3 venv
 
   and activate the environment by executing
   
@@ -161,21 +161,23 @@ Start *Jupyter Lab*
 
     source venv/bin/activate
 
-  while being in the root directory of this repository.
-
 * Start *Jupyter Lab* by executing
   
   .. code-block:: shell
 
     jupyter lab
 
-* To shut down the *Jupyter Lab* server enter the keyboard combination of `<Ctrl> + c` 
+* To shut down the *Jupyter Lab* server enter the keyboard combination of ``<Ctrl> + c``
   in the shell window in which the Jupyter server is running.
   A prompt will appear in which one has to verify that one wants to shut down the
-  server by entering `y`.
+  server by entering ``y``.
 
 Documentation
 ^^^^^^^^^^^^^
+
+.. admonition:: Note
+
+  This is only an optional step if you want to participate in improving the course material.
 
 In order to build the documentation locally one also needs to install its dependencies by executing the
 following command in the root directory of the repository (see :ref:`Repository setup`)
