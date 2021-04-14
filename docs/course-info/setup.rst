@@ -68,6 +68,16 @@ SuperCollider setup
 Please refer to the `SuperCollider download page <https://supercollider.github.io/download>`_
 for the install instructions of SuperCollider.
 
+When working with macOS we assume that you have installed SuperCollider in ``/Applications/SuperCollider`` so
+the following command should yield the version number of SuperCollider
+
+.. code-block:: shell
+
+  /Applications/SuperCollider.app/Contents/MacOS/sclang -v
+
+If you have installed SuperCollider in a different location you can set the environment variable ``SCLANG_PATH`` to the
+path where your *sclang* executable is located.
+
 Python setup
 ------------
 
