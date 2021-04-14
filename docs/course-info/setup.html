@@ -258,7 +258,6 @@ this requires a headless version of SuperCollider in Docker
 which is not trivial at this point.</p>
 <p>If somebody knows how to set this up please open a Pull Request.</p>
 </div>
-<p>If you prefer to use your own machine, please continue with this document.</p>
 </div>
 <div class="section" id="repository-setup">
 <h2>Repository setup<a class="headerlink" href="#repository-setup" title="Permalink to this headline">¶</a></h2>
@@ -293,41 +292,41 @@ virtual environment you are in this directory before entering the commands.</p>
 <h2>SuperCollider setup<a class="headerlink" href="#supercollider-setup" title="Permalink to this headline">¶</a></h2>
 <p>Please refer to the <a class="reference external" href="https://supercollider.github.io/download">SuperCollider download page</a>
 for the install instructions of SuperCollider.</p>
+<p>When working with macOS we assume that you have installed SuperCollider in <code class="docutils literal notranslate"><span class="pre">/Applications/SuperCollider</span></code> so
+the following command should yield the version number of SuperCollider</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/Applications/SuperCollider.app/Contents/MacOS/sclang -v
+</pre></div>
+</div>
+<p>If you have installed SuperCollider in a different location you can set the environment variable <code class="docutils literal notranslate"><span class="pre">SCLANG_PATH</span></code> to the
+path where your <em>sclang</em> executable is located.</p>
 </div>
 <div class="section" id="python-setup">
 <h2>Python setup<a class="headerlink" href="#python-setup" title="Permalink to this headline">¶</a></h2>
-<p>Please make sure you have installed <em>Python &gt;=3.7</em>, <em>pip3</em> and <em>virtualenv</em> on your machine.
+<p>Please make sure you have installed <em>Python 3.8</em>, <em>pip3</em> and <em>virtualenv</em> on your machine.
 A good guide on how to install <em>Python</em> on your machine can be found <a class="reference external" href="https://realpython.com/installing-python/">here</a>.</p>
-<p>After a sucessful installation please check that you have the following versions.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please refrain from <em>Python 3.9</em> as this is <a class="reference external" href="https://github.com/tensorflow/tensorflow/issues/44485">not supported by Tensorflow yet</a>.
-If you use <a class="reference external" href="https://brew.sh/">Homebrew</a> on macOS the complete setup procedure looks like</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install python 3.8 via homebrew</span>
-brew install python@3.8
-<span class="c1"># check if python 3.8 was installed properly - if it worked the version will be shown</span>
-/usr/local/opt/python@3.8/bin/python3 --version
-<span class="c1"># install virtualenv on the system</span>
-pip3 install virtualenv
-<span class="c1"># assuming git is installed - skip if you already done this</span>
-git clone https://github.com/capital-G/musikinformatik-sose2021.git
-<span class="c1"># access the created folder</span>
-<span class="nb">cd</span> musikinformatik_sose2021
-<span class="c1"># lets make sure we start with a clean venv</span>
-rm -rf venv
-<span class="c1"># now lets create a new venv with the specified python executable</span>
-virtualenv --python<span class="o">=</span>/usr/local/opt/python@3.8/bin/python3 venv
-<span class="c1"># activate the venv - something like (venv) will appear in the command line</span>
-<span class="nb">source</span> venv/bin/activate
-<span class="c1"># install dependencies into virtual environment</span>
-pip3 install -r requirements.txt
-<span class="c1"># start jupyter lab from virtual environment</span>
-jupyter lab
+The default homebrew setup will install the latest Python version which is 3.9 which will not work for our experiments.
+If you use <a class="reference external" href="https://brew.sh/">Homebrew</a> on macOS you can install version 3.8 by executing</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>brew install python@3.8
 </pre></div>
 </div>
 </div>
+<ul>
+<li><p>Install <em>virtualenv</em> by running</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install virtualenv
+</pre></div>
+</div>
+<p>in a terminal.
+A virtual environment will allow us to have a separate installation of Python for
+every project.</p>
+</li>
+<li><p>After a successful installation please check that you have the following</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 --version
-<span class="c1"># Python 3.8.2 - should be Python3 and 3.7 at least</span>
+<span class="c1"># Python 3.8.x</span>
+<span class="c1"># macOS users who installed python 3.8 via homebrew should check</span>
+<span class="c1"># /usr/local/opt/python@3.8/bin/python3 --version</span>
 
 pip3 --version
 <span class="c1"># pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip</span>
@@ -339,12 +338,20 @@ virtualenv --version
 <span class="c1"># python3 folder from above and not to e.g. python2</span>
 </pre></div>
 </div>
-<ul>
+</li>
 <li><p>Go to the root folder of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>) with a shell and execute
-the following commands in this folder.</p></li>
+the following commands in this folder.
+This step is crucial as otherwise the next commands will do not what is intended.</p></li>
 <li><p>Create a new virtual environment in the folder <cite>venv</cite> by executing</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>virtualenv venv
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>macOS users who installed python 3.8 with homebrew should instead call</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>virtualenv --python<span class="o">=</span>/usr/local/opt/python@3.8/bin/python3 venv
+</pre></div>
+</div>
 </div>
 <p>and activate the environment by executing</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
@@ -371,21 +378,24 @@ and execute the following commands in this folder.</p></li>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
 </pre></div>
 </div>
-<p>while being in the root directory of this repository.</p>
 </li>
 <li><p>Start <em>Jupyter Lab</em> by executing</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jupyter lab
 </pre></div>
 </div>
 </li>
-<li><p>To shut down the <em>Jupyter Lab</em> server enter the keyboard combination of <cite>&lt;Ctrl&gt; + c</cite>
+<li><p>To shut down the <em>Jupyter Lab</em> server enter the keyboard combination of <code class="docutils literal notranslate"><span class="pre">&lt;Ctrl&gt;</span> <span class="pre">+</span> <span class="pre">c</span></code>
 in the shell window in which the Jupyter server is running.
 A prompt will appear in which one has to verify that one wants to shut down the
-server by entering <cite>y</cite>.</p></li>
+server by entering <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
 </ul>
 </div>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>This is only an optional step if you want to participate in improving the course material.</p>
+</div>
 <p>In order to build the documentation locally one also needs to install its dependencies by executing the
 following command in the root directory of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>)</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements-docs.txt
