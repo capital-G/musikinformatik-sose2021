@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Python basics" href="python.html" />
-    <link rel="prev" title="Environment setup" href="../course-info/setup.html" />
+    <link rel="prev" title="Bibliography" href="../bib.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -86,6 +86,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../course-info/setup.html">
    Environment setup
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bib.html">
+   Bibliography
   </a>
  </li>
 </ul>
@@ -226,6 +231,7 @@
 for the basics of machine learning.
 This guide can not even scratch the surface of the tremendous amount of topics which should be covered but we can try nonetheless.</p>
 <p>We will also discuss the notion that is used throughout the course.</p>
+<p>A recommended read for a quick introduction is <span id="id1">[<a class="reference internal" href="../bib.html#id2">Bur19</a>]</span>.</p>
 <div class="section" id="data-structures">
 <h2>Data structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
 <p>We define a <em>scalar</em> <span class="math notranslate nohighlight">\(x\)</span> as a single numerical value and we note it as a single lowercase letter.
@@ -278,9 +284,9 @@ A metric will be a crucial guideline for us when we are working in high, non-ima
 The minimum value across all local minima is defined as the <em>global minimum</em>.
 This will be another crucial point of this course as this is <a class="reference external" href="https://en.wikipedia.org/wiki/Optimization_problem">a research field on its own</a>.
 Much of machine learning is tied to the riddle of finding the best solution to a problem - e.g. finding the lowest cost.</p>
-<div class="figure align-default" id="id3">
+<div class="figure align-default" id="id4">
 <img alt="Global and local maximum/minimum" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Extrema_example.svg" /><p class="caption"><span class="caption-text">Example of a global and local minimum/maximum.
-<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Extrema_example.svg">Source</a></span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Extrema_example.svg">Source</a></span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>Looking at this graph it seems quiet obvious to find the minimum and maximum - but when we working in non-imaginary and viewable dimensions
 we can not take a look at it.
@@ -297,21 +303,21 @@ If we replace <span class="math notranslate nohighlight">\(x\)</span> with <span
 \[\lim_{h \rightarrow 0} = \frac{f(x_0 + h) - f(x_0)}{h} := f'(x_0)\]</div>
 <p>which describes the derivative of <span class="math notranslate nohighlight">\(f\)</span> at the point <span class="math notranslate nohighlight">\(x_0\)</span>.
 Understanding the meaning of this is not trivial but basically it limits the growth of a function within a region.</p>
-<div class="figure align-default" id="id4">
+<div class="figure align-default" id="id5">
 <img alt="Calculation of the tangent" src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Tangent_animation.gif" />
 <p class="caption"><span class="caption-text">By approaching <span class="math notranslate nohighlight">\(\Delta x \rightarrow 0\)</span> we obtain a tangent which describes the growth
 at the point <span class="math notranslate nohighlight">\(x\)</span>.
-<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Tangent_animation.gif">Source</a></span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Tangent_animation.gif">Source</a></span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <p>The derivative of the basic function <span class="math notranslate nohighlight">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> for <span class="math notranslate nohighlight">\(f(x)=x^2\)</span> is <span class="math notranslate nohighlight">\(f'(x)=2x\)</span>.
 The <em>second order derivative</em> <span class="math notranslate nohighlight">\(f''\)</span> is defined as the derivative of the derivative - in our example it is
 <span class="math notranslate nohighlight">\(f''=2\)</span> and <span class="math notranslate nohighlight">\(f''' = f^{(3)} = 0\)</span>.
 The reverse procedure of derivation is called <em>integration</em> of a function.</p>
-<div class="figure align-default" id="id5">
+<div class="figure align-default" id="id6">
 <img alt="Plot of :math:`f(x) = |x|`." src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Absolute_value.svg" /><p class="caption"><span class="caption-text">Not every function is differentable. E.g. <span class="math notranslate nohighlight">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> with <span class="math notranslate nohighlight">\(f(x)=|x|\)</span> is not
 differentable at <span class="math notranslate nohighlight">\(x=0\)</span>.
 This will become important when working with neural networks.
-<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Absolute_value.svg">Source</a></span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Absolute_value.svg">Source</a></span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="working-with-vectors-and-matrices">
@@ -373,9 +379,9 @@ results in a <span class="math notranslate nohighlight">\(m \times p\)</span> ma
 <p>where <span class="math notranslate nohighlight">\(c_{i,j} = \sum_{k=1}^{n} a_{i,k} b_{k, j}\)</span>.</p>
 <p>The multiplication of matrices is not commutative as <span class="math notranslate nohighlight">\(\text{A} \text{B}\)</span> returns a <span class="math notranslate nohighlight">\(m \times p\)</span> matrix but
 <span class="math notranslate nohighlight">\(\text{B} \text{A}\)</span> is not defined if <span class="math notranslate nohighlight">\(m \neq p\)</span>.</p>
-<div class="figure align-default" id="id6">
+<div class="figure align-default" id="id7">
 <img alt="Matrix multiplication" src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Matrix_multiplication_diagram_2.svg" /><p class="caption"><span class="caption-text">A visual representation of matrix multiplication.
-<a class="reference external" href="https://en.wikipedia.org/wiki/File:Matrix_multiplication_diagram_2.svg">Source</a></span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://en.wikipedia.org/wiki/File:Matrix_multiplication_diagram_2.svg">Source</a></span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <p>Now lets take a look at the multiplication of a <span class="math notranslate nohighlight">\(m \times n\)</span> matrix <span class="math notranslate nohighlight">\(\text{A}\)</span> with a <span class="math notranslate nohighlight">\(n \times 1\)</span> column vector <span class="math notranslate nohighlight">\(\text{b}\)</span>.
 We say <em>column vector</em> because for this operation we will simply add a single dimension to <span class="math notranslate nohighlight">\(\text{b}\)</span> so it becomes basically a matrix.</p>
@@ -438,7 +444,7 @@ to a <em>measurable space</em> <span class="math notranslate nohighlight">\(E\)<
 What a <em>measurable space</em> is exactly is <a class="reference external" href="https://en.wikipedia.org/wiki/Measure_(mathematics)">a lecture on its own</a>.
 The <em>realization</em> <span class="math notranslate nohighlight">\(x\)</span> of <span class="math notranslate nohighlight">\(X(\omega) = x\)</span> for <span class="math notranslate nohighlight">\(\omega \in \Omega\)</span> can be regarded as an <em>outcome</em> of an <em>experiment</em>.</p>
 <p>Taking a coin toss as an example: The possible outcomes are <em>heads</em> (0) or <em>tails</em> (1), so <span class="math notranslate nohighlight">\(\Omega_{\text{coin}} = \lbrace 0, 1 \rbrace\)</span>.</p>
-<div class="admonition-todo admonition" id="id1">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>We define the <em>probability</em> that <span class="math notranslate nohighlight">\(X\)</span> has an <em>outcome</em> <span class="math notranslate nohighlight">\(S \subset E\)</span> by</p>
 <div class="math notranslate nohighlight">
@@ -460,9 +466,9 @@ an infinite space of outcomes is <span class="math notranslate nohighlight">\(0\
 But what we can do is describe the likelihood of to observe this particular sample relative to all observable samples.
 A <em>probability density function</em> (pdf) is exactly this and gives us a way to calculate the
 probabilities of a continuous random variables.</p>
-<div class="figure align-default" id="id7">
+<div class="figure align-default" id="id8">
 <img alt="plot of the standard normal distribution" src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg" /><p class="caption"><span class="caption-text">A common probability density function is the <em>standard normal distribution</em>.
-<a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution#/media/File:Standard_deviation_diagram.svg">Source</a></span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution#/media/File:Standard_deviation_diagram.svg">Source</a></span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <em>expectation</em> <span class="math notranslate nohighlight">\(\mathbb{E}[X]\)</span> of a discrete random variable <span class="math notranslate nohighlight">\(X\)</span> with <span class="math notranslate nohighlight">\(\Omega = \{ x_i \}_{i=1}^{m}\)</span> is given by</p>
 <div class="math notranslate nohighlight">
@@ -488,7 +494,7 @@ We can also calculate the expectation for our new dice:</p>
 <p>For a discrete random variable <span class="math notranslate nohighlight">\(X\)</span> we can use</p>
 <div class="math notranslate nohighlight">
 \[\sigma_X = \sqrt{\sum_{\omega \in \Omega} \mathbb{P}(X=\omega) (\omega - \mu_X)^2}\]</div>
-<div class="admonition-todo admonition" id="id2">
+<div class="admonition-todo admonition" id="id3">
 <p class="admonition-title">Todo</p>
 <ul class="simple">
 <li><p>Quantiles</p></li>
@@ -505,7 +511,7 @@ We can also calculate the expectation for our new dice:</p>
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../course-info/setup.html" title="previous page">Environment setup</a>
+    <a class='left-prev' id="prev-link" href="../bib.html" title="previous page">Bibliography</a>
     <a class='right-next' id="next-link" href="python.html" title="next page">Python basics</a>
 
         </div>
