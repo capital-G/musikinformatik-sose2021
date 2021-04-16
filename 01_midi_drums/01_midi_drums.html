@@ -293,7 +293,7 @@ But before we can do this we need to download and understand the dataset.</p>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dl_name</span><span class="si">}</span><span class="s2"> already downloaded to </span><span class="si">{</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">continue</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start downloading </span><span class="si">{</span><span class="n">dl_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - this can take multiple minutes!&quot;</span><span class="p">)</span>
-        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">dl_url</span><span class="p">,</span> <span class="n">dl_path</span><span class="p">)</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">],</span> <span class="n">dl_path</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished downloading&quot;</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">archive_dir</span><span class="p">):</span>
@@ -319,19 +319,19 @@ But before we can do this we need to download and understand the dataset.</p>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">a68ad214e112</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">1898460</span><span class="n">cdb0a</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">38</span>         <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dl_files</span><span class="p">[</span><span class="s2">&quot;midi&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 <span class="g g-Whitespace">     </span><span class="mi">39</span> 
 <span class="ne">---&gt; </span><span class="mi">40</span> <span class="n">download_dataset</span><span class="p">()</span>
 
-<span class="nn">&lt;ipython-input-2-a68ad214e112&gt;</span> in <span class="ni">download_dataset</span><span class="nt">(download_path)</span>
+<span class="nn">&lt;ipython-input-2-1898460cdb0a&gt;</span> in <span class="ni">download_dataset</span><span class="nt">(download_path)</span>
 <span class="g g-Whitespace">     </span><span class="mi">22</span>             <span class="k">continue</span>
 <span class="g g-Whitespace">     </span><span class="mi">23</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start downloading </span><span class="si">{</span><span class="n">dl_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - this can take multiple minutes!&quot;</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">24</span>         <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">dl_url</span><span class="p">,</span> <span class="n">dl_path</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">24</span>         <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">],</span> <span class="n">dl_path</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">25</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished downloading&quot;</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">26</span> 
 
-<span class="ne">NameError</span>: name &#39;dl_url&#39; is not defined
+<span class="ne">NameError</span>: name &#39;dl_path&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -472,7 +472,7 @@ We need to understand how the information we are interested in is accessible and
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x151b07bb0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x153a30ca0&gt;
     {0.0} &lt;music21.instrument.Flute &#39;WinJammer Demo: Flute&#39;&gt;
     {0.0} &lt;music21.tempo.MetronomeMark allegretto Quarter=106.0&gt;
     {0.0} &lt;music21.key.Key of C major&gt;
@@ -563,6 +563,8 @@ It is a common practice in data science to write a function which either loads t
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span> <span class="o">=</span> <span class="n">load_midi_df</span><span class="p">()</span>
+<span class="c1"># select 15 random samples from our list</span>
+<span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -570,7 +572,347 @@ It is a common practice in data science to write a function which either loads t
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Load dataframe from midi_df.parquet
 </pre></div>
 </div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>81923</th>
+      <td>3.658535</td>
+      <td>True</td>
+      <td>128.780432</td>
+      <td>../datasets/lmd/lmd_full/f/f4b72836981feedb9e1...</td>
+      <td>[harmnica, accordn2, drum, acoubass, pianogrd,...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>175.232953</td>
+    </tr>
+    <tr>
+      <th>171834</th>
+      <td>5.399796</td>
+      <td>True</td>
+      <td>467.992351</td>
+      <td>../datasets/lmd/lmd_full/5/53c9399ebac71119904...</td>
+      <td>[Flutes, Flutes, Oboes, Oboes, Clarinets, Clar...</td>
+      <td>False</td>
+      <td>19.0</td>
+      <td>192.0</td>
+      <td>188.547360</td>
+    </tr>
+    <tr>
+      <th>161502</th>
+      <td>0.600000</td>
+      <td>False</td>
+      <td>38.283333</td>
+      <td>../datasets/lmd/lmd_full/2/212f54d7b9e586147c6...</td>
+      <td>[Untitled]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>194.117647</td>
+    </tr>
+    <tr>
+      <th>39942</th>
+      <td>4.349159</td>
+      <td>True</td>
+      <td>254.776049</td>
+      <td>../datasets/lmd/lmd_full/6/609b19dde84d2374b7d...</td>
+      <td>[S-File, S-File, S-File, S-File, S-File, S-Fil...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>237.529957</td>
+    </tr>
+    <tr>
+      <th>100593</th>
+      <td>4.791044</td>
+      <td>False</td>
+      <td>190.137078</td>
+      <td>../datasets/lmd/lmd_full/d/de4dde0f1e960e41360...</td>
+      <td>[, , , , , ]</td>
+      <td>False</td>
+      <td>0.0</td>
+      <td>192.0</td>
+      <td>170.384180</td>
+    </tr>
+    <tr>
+      <th>44272</th>
+      <td>2.459015</td>
+      <td>True</td>
+      <td>228.161756</td>
+      <td>../datasets/lmd/lmd_full/6/6f74186f4c163863630...</td>
+      <td>[drummix, bass, ac piano, Vocal, back voc, ac ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>242.119770</td>
+    </tr>
+    <tr>
+      <th>15131</th>
+      <td>3.934424</td>
+      <td>True</td>
+      <td>251.814031</td>
+      <td>../datasets/lmd/lmd_full/0/0d8e9c4eb761a3e632b...</td>
+      <td>[TAKE ME HOME                    Bextor/Aller/...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>245.724188</td>
+    </tr>
+    <tr>
+      <th>34735</th>
+      <td>17.142852</td>
+      <td>False</td>
+      <td>340.282369</td>
+      <td>../datasets/lmd/lmd_full/6/6d3149b41d088c63627...</td>
+      <td>[Voice (Alto), Voice (Alto), Voice (Alto), Pia...</td>
+      <td>False</td>
+      <td>6.0</td>
+      <td>96.0</td>
+      <td>84.000025</td>
+    </tr>
+    <tr>
+      <th>45905</th>
+      <td>5.994792</td>
+      <td>True</td>
+      <td>280.114583</td>
+      <td>../datasets/lmd/lmd_full/1/1a931072e21340f256b...</td>
+      <td>[A.PIANO 1, FINGERDBAS, A.PIANO 1, PAN FLUTE, ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>207.446994</td>
+    </tr>
+    <tr>
+      <th>12844</th>
+      <td>3.282020</td>
+      <td>True</td>
+      <td>193.497545</td>
+      <td>../datasets/lmd/lmd_full/0/0a7c38887ba4882921e...</td>
+      <td>[CANDOMBE, PARA, GARDEL, http://fberni.tripod....</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>224.582071</td>
+    </tr>
+    <tr>
+      <th>114123</th>
+      <td>2.792100</td>
+      <td>False</td>
+      <td>100.750126</td>
+      <td>../datasets/lmd/lmd_full/4/455fcb4f4c5ad4d10da...</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>1024.0</td>
+      <td>153.020774</td>
+    </tr>
+    <tr>
+      <th>14339</th>
+      <td>7.961539</td>
+      <td>True</td>
+      <td>330.377789</td>
+      <td>../datasets/lmd/lmd_full/0/029c4baa3089eca3817...</td>
+      <td>[, Bass, Bass, Strings, Melodia, Slowstrings, ...</td>
+      <td>False</td>
+      <td>5.0</td>
+      <td>120.0</td>
+      <td>199.999987</td>
+    </tr>
+    <tr>
+      <th>131099</th>
+      <td>2.538459</td>
+      <td>True</td>
+      <td>51.692256</td>
+      <td>../datasets/lmd/lmd_full/3/353116ea8d2eb4041c9...</td>
+      <td>[MIDI Ch. 1, MIDI Ch. 2, MIDI Drums]</td>
+      <td>False</td>
+      <td>0.0</td>
+      <td>96.0</td>
+      <td>260.000260</td>
+    </tr>
+    <tr>
+      <th>124606</th>
+      <td>9.669701</td>
+      <td>True</td>
+      <td>273.626126</td>
+      <td>../datasets/lmd/lmd_full/3/3574baf9f9cdfa4c3e1...</td>
+      <td>[Rhodes Piano, Synth Bass H, Synth Bass L, Aco...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>207.262310</td>
+    </tr>
+    <tr>
+      <th>136078</th>
+      <td>8.405307</td>
+      <td>True</td>
+      <td>217.860027</td>
+      <td>../datasets/lmd/lmd_full/e/eb59c9f6854d897a03a...</td>
+      <td>[Bass / Acoustic bass, Piano / Rhodes, Melody ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>240.0</td>
+      <td>193.775528</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
+<p>Lets also attach the information about the possible file names.
+A problem we observe here is that we have many possible file names for a single cryptic filename - this is called a <em>1:n</em> relationship and it is not best practice to put such a relation into one dataframe but for now we will do this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_names_loop</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="c1"># we do not use apply as it consumes more memory and</span>
+    <span class="c1"># takes a bit longer</span>
+    <span class="n">original_names</span><span class="p">,</span> <span class="n">num_names</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">md5_hash</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">md5_filenames</span><span class="p">[</span><span class="n">md5_hash</span><span class="p">]</span>
+        <span class="n">original_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">num_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;original_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_names</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;num_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_names</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="n">add_names_loop</span><span class="p">(</span><span class="n">midi_df</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+      <th>original_names</th>
+      <th>num_names</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.818180</td>
+      <td>True</td>
+      <td>22.599409</td>
+      <td>../datasets/lmd/lmd_full/9/9fcfccf1c2245c74eb0...</td>
+      <td>[, , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>384.0</td>
+      <td>239.659814</td>
+      <td>[Sure.Polyphone.Midi/Poly 1496.mid, Sure.Polyp...</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.904761</td>
+      <td>False</td>
+      <td>26.126684</td>
+      <td>../datasets/lmd/lmd_full/9/9daedd9c5a390069a9c...</td>
+      <td>[reFX Nexus #2 (MIDI)]</td>
+      <td>False</td>
+      <td>0.0</td>
+      <td>96.0</td>
+      <td>220.500143</td>
+      <td>[W/Wildstylez_-_Pleasure_(Original_Mix)__kisga...</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.230769</td>
+      <td>False</td>
+      <td>188.999402</td>
+      <td>../datasets/lmd/lmd_full/9/94078e08bc697e5ec56...</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>256.0</td>
+      <td>253.787091</td>
+      <td>[Classical_Guitar_classicalguitarmidi.com_MIDI...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NaN</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>../datasets/lmd/lmd_full/9/911cd08fa1fae36e5e0...</td>
+      <td>None</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>[s/sou.mid, S/sou.mid]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.095833</td>
+      <td>False</td>
+      <td>6.475000</td>
+      <td>../datasets/lmd/lmd_full/9/9d37fb70bc6886e3987...</td>
+      <td>[MIDI out]</td>
+      <td>False</td>
+      <td>0.0</td>
+      <td>96.0</td>
+      <td>214.285714</td>
+      <td>[S/Sj - I Need U.mid]</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Lets examine the extracted metadata of those files.</p>
 <div class="cell docutils container">
@@ -581,7 +923,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_22_0.png" src="../_images/01_midi_drums_22_0.png" />
+<img alt="../_images/01_midi_drums_24_0.png" src="../_images/01_midi_drums_24_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -592,7 +934,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_23_0.png" src="../_images/01_midi_drums_23_0.png" />
+<img alt="../_images/01_midi_drums_25_0.png" src="../_images/01_midi_drums_25_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -602,7 +944,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_24_0.png" src="../_images/01_midi_drums_24_0.png" />
+<img alt="../_images/01_midi_drums_26_0.png" src="../_images/01_midi_drums_26_0.png" />
 </div>
 </div>
 <p>We see that the <code class="docutils literal notranslate"><span class="pre">end_time</span></code> has some extreme values that are probably wrong - lets inspect those examples closer to see if we can see a pattern.</p>
@@ -640,6 +982,8 @@ It is a common practice in data science to write a function which either loads t
       <th>num_time_signature_changes</th>
       <th>resolution</th>
       <th>tempo</th>
+      <th>original_names</th>
+      <th>num_names</th>
     </tr>
   </thead>
   <tbody>
@@ -654,6 +998,8 @@ It is a common practice in data science to write a function which either loads t
       <td>2.0</td>
       <td>120.0</td>
       <td>225.041860</td>
+      <td>[s/sunroad.mid, S/sunroad.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>28204</th>
@@ -666,6 +1012,8 @@ It is a common practice in data science to write a function which either loads t
       <td>9.0</td>
       <td>96.0</td>
       <td>220.109820</td>
+      <td>[FErnszt/Olala.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>69901</th>
@@ -678,6 +1026,8 @@ It is a common practice in data science to write a function which either loads t
       <td>7.0</td>
       <td>96.0</td>
       <td>229.041171</td>
+      <td>[FErnszt/Swingin.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>26973</th>
@@ -690,6 +1040,8 @@ It is a common practice in data science to write a function which either loads t
       <td>1.0</td>
       <td>192.0</td>
       <td>144.311366</td>
+      <td>[Clapton Eric/Bellbottom Blues.mid, Various Ar...</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>24515</th>
@@ -702,6 +1054,8 @@ It is a common practice in data science to write a function which either loads t
       <td>13.0</td>
       <td>192.0</td>
       <td>181.059483</td>
+      <td>[K/Kevin Parent Les Doigts 2.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>47026</th>
@@ -714,6 +1068,8 @@ It is a common practice in data science to write a function which either loads t
       <td>1.0</td>
       <td>120.0</td>
       <td>216.170531</td>
+      <td>[L/Les Lacs Du Conemara.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>129390</th>
@@ -726,6 +1082,8 @@ It is a common practice in data science to write a function which either loads t
       <td>1.0</td>
       <td>120.0</td>
       <td>216.170531</td>
+      <td>[L/Les Lacs Du Connemara Michel Sardou.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>52962</th>
@@ -738,6 +1096,8 @@ It is a common practice in data science to write a function which either loads t
       <td>1.0</td>
       <td>192.0</td>
       <td>263.729424</td>
+      <td>[Diversen Klassiek/DR_G.MID, D/DR_G.MID]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>81576</th>
@@ -750,6 +1110,8 @@ It is a common practice in data science to write a function which either loads t
       <td>3.0</td>
       <td>384.0</td>
       <td>179.936115</td>
+      <td>[p/piensami.mid, P/piensami.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>65135</th>
@@ -762,6 +1124,8 @@ It is a common practice in data science to write a function which either loads t
       <td>1.0</td>
       <td>120.0</td>
       <td>190.305001</td>
+      <td>[Diversen Kerst Muziek Traditional/O-Little-To...</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
@@ -776,7 +1140,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_28_0.png" src="../_images/01_midi_drums_28_0.png" />
+<img alt="../_images/01_midi_drums_30_0.png" src="../_images/01_midi_drums_30_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">beat_start</span></code> looks ok, although we also should include some filtering here.</p>
@@ -787,7 +1151,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_30_0.png" src="../_images/01_midi_drums_30_0.png" />
+<img alt="../_images/01_midi_drums_32_0.png" src="../_images/01_midi_drums_32_0.png" />
 </div>
 </div>
 <p>It is interesting to see that 95% of our examples are in the 200 bpm range - maybe they were transcribed in half time or we have a skewed dataset towards fast music which would be an interesting exploration what kind of music gets transcribed to MIDI files.</p>
@@ -802,7 +1166,7 @@ We have an expectation of our data which can help us to see if the data makes se
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_32_0.png" src="../_images/01_midi_drums_32_0.png" />
+<img alt="../_images/01_midi_drums_34_0.png" src="../_images/01_midi_drums_34_0.png" />
 </div>
 </div>
 <p>Resolution corresponds to the <a class="reference external" href="https://en.wikipedia.org/wiki/Pulses_per_quarter_note">PPQN</a> of the MIDI file.
@@ -841,6 +1205,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <th>num_time_signature_changes</th>
       <th>resolution</th>
       <th>tempo</th>
+      <th>original_names</th>
+      <th>num_names</th>
     </tr>
   </thead>
   <tbody>
@@ -855,6 +1221,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>25000.0</td>
       <td>239.221606</td>
+      <td>[b/beethovenalladanza.mid, B/beethovenalladanz...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>45187</th>
@@ -867,6 +1235,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>24576.0</td>
       <td>225.608072</td>
+      <td>[Pop_and_Top40/2 Pac - Changes.mid, Pop_and_To...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>67351</th>
@@ -879,6 +1249,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>2.0</td>
       <td>16384.0</td>
       <td>235.213491</td>
+      <td>[a/amigo3.mid, A/amigo3.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>38884</th>
@@ -891,6 +1263,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>15360.0</td>
       <td>227.500228</td>
+      <td>[R/Refresh_-_A_Step_Too_Far__DJ_Exprice_200809...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>3838</th>
@@ -903,6 +1277,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>15360.0</td>
       <td>246.400246</td>
+      <td>[S/Svenrg Vs Bass T - The Sign (Pulsedriver Vs...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>59166</th>
@@ -915,6 +1291,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>15360.0</td>
       <td>51.375024</td>
+      <td>[F/ferry_corsten__everything_goes__tmf_awards_...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>146384</th>
@@ -927,6 +1305,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>15360.0</td>
       <td>268.000116</td>
+      <td>[D/Decoy_And_Roy_-_Innerlife__DJRenco_Sam_Cera...</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>112102</th>
@@ -939,6 +1319,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>15360.0</td>
       <td>276.000386</td>
+      <td>[K/Kraftwerk_-_Dentaku__RueArsins_201302032206...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>92169</th>
@@ -951,6 +1333,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>15360.0</td>
       <td>213.126196</td>
+      <td>[2/2_Best_Enemies_-_Phases_(TBY_Romantic_Mix)_...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>175242</th>
@@ -963,6 +1347,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>1.0</td>
       <td>15360.0</td>
       <td>280.000280</td>
+      <td>[D/Dusterix - Dusted (CJ Stone Mix).mid]</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -975,7 +1361,7 @@ Everything above 1000 should be suspicious, so lets take a look at those example
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_35_0.png" src="../_images/01_midi_drums_35_0.png" />
+<img alt="../_images/01_midi_drums_37_0.png" src="../_images/01_midi_drums_37_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1012,6 +1398,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <th>num_time_signature_changes</th>
       <th>resolution</th>
       <th>tempo</th>
+      <th>original_names</th>
+      <th>num_names</th>
     </tr>
   </thead>
   <tbody>
@@ -1026,6 +1414,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>959.0</td>
       <td>48.0</td>
       <td>222.143725</td>
+      <td>[S/STRAUSS.MID, S/STRAUSS.MID]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>26776</th>
@@ -1038,6 +1428,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>782.0</td>
       <td>48.0</td>
       <td>199.481296</td>
+      <td>[Hollands/NACHT.MID]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>168045</th>
@@ -1050,6 +1442,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>479.0</td>
       <td>96.0</td>
       <td>242.258977</td>
+      <td>[S/Striving.MID, Midis Diversas/STRIVING.MID, ...</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>60293</th>
@@ -1062,6 +1456,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>424.0</td>
       <td>1024.0</td>
       <td>218.486679</td>
+      <td>[B/beevar2.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>44034</th>
@@ -1074,6 +1470,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>382.0</td>
       <td>1024.0</td>
       <td>228.828269</td>
+      <td>[Schumann/Schuman Toccata op7.mid, Schumann/Sc...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>93896</th>
@@ -1086,6 +1484,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>381.0</td>
       <td>1024.0</td>
       <td>196.251518</td>
+      <td>[S/Sonata - C.MID, Midis Diversas/SONATA - C.M...</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>89587</th>
@@ -1098,6 +1498,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>349.0</td>
       <td>192.0</td>
       <td>207.477311</td>
+      <td>[Jethro-Tull/a passion.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>121888</th>
@@ -1110,6 +1512,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>345.0</td>
       <td>120.0</td>
       <td>165.797267</td>
+      <td>[Schubert/Valses Sentimentales op50 D779.mid, ...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>163342</th>
@@ -1122,6 +1526,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>300.0</td>
       <td>96.0</td>
       <td>231.269832</td>
+      <td>[S/Swept Away.mid, Midis Diversas/swept away.m...</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>26387</th>
@@ -1134,6 +1540,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>296.0</td>
       <td>1024.0</td>
       <td>195.007038</td>
+      <td>[B/beevar1.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>172851</th>
@@ -1146,6 +1554,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>278.0</td>
       <td>1024.0</td>
       <td>179.377942</td>
+      <td>[P/pagavar9.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>93577</th>
@@ -1158,6 +1568,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>278.0</td>
       <td>1024.0</td>
       <td>183.250619</td>
+      <td>[Bartok/Unknown Piano Sonata Mov.3.mid, Bartok...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>37475</th>
@@ -1170,6 +1582,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>276.0</td>
       <td>1024.0</td>
       <td>190.000285</td>
+      <td>[d/dance8.mid, D/dance8.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>7226</th>
@@ -1182,6 +1596,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>275.0</td>
       <td>1024.0</td>
       <td>229.009078</td>
+      <td>[n/night-3.mid, N/night-3.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>16617</th>
@@ -1194,6 +1610,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>267.0</td>
       <td>1024.0</td>
       <td>274.023321</td>
+      <td>[t/tocatacl.mid, T/tocatacl.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>157624</th>
@@ -1206,6 +1624,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>266.0</td>
       <td>1024.0</td>
       <td>234.355089</td>
+      <td>[Bartok/Unknown Piano Sonata Mov.1.mid, Bartok...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>101824</th>
@@ -1218,6 +1638,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>261.0</td>
       <td>1024.0</td>
       <td>186.672066</td>
+      <td>[r/rhapsody05.mid, R/rhapsody05.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>116874</th>
@@ -1230,6 +1652,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>259.0</td>
       <td>1024.0</td>
       <td>254.599908</td>
+      <td>[Rachmaninov/Paganini variations.mid, Rachmani...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>14333</th>
@@ -1242,6 +1666,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>256.0</td>
       <td>1024.0</td>
       <td>231.400347</td>
+      <td>[d/deb8.mid, D/deb8.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>13465</th>
@@ -1254,6 +1680,8 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>227.0</td>
       <td>1024.0</td>
       <td>182.965443</td>
+      <td>[Classical Archives - The Greats (MIDI)/Bartok...</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -1270,7 +1698,7 @@ To keep things simple for now we should maybe allow only songs without any time 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_38_0.png" src="../_images/01_midi_drums_38_0.png" />
+<img alt="../_images/01_midi_drums_40_0.png" src="../_images/01_midi_drums_40_0.png" />
 </div>
 </div>
 <p>We can also take a look at the most common instrument names in our dataset.</p>
@@ -1306,6 +1734,256 @@ Name: instrument_names, dtype: int64
 </div>
 </div>
 </div>
+<p>And also take a look at the most common names of our original filenames.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;num_names&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>beat_start</th>
+      <th>drums</th>
+      <th>end_time</th>
+      <th>file_path</th>
+      <th>instrument_names</th>
+      <th>midi_error</th>
+      <th>num_time_signature_changes</th>
+      <th>resolution</th>
+      <th>tempo</th>
+      <th>original_names</th>
+      <th>num_names</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>105645</th>
+      <td>NaN</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>../datasets/lmd/lmd_full/d/d41d8cd98f00b204e98...</td>
+      <td>None</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>[Mccartney Paul/Bluebird Paul and Linda Mccart...</td>
+      <td>505</td>
+    </tr>
+    <tr>
+      <th>140258</th>
+      <td>NaN</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>../datasets/lmd/lmd_full/e/ea1346344936b7397f2...</td>
+      <td>None</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>[Sure.Polyphone.Midi/Hangon.MID, Sure.Polyphon...</td>
+      <td>116</td>
+    </tr>
+    <tr>
+      <th>3815</th>
+      <td>1.500000</td>
+      <td>True</td>
+      <td>149.996094</td>
+      <td>../datasets/lmd/lmd_full/9/98b7b924eb5c5fcfbd6...</td>
+      <td>[Organ 3 Lead, Organ 3 Harmony, Harmonica, Nyl...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>232.563380</td>
+      <td>[Sure.Polyphone.Midi/Love Me Do.mid, l/loveme0...</td>
+      <td>73</td>
+    </tr>
+    <tr>
+      <th>137550</th>
+      <td>0.000000</td>
+      <td>True</td>
+      <td>368.695560</td>
+      <td>../datasets/lmd/lmd_full/e/e651708cb4e24e60a5b...</td>
+      <td>[Vocals, Guitar 1, Guitar 2, Guitar 3, Guitar ...</td>
+      <td>False</td>
+      <td>13.0</td>
+      <td>120.0</td>
+      <td>238.815999</td>
+      <td>[U/Unforgiven 2.mid, t/theunforgiven2.mid, Met...</td>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th>40890</th>
+      <td>4.210520</td>
+      <td>True</td>
+      <td>263.157500</td>
+      <td>../datasets/lmd/lmd_full/6/697d99bf3aee8effc28...</td>
+      <td>[, , , , , , , , , , , , , , ]</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>192.0</td>
+      <td>228.715629</td>
+      <td>[VARIOUS/U 2 - Don`t You Forget Me.mid, D/Don'...</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>13452</th>
+      <td>0.638298</td>
+      <td>True</td>
+      <td>239.973452</td>
+      <td>../datasets/lmd/lmd_full/0/05607e50402c0bb1a8a...</td>
+      <td>[Percussion, Percussion, Bass, High synth, Flu...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>189.167664</td>
+      <td>[Sure.Polyphone.Midi/Dr - Dre.MID, Sure.Polyph...</td>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>35183</th>
+      <td>3.157890</td>
+      <td>True</td>
+      <td>147.484755</td>
+      <td>../datasets/lmd/lmd_full/6/675fe9788c44ef27d3d...</td>
+      <td>[Fretless Bass, Lead Flute, Aah Double, Ooh 1,...</td>
+      <td>False</td>
+      <td>7.0</td>
+      <td>96.0</td>
+      <td>181.250133</td>
+      <td>[A/Atasteofhoney.mid, a/atasteof.mid, Beatles,...</td>
+      <td>59</td>
+    </tr>
+    <tr>
+      <th>90521</th>
+      <td>2.536842</td>
+      <td>True</td>
+      <td>193.159651</td>
+      <td>../datasets/lmd/lmd_full/c/c507304afe6cddba192...</td>
+      <td>[Flute, Synth Bass, Synth Bass 2, Orch Hit, Ef...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>206.513514</td>
+      <td>[Sure.Polyphone.Midi/15.mid, m/mission-g-g.mid...</td>
+      <td>59</td>
+    </tr>
+    <tr>
+      <th>18774</th>
+      <td>3.485049</td>
+      <td>True</td>
+      <td>121.956351</td>
+      <td>../datasets/lmd/lmd_full/0/07f7181fb5ff6e87cd6...</td>
+      <td>[, , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>201.848937</td>
+      <td>[BeachBoys/Pleasepleaseme.mid, p/please3.mid, ...</td>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>62115</th>
+      <td>4.950000</td>
+      <td>True</td>
+      <td>164.699980</td>
+      <td>../datasets/lmd/lmd_full/8/88666265d8e30cf7ef1...</td>
+      <td>[Fretless E.Bass, Nylon Gtr, Rock Org Lead, Oo...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>208.075417</td>
+      <td>[BeachBoys/Doyouwanttoknowasecret.mid, s/secre...</td>
+      <td>57</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;original_names&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">original_names</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[^a-zA-Z]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">explode</span><span class="p">()</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              1091324
+mid            570786
+midi            56765
+various         42479
+artists         36610
+a               34883
+the             34148
+l               29181
+s               28479
+polyphone       24771
+sure            23089
+i               22765
+m               20958
+e               20792
+t               19164
+midis           19014
+c               18162
+b               17950
+d               17712
+n               17012
+h               15452
+o               15425
+g               13303
+you             13228
+p               12267
+k               12032
+of              11890
+poly            11836
+in              11073
+f               10433
+beatles          9696
+love             9246
+r                8911
+me               8901
+j                8816
+diversen         8643
+my               8172
+to               7585
+divers           7025
+w                6894
+analisadas       6320
+no               6073
+de               5601
+on               5373
+and              5349
+midirip          5017
+it               4853
+bach             4692
+classical        4542
+unsorted         4419
+Name: original_names, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>An interesting aspect of this analyis reveals that the most common words in a text corpora do not often contain much information what the text is about because the grammar structure of the text introduces noise to the dataset.</p>
+<p>There are basic algorithms such as <a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">tf-idf</a> which allows us to filter out the noise by asserting that a word which is common in many documents has little to no meaning (e.g. <em>the</em> or in our case <em>midi</em>) and therefore give it a low score.
+Although if a significant subset of our file names contain a word that is not so common in the other file names (e.g. <em>beatles</em>) this <em>token</em> will receive a high rating.</p>
+<p>For now we dont want to inspect this further but its always good to know such kind of algorithms as it helps to filter out the relevant data.</p>
 <p>Its also good to make some sanity checks on our data.
 One assumption would be that every file in which we did not detect a drum track also does not contain an instrument with the name <em>drums</em>.</p>
 <div class="cell docutils container">
@@ -1346,6 +2024,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <th>num_time_signature_changes</th>
       <th>resolution</th>
       <th>tempo</th>
+      <th>original_names</th>
+      <th>num_names</th>
     </tr>
   </thead>
   <tbody>
@@ -1360,6 +2040,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>192.0</td>
       <td>190.000285</td>
+      <td>[M/Martha My Dear 3.mid, Beatles +GeorgeJohnPa...</td>
+      <td>15</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1372,6 +2054,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>120.0</td>
       <td>120.000180</td>
+      <td>[s/smetmoth.mid, S/smetmoth.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1384,6 +2068,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>120.0</td>
       <td>139.999977</td>
+      <td>[Songs+300/Tunnel_o.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1396,6 +2082,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>192.0</td>
       <td>226.482465</td>
+      <td>[s/seaquest2.mid, S/seaquest2.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1408,9 +2096,13 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>192.0</td>
       <td>204.052854</td>
+      <td>[Pop/SLEGDEHM.MID, PeterGabriel/Sledgehammer6....</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1432,6 +2124,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>192.0</td>
       <td>218.459582</td>
+      <td>[u/unchainedmelody3.mid, U/UnchainedMelody3.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>149</th>
@@ -1444,6 +2138,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>480.0</td>
       <td>211.143695</td>
+      <td>[e/ElectroJam.Mid, E/ElectroJam.Mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>150</th>
@@ -1456,6 +2152,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>192.0</td>
       <td>157.793103</td>
+      <td>[t/tearinhand.mid, T/tearinhand.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>151</th>
@@ -1468,6 +2166,8 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>16.0</td>
       <td>240.0</td>
       <td>284.928064</td>
+      <td>[l/louder.mid, L/louder.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>152</th>
@@ -1480,10 +2180,12 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>1.0</td>
       <td>120.0</td>
       <td>235.685752</td>
+      <td>[Christian/Easyway.mid, Various Artists/easywa...</td>
+      <td>11</td>
     </tr>
   </tbody>
 </table>
-<p>153 rows × 9 columns</p>
+<p>153 rows × 11 columns</p>
 </div></div></div>
 </div>
 <p>Listening to those examples reveal that some of them use another instrument than drums for their drums - either by artistic choice or by mistake.
@@ -1535,6 +2237,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <th>num_time_signature_changes</th>
       <th>resolution</th>
       <th>tempo</th>
+      <th>original_names</th>
+      <th>num_names</th>
     </tr>
   </thead>
   <tbody>
@@ -1549,6 +2253,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>120.0</td>
       <td>224.502048</td>
+      <td>[S/Smooth .mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1561,6 +2267,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>120.0</td>
       <td>184.213982</td>
+      <td>[Sure.Polyphone.Midi/A Winter's Tale.mid, w/wi...</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>10</th>
@@ -1573,6 +2281,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>480.0</td>
       <td>265.636110</td>
+      <td>[E/Enola Gay 63.mid, divers midi 3/OMD_-_Enola...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>11</th>
@@ -1585,6 +2295,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>480.0</td>
       <td>165.000165</td>
+      <td>[z/zombie05.mid, Z/zombie05.mid]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>12</th>
@@ -1597,9 +2309,13 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>192.0</td>
       <td>212.877687</td>
+      <td>[J/J. Rivers Poor Side of Town.mid, divers mid...</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1621,6 +2337,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>480.0</td>
       <td>141.332152</td>
+      <td>[T/taylor_swift-tim_mcgraw.mid]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>178556</th>
@@ -1633,6 +2351,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>240.0</td>
       <td>184.252715</td>
+      <td>[Y/Youvemad L.mid, Y/YOUVEMAD L.mid, Y/YOUVEMA...</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>178557</th>
@@ -1645,6 +2365,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>120.0</td>
       <td>183.172080</td>
+      <td>[R/Roberto Carlos - Propuesta L.mid, Midis Jov...</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>178559</th>
@@ -1657,6 +2379,8 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>96.0</td>
       <td>274.353398</td>
+      <td>[B/Boys 2.mid, b/boys_2.mid, Beatles +GeorgeJo...</td>
+      <td>16</td>
     </tr>
     <tr>
       <th>178560</th>
@@ -1669,10 +2393,12 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>1.0</td>
       <td>96.0</td>
       <td>229.821409</td>
+      <td>[G/Gerry Boulet Deadline.mid]</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
-<p>97615 rows × 9 columns</p>
+<p>97615 rows × 11 columns</p>
 </div></div></div>
 </div>
 <p>We now filtered half of our available examples by just looking at the metadata of the MIDI files.

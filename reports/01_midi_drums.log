@@ -40,7 +40,7 @@ def download_dataset(download_path: str = "../datasets/lmd"):
             print(f"{dl_name} already downloaded to {dl['path']}")
             continue
         print(f"Start downloading {dl_name} to {dl['path']} - this can take multiple minutes!")
-        urllib.request.urlretrieve(dl_url, dl_path)
+        urllib.request.urlretrieve(dl['url'], dl_path)
         print(f"Finished downloading")
     
     if not os.path.isdir(archive_dir):
@@ -61,18 +61,18 @@ download_dataset()
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m<ipython-input-2-a68ad214e112>[0m in [0;36m<module>[0;34m[0m
+[0;32m<ipython-input-2-1898460cdb0a>[0m in [0;36m<module>[0;34m[0m
 [1;32m     38[0m         [0mos[0m[0;34m.[0m[0mremove[0m[0;34m([0m[0mdl_files[0m[0;34m[[0m[0;34m"midi"[0m[0;34m][0m[0;34m[[0m[0;34m"path"[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [1;32m     39[0m [0;34m[0m[0m
 [0;32m---> 40[0;31m [0mdownload_dataset[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [0m
-[0;32m<ipython-input-2-a68ad214e112>[0m in [0;36mdownload_dataset[0;34m(download_path)[0m
+[0;32m<ipython-input-2-1898460cdb0a>[0m in [0;36mdownload_dataset[0;34m(download_path)[0m
 [1;32m     22[0m             [0;32mcontinue[0m[0;34m[0m[0;34m[0m[0m
 [1;32m     23[0m         [0mprint[0m[0;34m([0m[0;34mf"Start downloading {dl_name} to {dl['path']} - this can take multiple minutes!"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 24[0;31m         [0murllib[0m[0;34m.[0m[0mrequest[0m[0;34m.[0m[0murlretrieve[0m[0;34m([0m[0mdl_url[0m[0;34m,[0m [0mdl_path[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 24[0;31m         [0murllib[0m[0;34m.[0m[0mrequest[0m[0;34m.[0m[0murlretrieve[0m[0;34m([0m[0mdl[0m[0;34m[[0m[0;34m'url'[0m[0;34m][0m[0;34m,[0m [0mdl_path[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m     25[0m         [0mprint[0m[0;34m([0m[0;34mf"Finished downloading"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [1;32m     26[0m [0;34m[0m[0m
 
-[0;31mNameError[0m: name 'dl_url' is not defined
-NameError: name 'dl_url' is not defined
+[0;31mNameError[0m: name 'dl_path' is not defined
+NameError: name 'dl_path' is not defined
 
