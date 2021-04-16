@@ -27,6 +27,7 @@ generating sounds.
    :caption: Course information
 
    docs/course-info/setup.rst
+   docs/bib.rst
 
 .. toctree::
    :maxdepth: 2
@@ -40,3 +41,4 @@ generating sounds.
    :caption: Lesson 1
 
    01_midi_drums/01_midi_drums.ipynb
+
