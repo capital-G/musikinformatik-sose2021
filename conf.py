@@ -32,6 +32,7 @@ extensions = [
     'sphinx.ext.todo',
     'myst_nb',
     'jupyter_sphinx',
+    'sphinxcontrib.bibtex',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -79,3 +80,5 @@ html_context = {
     "github_version": "main",
     "doc_path": "",
 }
+
+bibtex_bibfiles = ['refs.bib']

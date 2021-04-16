@@ -6,3 +6,4 @@ jupyter-sphinx
 pydata-sphinx-theme
 MyST-NB
 imageio
+git+https://github.com/mcmtroffaes/sphinxcontrib-bibtex.git

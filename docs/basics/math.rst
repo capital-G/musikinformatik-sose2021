@@ -7,6 +7,8 @@ This guide can not even scratch the surface of the tremendous amount of topics w
 
 We will also discuss the notion that is used throughout the course.
 
+A recommended read for a quick introduction is :cite:p:`2019:burkov`.
+
 Data structures
 ---------------
 
