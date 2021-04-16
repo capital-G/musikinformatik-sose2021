@@ -1,34 +1,78 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/nbclient/client.py", line 1112, in execute
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/nbclient/client.py", line 1112, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
     return just_run(coro(*args, **kwargs))
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
     return loop.run_until_complete(coro)
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
     return future.result()
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/nbclient/client.py", line 553, in async_execute
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/nbclient/client.py", line 553, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/nbclient/client.py", line 857, in async_execute_cell
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/nbclient/client.py", line 857, in async_execute_cell
     self._check_raise_for_error(cell, exec_reply)
-  File "/opt/hostedtoolcache/Python/3.8.8/x64/lib/python3.8/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+  File "/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# select 5 random files
-np.random.choice(midi_files, 5)
+import urllib.request
+import subprocess
+
+def download_dataset(download_path: str = "../datasets/lmd"):
+    os.makedirs(download_path, exist_ok=True)
+    archive_dir = os.path.join(download_path, "lmd_full")
+    
+    dl_files = {
+        "midi": {
+            "path": os.path.join(download_path, "lmd_full.tap.gz"),
+            "url": "http://hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz"
+        },
+        "json": {
+            "path": os.path.join(download_path, "md5_to_path.json"),
+            "url": "http://hog.ee.columbia.edu/craffel/lmd/md5_to_paths.json"
+        },
+    }
+    
+    for dl_name, dl in dl_files.items():
+        if os.path.isfile(dl["path"]) or (dl_name == "midi" and os.path.isdir(archive_dir)):
+            print(f"{dl_name} already downloaded to {dl['path']}")
+            continue
+        print(f"Start downloading {dl_name} to {dl['path']} - this can take multiple minutes!")
+        urllib.request.urlretrieve(dl_url, dl_path)
+        print(f"Finished downloading")
+    
+    if not os.path.isdir(archive_dir):
+        print("Start extracting the files of archive - this will take some minutes")
+        # todo: windows has no tar
+        subprocess.check_output([
+            'tar', '-xzf', dl_files["midi"]["path"],
+            '-C', os.path.join(download_path)
+        ])
+        print("Finished extracting")
+    
+    if os.path.isfile(dl_files["midi"]["path"]):
+        print("Remove archive")
+        os.remove(dl_files["midi"]["path"])
+
+download_dataset()
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValueError[0m                                Traceback (most recent call last)
-[0;32m<ipython-input-3-f0993117107c>[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;31m# select 5 random files[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 2[0;31m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mchoice[0m[0;34m([0m[0mmidi_files[0m[0;34m,[0m [0;36m5[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m<ipython-input-2-a68ad214e112>[0m in [0;36m<module>[0;34m[0m
+[1;32m     38[0m         [0mos[0m[0;34m.[0m[0mremove[0m[0;34m([0m[0mdl_files[0m[0;34m[[0m[0;34m"midi"[0m[0;34m][0m[0;34m[[0m[0;34m"path"[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     39[0m [0;34m[0m[0m
+[0;32m---> 40[0;31m [0mdownload_dataset[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [0m
-[0;32mmtrand.pyx[0m in [0;36mnumpy.random.mtrand.RandomState.choice[0;34m()[0m
+[0;32m<ipython-input-2-a68ad214e112>[0m in [0;36mdownload_dataset[0;34m(download_path)[0m
+[1;32m     22[0m             [0;32mcontinue[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     23[0m         [0mprint[0m[0;34m([0m[0;34mf"Start downloading {dl_name} to {dl['path']} - this can take multiple minutes!"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 24[0;31m         [0murllib[0m[0;34m.[0m[0mrequest[0m[0;34m.[0m[0murlretrieve[0m[0;34m([0m[0mdl_url[0m[0;34m,[0m [0mdl_path[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     25[0m         [0mprint[0m[0;34m([0m[0;34mf"Finished downloading"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     26[0m [0;34m[0m[0m
 
-[0;31mValueError[0m: 'a' cannot be empty unless no samples are taken
-ValueError: 'a' cannot be empty unless no samples are taken
+[0;31mNameError[0m: name 'dl_url' is not defined
+NameError: name 'dl_url' is not defined
 

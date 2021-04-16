@@ -257,33 +257,103 @@ But in order to do this we want to take a look at the quantisation (?) of our pa
 </div>
 <div class="section" id="getting-the-dataset">
 <h2>Getting the dataset<a class="headerlink" href="#getting-the-dataset" title="Permalink to this headline">¶</a></h2>
-<p>As our methods rely on data we need a way to obtain such data.
-Of course we start to get into difficult teritory here from a copyright point of view - so for now we will rely on public domain datasets?</p>
+<p>As our methods rely on data we need a way to obtain such data and this will be on of our first endeavours in this machine learning based workshop.
+Thankfully there are search engines which help us to find data in the internet easily.
+One search results when one searches for <em>midi dataset</em> is <a class="reference external" href="https://colinraffel.com/projects/lmd/">https://colinraffel.com/projects/lmd/</a>.</p>
+<blockquote>
+<div><p>The Lakh MIDI dataset is a collection of 176,581 unique MIDI files, 45,129 of which have been matched and aligned to entries in the Million Song Dataset. […]</p>
+</div></blockquote>
+<p>Of course the cultural skewness of such a dataset is a thing we need to be aware of.
+What kind of music is transcribable into the MIDI format and what kind of music is transcribed as MIDI at all.
+Maybe we can shed some light into the last question by inspecting the dataset.
+But before we can do this we need to download and understand the dataset.</p>
+<p>We use a function which will check if the files are already downloaded and if not will download and extract the directory.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">def</span> <span class="nf">download_dataset</span><span class="p">(</span><span class="n">download_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;../datasets/lmd&quot;</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">download_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">archive_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">download_path</span><span class="p">,</span> <span class="s2">&quot;lmd_full&quot;</span><span class="p">)</span>
+    
+    <span class="n">dl_files</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;midi&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">download_path</span><span class="p">,</span> <span class="s2">&quot;lmd_full.tap.gz&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;json&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">download_path</span><span class="p">,</span> <span class="s2">&quot;md5_to_path.json&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://hog.ee.columbia.edu/craffel/lmd/md5_to_paths.json&quot;</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    
+    <span class="k">for</span> <span class="n">dl_name</span><span class="p">,</span> <span class="n">dl</span> <span class="ow">in</span> <span class="n">dl_files</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dl</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="n">dl_name</span> <span class="o">==</span> <span class="s2">&quot;midi&quot;</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">archive_dir</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dl_name</span><span class="si">}</span><span class="s2"> already downloaded to </span><span class="si">{</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start downloading </span><span class="si">{</span><span class="n">dl_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - this can take multiple minutes!&quot;</span><span class="p">)</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">dl_url</span><span class="p">,</span> <span class="n">dl_path</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished downloading&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">archive_dir</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start extracting the files of archive - this will take some minutes&quot;</span><span class="p">)</span>
+        <span class="c1"># todo: windows has no tar</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span>
+            <span class="s1">&#39;tar&#39;</span><span class="p">,</span> <span class="s1">&#39;-xzf&#39;</span><span class="p">,</span> <span class="n">dl_files</span><span class="p">[</span><span class="s2">&quot;midi&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">],</span>
+            <span class="s1">&#39;-C&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">download_path</span><span class="p">)</span>
+        <span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished extracting&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dl_files</span><span class="p">[</span><span class="s2">&quot;midi&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Remove archive&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dl_files</span><span class="p">[</span><span class="s2">&quot;midi&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+
+<span class="n">download_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Start downloading midi to ../datasets/lmd/lmd_full.tap.gz - this can take multiple minutes!
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">a68ad214e112</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span>         <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dl_files</span><span class="p">[</span><span class="s2">&quot;midi&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span> 
+<span class="ne">---&gt; </span><span class="mi">40</span> <span class="n">download_dataset</span><span class="p">()</span>
+
+<span class="nn">&lt;ipython-input-2-a68ad214e112&gt;</span> in <span class="ni">download_dataset</span><span class="nt">(download_path)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>             <span class="k">continue</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start downloading </span><span class="si">{</span><span class="n">dl_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">dl</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - this can take multiple minutes!&quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">24</span>         <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">dl_url</span><span class="p">,</span> <span class="n">dl_path</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished downloading&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> 
+
+<span class="ne">NameError</span>: name &#39;dl_url&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="parsing-the-dataset">
 <h2>Parsing the dataset<a class="headerlink" href="#parsing-the-dataset" title="Permalink to this headline">¶</a></h2>
 <p>When working with large sets of files the unix utility <a class="reference external" href="https://en.wikipedia.org/wiki/Glob_(programming)">glob</a> comes in handy as we can describe the pattern of the file paths we want to match instead of listing all files.</p>
-<p>When we take a quick look at the data set we see that there are two occurences of common file pattens:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">midi_dataset</span><span class="o">/</span><span class="n">C</span><span class="o">/</span><span class="n">Celine</span> <span class="n">Dion</span> <span class="o">-</span> <span class="p">(</span><span class="n">If</span><span class="o">-</span><span class="n">There</span><span class="o">-</span><span class="n">Was</span><span class="p">)</span> <span class="n">Any</span> <span class="n">Other</span> <span class="n">Way</span><span class="o">.</span><span class="n">mid</span>
-<span class="n">midi_dataset</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">A</span> <span class="n">AH</span><span class="o">.</span><span class="n">The</span> <span class="n">living</span> <span class="n">daylights</span><span class="o">.</span><span class="n">mid</span>
+<p>When we take a quick look at the pattern it seems they all follow a structure like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">../</span><span class="n">datasets</span><span class="o">/</span><span class="n">lmd</span><span class="o">/</span><span class="n">lmd_full</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="n">a0cbb3f083d14d57858c87b26f85873</span><span class="o">.</span><span class="n">mid</span>
 </pre></div>
 </div>
-<p>So we have either</p>
-<ul class="simple">
-<li><p>a single character folder in which <code class="docutils literal notranslate"><span class="pre">.mid</span></code> files are</p></li>
-<li><p>a single character folder with another single character folder in which <code class="docutils literal notranslate"><span class="pre">.mid</span></code> files are</p></li>
-</ul>
-<p>Some googling for <em>glob any depth only extension</em> reveals <a class="reference external" href="https://stackoverflow.com/a/14798263/3475778">this stack overflow answer</a> from which we can now deduce our glob pattern to match the files.</p>
+<p>Soon we will understand why the filename has this cryptic format, but for now we simply want to parse all available files into an array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GLOB_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;../datasets/midi_dataset/**/*.mid&#39;</span>
-<span class="n">midi_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">GLOB_PATTERN</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/lmd/lmd_full/*/*.mid&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in dataset&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 0 midi files in dataset
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 178561 midi files in dataset
 </pre></div>
 </div>
 </div>
@@ -296,15 +366,12 @@ Of course we start to get into difficult teritory here from a copyright point of
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">f0993117107c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># select 5 random files</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-
-<span class="nn">mtrand.pyx</span> in <span class="ni">numpy.random.mtrand.RandomState.choice</span><span class="nt">()</span>
-
-<span class="ne">ValueError</span>: &#39;a&#39; cannot be empty unless no samples are taken
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;../datasets/lmd/lmd_full/4/4a69b1a10e4dbe409ac922de4f6256d8.mid&#39;,
+       &#39;../datasets/lmd/lmd_full/b/b102261b4c27ea58bad4777b5df5be5e.mid&#39;,
+       &#39;../datasets/lmd/lmd_full/3/3a8ccaab480919c35f37fdf08c238e29.mid&#39;,
+       &#39;../datasets/lmd/lmd_full/d/dc6416232e05b3d44fb62007ca84b474.mid&#39;,
+       &#39;../datasets/lmd/lmd_full/4/4fb744a04c1afbb0309b581410b33363.mid&#39;],
+      dtype=&#39;&lt;U63&#39;)
 </pre></div>
 </div>
 </div>
@@ -313,78 +380,7 @@ Of course we start to get into difficult teritory here from a copyright point of
 We can simply match every file in our dataset directory and show us the differences by using <a class="reference external" href="https://realpython.com/python-sets/">sets</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missed_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/midi_dataset/**/*.*&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> files&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Did not match 765 files
-</pre></div>
-</div>
-</div>
-</div>
-<p>It turns out that we missed some files.
-Lets take a look at them using <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html">random.choice</a> from the numpy library.
-But as this function does not work with sets we need to transform the set to a list.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">missed_files</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;../datasets/midi_dataset/G/G/GuitarDancesOld.MID&#39;,
-       &#39;../datasets/midi_dataset/R/R/RESTLESS HEART.Sweet whiskey lies.MID&#39;,
-       &#39;../datasets/midi_dataset/A/A/andgodcriedTess.MID&#39;,
-       &quot;../datasets/midi_dataset/E/E/EAMON.I love them ho&#39;s.MID&quot;,
-       &#39;../datasets/midi_dataset/L/L/LIQUIDO.Narcotic K.MID&#39;],
-      dtype=&#39;&lt;U114&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<p>It seems there are files missing that have a capitalized file extension <code class="docutils literal notranslate"><span class="pre">.MID</span></code>.</p>
-<p>But lets not rely on the few examples, lets use a <a class="reference external" href="https://realpython.com/list-comprehension-python/">list comprehension</a> to filter out all examples that are not ending in a capitalized manner.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.MID&#39;</span><span class="p">)]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../datasets/midi_dataset/R/R/rhapsodyinblue.midi&#39;,
- &#39;../datasets/midi_dataset/W/W/Wollt ihr das bett in flammen sehen.Mid&#39;,
- &#39;../datasets/midi_dataset/S/S/Stripped [Rammstein].MIDi&#39;,
- &#39;../datasets/midi_dataset/S/S/standbyyourman.midi&#39;,
- &#39;../datasets/midi_dataset/M/M/MM-personal jesus.midi&#39;,
- &#39;../datasets/midi_dataset/S/S/S.ROGERS BAND.Alzati la gonna K.Mid&#39;,
- &#39;../datasets/midi_dataset/L/L/littlebrownjug.midi&#39;,
- &#39;../datasets/midi_dataset/M/M/mike_koglin_&amp;_dj_uto__time__zoik.midi&#39;]
-</pre></div>
-</div>
-</div>
-</div>
-<p>We see that we are still missing the files that have <code class="docutils literal notranslate"><span class="pre">.Mid</span></code>, <code class="docutils literal notranslate"><span class="pre">.midi</span></code> and <code class="docutils literal notranslate"><span class="pre">.MIDi</span></code> as extension.
-If we include these we will now have matched all files of our dataset.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;MID&#39;</span><span class="p">,</span> <span class="s1">&#39;Mid&#39;</span><span class="p">,</span> <span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;MIDi&#39;</span><span class="p">]:</span>
-    <span class="n">MID_GLOB_PATTERN</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;../datasets/midi_dataset/**/*.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span>
-    <span class="n">midi_files</span> <span class="o">+=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">MID_GLOB_PATTERN</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in dataset&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 40477 midi files in dataset
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missed_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/midi_dataset/**/*.*&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missed_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../datasets/lmd/lmd_full/**/*.*&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missed_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> files&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -395,8 +391,53 @@ If we include these we will now have matched all files of our dataset.</p>
 </div>
 </div>
 </div>
-<p>Of course we could have just matched every file in the directory but then we would not have those exercises and one will at one point work with <em>dirty</em> datasets so its good to have at least some experience on how to inspect just the files of our dataset.</p>
-<p>Also it is always a good idea to only include such files into the dataset that we expect because having an unexpected file in the dataset needs to be avoided because this can mess up our results.</p>
+<p>Thankfully we have a rather clean dataset here which does not force us to do file acrobatics.</p>
+<p>But we did not just download MIDI files, we also downloaded a JSON file which we will now take a look into.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../datasets/lmd/md5_to_path.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">md5_filenames</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">md5_filenames</span><span class="p">[</span><span class="s2">&quot;1c83fc02b8c57fbc2605900bb31793fb&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;E/Exaltasamba - Megastar.mid&#39;,
+ &#39;Midis Samba e Pagode/Exaltasamba - Megastar.mid&#39;,
+ &#39;Midis Samba e Pagode/Exaltasamba - Megastar.mid&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>So - why do we have an additional file which tells us the original filename?
+This is actually a good trick in order to avoid duplicates in the dataset - we use a so called hash function which will return a cryptic string depending on the data that we <em>hash</em>.
+Two files will produce the same hash output - so if we simple rename each file to the hash it produces we will automatically delete and detect all duplicates in our dataset.
+This is a common practice if the data was obtained by scraping multiple sources for data.</p>
+<p>Lets just take a look if we can verify this claim.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="n">example_midi_file</span> <span class="o">=</span> <span class="s2">&quot;../datasets/lmd/lmd_full/1/1c83fc02b8c57fbc2605900bb31793fb.mid&quot;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">example_midi_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">file_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">chunk</span> <span class="o">:=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8192</span><span class="p">):</span>
+        <span class="n">file_hash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hash for </span><span class="si">{</span><span class="n">example_midi_file</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">file_hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hash for ../datasets/lmd/lmd_full/1/1c83fc02b8c57fbc2605900bb31793fb.mid is 1c83fc02b8c57fbc2605900bb31793fb
+</pre></div>
+</div>
+</div>
+</div>
+<p>This also gives us a nice additional information - a common MIDI file will probably have lots of different names as it was scraped from multiple files which probably changed the filenames a bit.</p>
 </div>
 <div class="section" id="inspecting-the-data">
 <h2>Inspecting the data<a class="headerlink" href="#inspecting-the-data" title="Permalink to this headline">¶</a></h2>
@@ -419,7 +460,7 @@ We need to understand how the information we are interested in is accessible and
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected ../datasets/midi_dataset/A/A/AreYouAfraidOfTheDark.mid as example MIDI file
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected ../datasets/lmd/lmd_full/d/d3121806fccdc6bbdb727e1685c39bd0.mid as example MIDI file
 </pre></div>
 </div>
 </div>
@@ -431,16 +472,16 @@ We need to understand how the information we are interested in is accessible and
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x10d044d30&gt;
-    {0.0} &lt;music21.instrument.Piano &#39;Theme from Love Story: piano&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0.0} &lt;music21.stream.Part 0x151b07bb0&gt;
+    {0.0} &lt;music21.instrument.Flute &#39;WinJammer Demo: Flute&#39;&gt;
+    {0.0} &lt;music21.tempo.MetronomeMark allegretto Quarter=106.0&gt;
     {0.0} &lt;music21.key.Key of C major&gt;
-    {0.0} &lt;music21.stream.Voice 0x10d5210a0&gt;
-        {0.0} &lt;music21.note.Rest rest&gt;
-        {8.0} &lt;music21.note.Note A&gt;
-        {8.75} &lt;music21.note.Note C&gt;
-        {9.0} &lt;music21.note.Note E&gt;
-        {9.25} &lt;music21.note.Rest rest&gt;
-        {9.3333} &lt;music21.note.Note A&gt;
+    {0.0} &lt;music21.meter.TimeSignature 4/4&gt;
+    {0.0} &lt;music21.note.Rest rest&gt;
+    {52.0} &lt;music21.note.Note F#&gt;
+    {53.0} &lt;music21.note.Note E-&gt;
+    {53.75} &lt;music21.note.Note F#&gt;
+    {54.75} &lt;music21.note.Rest rest&gt;
 </pre></div>
 </div>
 </div>
@@ -453,7 +494,7 @@ From the <a class="reference external" href="https://en.wikipedia.org/wiki/Gener
 <p>The <a class="reference external" href="https://web.mit.edu/music21/doc/moduleReference/moduleConverter.html">docs</a> reveal that <code class="docutils literal notranslate"><span class="pre">music21.converter</span></code> seems to be the proper package.</p>
 <p>We also start annotating our dataset using <a class="reference external" href="https://pandas.pydata.org/">pandas</a> which is a library for data analysis and manipulation to keep track of any metadata the files have.
 Especially the <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html">apply</a> method comes in handy here as we start with a list of MIDI file paths (see <code class="docutils literal notranslate"><span class="pre">load_midi_df</span></code>) and then we want to extend this list with some information from our MIDI file by applying the <code class="docutils literal notranslate"><span class="pre">parse_midi</span></code> function to all rows of our list.</p>
-<p>Additionally we will use <a class="reference external" href="https://en.wikipedia.org/wiki/Cache_(computing)">caching</a> because the meta-analyis of our MIDI files takes about 40 minutes on my MacBook.
+<p>Additionally we will use <a class="reference external" href="https://en.wikipedia.org/wiki/Cache_(computing)">caching</a> because the meta-analyis of our MIDI files takes about 2 hours on my MacBook.
 Caching means that we will store the results on the hard drive so once we calculated them we do not need to re-calculate them because we will just load the files from the hard drive.
 It is a common practice in data science to write a function which either loads the data from a file or generates the file we are using as generating or calculating the data is a step which takes often a long time.</p>
 <div class="cell docutils container">
@@ -493,7 +534,7 @@ It is a common practice in data science to write a function which either loads t
 
 <span class="k">def</span> <span class="nf">load_midi_df</span><span class="p">(</span>
     <span class="n">save_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span><span class="s1">&#39;midi_df.parquet&#39;</span><span class="p">,</span>
-    <span class="n">dataset_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;../datasets/midi_dataset&#39;</span><span class="p">,</span>
+    <span class="n">dataset_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;../datasets/lmd/lmd_full/&#39;</span><span class="p">,</span>
     <span class="n">force_reload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -505,10 +546,7 @@ It is a common practice in data science to write a function which either loads t
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load data to new dataframe&#39;</span><span class="p">)</span>
-    <span class="n">midi_files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;mid&#39;</span><span class="p">,</span> <span class="s1">&#39;MID&#39;</span><span class="p">,</span> <span class="s1">&#39;Mid&#39;</span><span class="p">,</span> <span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;MIDi&#39;</span><span class="p">]:</span>
-        <span class="c1"># maybe os.walk would be better?</span>
-        <span class="n">midi_files</span> <span class="o">+=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s1">/**/*.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">midi_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="s1">&#39;*/*.mid&#39;</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> midi files in folder </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     
     <span class="n">midi_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;file_path&#39;</span><span class="p">:</span> <span class="n">midi_files</span><span class="p">})</span>
@@ -543,7 +581,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_24_0.png" src="../_images/01_midi_drums_24_0.png" />
+<img alt="../_images/01_midi_drums_22_0.png" src="../_images/01_midi_drums_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -554,7 +592,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_25_0.png" src="../_images/01_midi_drums_25_0.png" />
+<img alt="../_images/01_midi_drums_23_0.png" src="../_images/01_midi_drums_23_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -564,7 +602,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_26_0.png" src="../_images/01_midi_drums_26_0.png" />
+<img alt="../_images/01_midi_drums_24_0.png" src="../_images/01_midi_drums_24_0.png" />
 </div>
 </div>
 <p>We see that the <code class="docutils literal notranslate"><span class="pre">end_time</span></code> has some extreme values that are probably wrong - lets inspect those examples closer to see if we can see a pattern.</p>
@@ -606,124 +644,124 @@ It is a common practice in data science to write a function which either loads t
   </thead>
   <tbody>
     <tr>
-      <th>18490</th>
+      <th>84737</th>
+      <td>0.468750</td>
+      <td>False</td>
+      <td>31055.625000</td>
+      <td>../datasets/lmd/lmd_full/f/f7b41341a20201f860c...</td>
+      <td>[Melody, On the Sun Road, Vivian Lai, Joseph L...</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>120.0</td>
+      <td>225.041860</td>
+    </tr>
+    <tr>
+      <th>28204</th>
+      <td>0.352941</td>
+      <td>True</td>
+      <td>25714.187790</td>
+      <td>../datasets/lmd/lmd_full/7/7abab3566b77073f827...</td>
+      <td>[, , , , , , , ]</td>
+      <td>False</td>
+      <td>9.0</td>
+      <td>96.0</td>
+      <td>220.109820</td>
+    </tr>
+    <tr>
+      <th>69901</th>
+      <td>1.263156</td>
+      <td>True</td>
+      <td>20384.791244</td>
+      <td>../datasets/lmd/lmd_full/a/af6b689cfbb13c302bd...</td>
+      <td>[Acoustic Bass, Brass, Grand piano, Rock Organ...</td>
+      <td>False</td>
+      <td>7.0</td>
+      <td>96.0</td>
+      <td>229.041171</td>
+    </tr>
+    <tr>
+      <th>26973</th>
+      <td>1.444671</td>
+      <td>True</td>
+      <td>19652.447880</td>
+      <td>../datasets/lmd/lmd_full/7/73f4f536d3d42293bd7...</td>
+      <td>[tk1, tk2, tk3, tk4, tk10, tk11]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>144.311366</td>
+    </tr>
+    <tr>
+      <th>24515</th>
+      <td>1.016603</td>
+      <td>True</td>
+      <td>19623.803343</td>
+      <td>../datasets/lmd/lmd_full/7/7486b07d9a4060fa614...</td>
+      <td>[Steel Str.Guitar, Fretless Bass, Piano, Violi...</td>
+      <td>False</td>
+      <td>13.0</td>
+      <td>192.0</td>
+      <td>181.059483</td>
+    </tr>
+    <tr>
+      <th>47026</th>
+      <td>31.153327</td>
+      <td>True</td>
+      <td>18872.905893</td>
+      <td>../datasets/lmd/lmd_full/1/15be4e0d9a337fbcc76...</td>
+      <td>[, , , , , , , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>216.170531</td>
+    </tr>
+    <tr>
+      <th>129390</th>
+      <td>31.153327</td>
+      <td>True</td>
+      <td>18872.905893</td>
+      <td>../datasets/lmd/lmd_full/3/3f981f6caf64d373e11...</td>
+      <td>[, , , , , , , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>216.170531</td>
+    </tr>
+    <tr>
+      <th>52962</th>
+      <td>0.410958</td>
+      <td>False</td>
+      <td>15717.097325</td>
+      <td>../datasets/lmd/lmd_full/1/1880f0001f6c5bd6c69...</td>
+      <td>[, , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>263.729424</td>
+    </tr>
+    <tr>
+      <th>81576</th>
+      <td>0.677083</td>
+      <td>True</td>
+      <td>15491.909440</td>
+      <td>../datasets/lmd/lmd_full/f/fce329e7539459a23e4...</td>
+      <td>[A. Bass, Clas. Guit, A. Guitar, OPCIONAL, (Ma...</td>
+      <td>False</td>
+      <td>3.0</td>
+      <td>384.0</td>
+      <td>179.936115</td>
+    </tr>
+    <tr>
+      <th>65135</th>
       <td>3.044301</td>
       <td>True</td>
       <td>14337.531639</td>
-      <td>../datasets/midi_dataset/O/O/O-Little-Town-Of-...</td>
+      <td>../datasets/lmd/lmd_full/8/876255a805247c5fca2...</td>
       <td>[, , , , , , , ]</td>
       <td>False</td>
       <td>1.0</td>
       <td>120.0</td>
       <td>190.305001</td>
-    </tr>
-    <tr>
-      <th>28128</th>
-      <td>1.200000</td>
-      <td>True</td>
-      <td>8076.648605</td>
-      <td>../datasets/midi_dataset/D/D/DION.Move any mou...</td>
-      <td>[Room2/Chorus3, Room2/Chorus3, Room2/Chorus3, ...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>231.740783</td>
-    </tr>
-    <tr>
-      <th>4909</th>
-      <td>1.999998</td>
-      <td>True</td>
-      <td>6100.739733</td>
-      <td>../datasets/midi_dataset/G/G/Give a Little Bea...</td>
-      <td>[temp piano, new piano, , sax solo part 1, sax...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>480.0</td>
-      <td>174.986064</td>
-    </tr>
-    <tr>
-      <th>4581</th>
-      <td>1.200000</td>
-      <td>False</td>
-      <td>4159.858340</td>
-      <td>../datasets/midi_dataset/G/G/GoldbergVariation...</td>
-      <td>[Solo Harpsichord with 2 Manuals, ------------...</td>
-      <td>False</td>
-      <td>28.0</td>
-      <td>480.0</td>
-      <td>194.206702</td>
-    </tr>
-    <tr>
-      <th>22934</th>
-      <td>5.641020</td>
-      <td>True</td>
-      <td>3721.089187</td>
-      <td>../datasets/midi_dataset/J/J/Jean-Michel-Jarre...</td>
-      <td>[SYNTH 1, SYNTH 1, SYNTH 1, SYNTH 2, SYNTH 2, ...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>195.528695</td>
-    </tr>
-    <tr>
-      <th>34903</th>
-      <td>0.750000</td>
-      <td>True</td>
-      <td>3011.975000</td>
-      <td>../datasets/midi_dataset/L/L/LED ZEPPELIN.Than...</td>
-      <td>[acoustic embellishment, main acoustic, hammon...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>161.616162</td>
-    </tr>
-    <tr>
-      <th>34998</th>
-      <td>0.750000</td>
-      <td>True</td>
-      <td>3011.975000</td>
-      <td>../datasets/midi_dataset/L/L/Led_Zeppelin_Than...</td>
-      <td>[acoustic embellishment, main acoustic, hammon...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>161.616162</td>
-    </tr>
-    <tr>
-      <th>6898</th>
-      <td>5.871094</td>
-      <td>False</td>
-      <td>2812.520833</td>
-      <td>../datasets/midi_dataset/T/T/TILLOTSON.11 Pian...</td>
-      <td>[PIANO]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>204.285192</td>
-    </tr>
-    <tr>
-      <th>11505</th>
-      <td>3.505880</td>
-      <td>False</td>
-      <td>2762.016084</td>
-      <td>../datasets/midi_dataset/S/S/Super Robot Taise...</td>
-      <td>[Marimba, Acoustic Guitar, Piano, Violin, Bass...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>1024.0</td>
-      <td>232.714309</td>
-    </tr>
-    <tr>
-      <th>10375</th>
-      <td>3.505880</td>
-      <td>False</td>
-      <td>2762.016084</td>
-      <td>../datasets/midi_dataset/S/S/Super Robot Taise...</td>
-      <td>[Marimba, Acoustic Guitar, Piano, Violin, Bass...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>1024.0</td>
-      <td>232.544595</td>
     </tr>
   </tbody>
 </table>
@@ -738,7 +776,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_30_0.png" src="../_images/01_midi_drums_30_0.png" />
+<img alt="../_images/01_midi_drums_28_0.png" src="../_images/01_midi_drums_28_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">beat_start</span></code> looks ok, although we also should include some filtering here.</p>
@@ -749,7 +787,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_32_0.png" src="../_images/01_midi_drums_32_0.png" />
+<img alt="../_images/01_midi_drums_30_0.png" src="../_images/01_midi_drums_30_0.png" />
 </div>
 </div>
 <p>It is interesting to see that 95% of our examples are in the 200 bpm range - maybe they were transcribed in half time or we have a skewed dataset towards fast music which would be an interesting exploration what kind of music gets transcribed to MIDI files.</p>
@@ -764,7 +802,7 @@ We have an expectation of our data which can help us to see if the data makes se
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_34_0.png" src="../_images/01_midi_drums_34_0.png" />
+<img alt="../_images/01_midi_drums_32_0.png" src="../_images/01_midi_drums_32_0.png" />
 </div>
 </div>
 <p>Resolution corresponds to the <a class="reference external" href="https://en.wikipedia.org/wiki/Pulses_per_quarter_note">PPQN</a> of the MIDI file.
@@ -807,11 +845,11 @@ Everything above 1000 should be suspicious, so lets take a look at those example
   </thead>
   <tbody>
     <tr>
-      <th>32259</th>
+      <th>33871</th>
       <td>2.000000</td>
       <td>False</td>
       <td>135.368840</td>
-      <td>../datasets/midi_dataset/B/B/beethovenalladanz...</td>
+      <td>../datasets/lmd/lmd_full/6/610987ebaf0a326db40...</td>
       <td>[, , , ]</td>
       <td>False</td>
       <td>1.0</td>
@@ -819,112 +857,112 @@ Everything above 1000 should be suspicious, so lets take a look at those example
       <td>239.221606</td>
     </tr>
     <tr>
-      <th>22942</th>
-      <td>3.628112</td>
+      <th>45187</th>
+      <td>1.071428</td>
+      <td>True</td>
+      <td>79.280092</td>
+      <td>../datasets/lmd/lmd_full/1/1283eddbc4ab9042dcc...</td>
+      <td>[, , ]</td>
       <td>False</td>
-      <td>14.512448</td>
-      <td>../datasets/midi_dataset/J/J/Josh_Gallahan_-_1...</td>
-      <td>[Combinator 1, Thor 2]</td>
+      <td>1.0</td>
+      <td>24576.0</td>
+      <td>225.608072</td>
+    </tr>
+    <tr>
+      <th>67351</th>
+      <td>0.250000</td>
+      <td>False</td>
+      <td>26.987488</td>
+      <td>../datasets/lmd/lmd_full/a/a5c6eb45c94d84474cb...</td>
+      <td>[, , ]</td>
+      <td>False</td>
+      <td>2.0</td>
+      <td>16384.0</td>
+      <td>235.213491</td>
+    </tr>
+    <tr>
+      <th>38884</th>
+      <td>0.642857</td>
+      <td>False</td>
+      <td>13.071416</td>
+      <td>../datasets/lmd/lmd_full/6/63ecd58c3d030790cd9...</td>
+      <td>[A Step Too Far]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>185.220302</td>
+      <td>227.500228</td>
     </tr>
     <tr>
-      <th>18750</th>
-      <td>2.482758</td>
+      <th>3838</th>
+      <td>1.499999</td>
       <td>False</td>
-      <td>6.310343</td>
-      <td>../datasets/midi_dataset/O/O/Overload_-_The_An...</td>
-      <td>[]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>257.777842</td>
-    </tr>
-    <tr>
-      <th>3788</th>
-      <td>1.935483</td>
-      <td>False</td>
-      <td>20.403217</td>
-      <td>../datasets/midi_dataset/N/N/Nore_-_LEHHHGOOO_...</td>
-      <td>[Redrum 1, Phastday MOD, RAW, Combinator 1]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>186.000084</td>
-    </tr>
-    <tr>
-      <th>11202</th>
-      <td>11.691164</td>
-      <td>False</td>
-      <td>112.941056</td>
-      <td>../datasets/midi_dataset/S/S/Spaceline_-_sumer...</td>
-      <td>[virus sin, virus gytare]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>222.545692</td>
-    </tr>
-    <tr>
-      <th>1149</th>
-      <td>2.065215</td>
-      <td>False</td>
-      <td>27.608657</td>
-      <td>../datasets/midi_dataset/R/R/Rah_-_Wave__Ambia...</td>
-      <td>[Main Melody]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>249.290672</td>
-    </tr>
-    <tr>
-      <th>28944</th>
-      <td>1.241379</td>
-      <td>False</td>
-      <td>13.241376</td>
-      <td>../datasets/midi_dataset/D/D/dj_tibby__eternit...</td>
+      <td>13.714272</td>
+      <td>../datasets/lmd/lmd_full/9/9f0df0be6a30b48a7a2...</td>
       <td>[SubTractor 1]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
-      <td>290.000073</td>
+      <td>246.400246</td>
     </tr>
     <tr>
-      <th>26966</th>
-      <td>2.142855</td>
+      <th>59166</th>
+      <td>14.014592</td>
       <td>False</td>
-      <td>13.553558</td>
-      <td>../datasets/midi_dataset/D/D/Dj_Cyglas_-_Brain...</td>
-      <td>[Combinator 1]</td>
+      <td>28.029184</td>
+      <td>../datasets/lmd/lmd_full/8/80013e388373fca6ca3...</td>
+      <td>[Strings]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>51.375024</td>
+    </tr>
+    <tr>
+      <th>146384</th>
+      <td>0.671642</td>
+      <td>False</td>
+      <td>7.059232</td>
+      <td>../datasets/lmd/lmd_full/b/b95c22e47fb3dc8855a...</td>
+      <td>[MELODY, BASSLINE]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>268.000116</td>
+    </tr>
+    <tr>
+      <th>112102</th>
+      <td>1.521737</td>
+      <td>False</td>
+      <td>6.847817</td>
+      <td>../datasets/lmd/lmd_full/4/477fed40eecc0fd5051...</td>
+      <td>[Matel disco music maker, Bass, Stylophone 1, ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>276.000386</td>
+    </tr>
+    <tr>
+      <th>92169</th>
+      <td>1.655172</td>
+      <td>False</td>
+      <td>13.237066</td>
+      <td>../datasets/lmd/lmd_full/c/c3e63f5d16ed5a7124a...</td>
+      <td>[2 Best Enemies - Phases]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>15360.0</td>
+      <td>213.126196</td>
+    </tr>
+    <tr>
+      <th>175242</th>
+      <td>1.499999</td>
+      <td>False</td>
+      <td>27.428544</td>
+      <td>../datasets/lmd/lmd_full/5/5e35a0ca0be796095f8...</td>
+      <td>[NN-XT 1, NN19 1, SubTractor 1]</td>
       <td>False</td>
       <td>1.0</td>
       <td>15360.0</td>
       <td>280.000280</td>
-    </tr>
-    <tr>
-      <th>14143</th>
-      <td>0.845070</td>
-      <td>False</td>
-      <td>13.516719</td>
-      <td>../datasets/midi_dataset/A/A/alphazone__rockin...</td>
-      <td>[SYNTH, BASS]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>284.000142</td>
-    </tr>
-    <tr>
-      <th>14129</th>
-      <td>0.206897</td>
-      <td>False</td>
-      <td>26.379304</td>
-      <td>../datasets/midi_dataset/A/A/andy_ling__fixati...</td>
-      <td>[SubTractor 1, SubTractor 2]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>255.513577</td>
     </tr>
   </tbody>
 </table>
@@ -937,7 +975,7 @@ Everything above 1000 should be suspicious, so lets take a look at those example
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_37_0.png" src="../_images/01_midi_drums_37_0.png" />
+<img alt="../_images/01_midi_drums_35_0.png" src="../_images/01_midi_drums_35_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -978,244 +1016,244 @@ Everything above 1000 should be suspicious, so lets take a look at those example
   </thead>
   <tbody>
     <tr>
-      <th>17123</th>
-      <td>7.400000</td>
+      <th>72284</th>
+      <td>5.862357</td>
       <td>True</td>
-      <td>1548.530277</td>
-      <td>../datasets/midi_dataset/F/F/FortunaImperatrix...</td>
-      <td>[- Carmina Burana (1936), , Sequenced by, Rash...</td>
+      <td>204.310165</td>
+      <td>../datasets/lmd/lmd_full/a/a85612fb0992100bded...</td>
+      <td>[STRAUSS, STRAUSS, STRAUSS, STRAUSS, STRAUSS, ...</td>
       <td>False</td>
-      <td>223.0</td>
-      <td>120.0</td>
-      <td>215.422062</td>
+      <td>959.0</td>
+      <td>48.0</td>
+      <td>222.143725</td>
     </tr>
     <tr>
-      <th>17808</th>
-      <td>7.000000</td>
+      <th>26776</th>
+      <td>6.629205</td>
       <td>True</td>
-      <td>1585.133592</td>
-      <td>../datasets/midi_dataset/F/F/Fortuna-Imperatri...</td>
-      <td>[STRINGS, PIZZICATO, STRINGS, FLUTE, FLUTE, OB...</td>
+      <td>229.441685</td>
+      <td>../datasets/lmd/lmd_full/7/7d42a95293cc47bcacf...</td>
+      <td>[NACHT, NACHT, NACHT, NACHT, NACHT, NACHT, NACHT]</td>
       <td>False</td>
-      <td>223.0</td>
-      <td>384.0</td>
-      <td>216.869880</td>
+      <td>782.0</td>
+      <td>48.0</td>
+      <td>199.481296</td>
     </tr>
     <tr>
-      <th>7750</th>
-      <td>0.416666</td>
-      <td>False</td>
-      <td>1472.191436</td>
-      <td>../datasets/midi_dataset/T/T/The-9th-Symphony.mid</td>
-      <td>[]</td>
-      <td>False</td>
-      <td>197.0</td>
-      <td>240.0</td>
-      <td>228.889697</td>
-    </tr>
-    <tr>
-      <th>25871</th>
-      <td>4.625717</td>
-      <td>False</td>
-      <td>381.390677</td>
-      <td>../datasets/midi_dataset/C/C/Chopin_Polonaise_...</td>
-      <td>[]</td>
-      <td>False</td>
-      <td>184.0</td>
-      <td>1024.0</td>
-      <td>192.891986</td>
-    </tr>
-    <tr>
-      <th>40123</th>
-      <td>3.607587</td>
+      <th>168045</th>
+      <td>3.304224</td>
       <td>True</td>
-      <td>547.593732</td>
-      <td>../datasets/midi_dataset/M/M/METHENY.The first...</td>
-      <td>[The First Circle, The First Circle, The First...</td>
+      <td>255.266272</td>
+      <td>../datasets/lmd/lmd_full/5/5693291bc82548fea37...</td>
+      <td>[VIBRA SLAP, VIBRA SLAP, VIBRA SLAP, VIBRA SLA...</td>
       <td>False</td>
-      <td>173.0</td>
+      <td>479.0</td>
       <td>96.0</td>
-      <td>168.527028</td>
+      <td>242.258977</td>
     </tr>
     <tr>
-      <th>31675</th>
-      <td>0.900000</td>
-      <td>True</td>
-      <td>195.862500</td>
-      <td>../datasets/midi_dataset/B/B/BattleStarGalacti...</td>
-      <td>[Piccolo, SoundTrack, SynBrass1, Trombone, Dee...</td>
+      <th>60293</th>
+      <td>5.500000</td>
       <td>False</td>
-      <td>165.0</td>
-      <td>240.0</td>
-      <td>195.342528</td>
+      <td>283.476487</td>
+      <td>../datasets/lmd/lmd_full/8/85b2d4e8637008f6b4e...</td>
+      <td>[, ]</td>
+      <td>False</td>
+      <td>424.0</td>
+      <td>1024.0</td>
+      <td>218.486679</td>
     </tr>
     <tr>
-      <th>10428</th>
+      <th>44034</th>
+      <td>1.550000</td>
+      <td>False</td>
+      <td>407.079384</td>
+      <td>../datasets/lmd/lmd_full/6/69df67cd25dd33c1217...</td>
+      <td>[, ]</td>
+      <td>False</td>
+      <td>382.0</td>
+      <td>1024.0</td>
+      <td>228.828269</td>
+    </tr>
+    <tr>
+      <th>93896</th>
       <td>4.500000</td>
-      <td>True</td>
-      <td>175.500000</td>
-      <td>../datasets/midi_dataset/S/S/sheryl_crow-stron...</td>
-      <td>[Guitar 1, Guitar 2, Guitar 3, Guitar 3 (Bend)...</td>
       <td>False</td>
-      <td>154.0</td>
+      <td>785.261142</td>
+      <td>../datasets/lmd/lmd_full/c/cf1767440a9e43e7193...</td>
+      <td>[© 1996, © 1996]</td>
+      <td>False</td>
+      <td>381.0</td>
+      <td>1024.0</td>
+      <td>196.251518</td>
+    </tr>
+    <tr>
+      <th>89587</th>
+      <td>5.500000</td>
+      <td>True</td>
+      <td>2630.747499</td>
+      <td>../datasets/lmd/lmd_full/c/c0caac5c8affb877d36...</td>
+      <td>[Vocals, Vocals, Vocals, Vocals, Sax &amp; Flute, ...</td>
+      <td>False</td>
+      <td>349.0</td>
       <td>192.0</td>
-      <td>161.471748</td>
+      <td>207.477311</td>
     </tr>
     <tr>
-      <th>30576</th>
-      <td>1.588234</td>
+      <th>121888</th>
+      <td>1.909089</td>
       <td>False</td>
-      <td>211.764600</td>
-      <td>../datasets/midi_dataset/E/E/elitesyncopations...</td>
-      <td>[Instrument 1, Instrument2, Instrument3]</td>
+      <td>1340.480446</td>
+      <td>../datasets/lmd/lmd_full/4/441c229736ca265a78b...</td>
+      <td>[Grand Piano, Instrument17, Instrument18, Inst...</td>
       <td>False</td>
-      <td>151.0</td>
-      <td>1024.0</td>
-      <td>168.053519</td>
-    </tr>
-    <tr>
-      <th>2494</th>
-      <td>2.857140</td>
-      <td>False</td>
-      <td>277.472373</td>
-      <td>../datasets/midi_dataset/I/I/II-glorification_...</td>
-      <td>[Ch  1]</td>
-      <td>False</td>
-      <td>150.0</td>
-      <td>240.0</td>
-      <td>239.161377</td>
-    </tr>
-    <tr>
-      <th>15136</th>
-      <td>4.067256</td>
-      <td>False</td>
-      <td>193.872536</td>
-      <td>../datasets/midi_dataset/A/A/Aladdin(PrinceAli...</td>
-      <td>[BrassSection   Arranged by..., SynthVoice  .....</td>
-      <td>False</td>
-      <td>144.0</td>
-      <td>240.0</td>
-      <td>170.708093</td>
-    </tr>
-    <tr>
-      <th>36753</th>
-      <td>7.052083</td>
-      <td>True</td>
-      <td>259.000000</td>
-      <td>../datasets/midi_dataset/P/P/P.FLOYD.Money K.mid</td>
-      <td>[, , , , , , , , ]</td>
-      <td>False</td>
-      <td>137.0</td>
-      <td>384.0</td>
-      <td>174.734561</td>
-    </tr>
-    <tr>
-      <th>33351</th>
-      <td>2.250000</td>
-      <td>True</td>
-      <td>520.500000</td>
-      <td>../datasets/midi_dataset/B/B/Burzum-Jesus Tod ...</td>
-      <td>[Guitar 1, Guitar 2, Drums]</td>
-      <td>False</td>
-      <td>137.0</td>
-      <td>480.0</td>
-      <td>160.000000</td>
-    </tr>
-    <tr>
-      <th>12305</th>
-      <td>0.789473</td>
-      <td>False</td>
-      <td>440.280071</td>
-      <td>../datasets/midi_dataset/S/S/somewhereintime.m...</td>
-      <td>[Contrabass, Harp, Clarinet, Flute, Slo Vln, V...</td>
-      <td>False</td>
-      <td>136.0</td>
-      <td>1024.0</td>
-      <td>125.156665</td>
-    </tr>
-    <tr>
-      <th>37048</th>
-      <td>7.118636</td>
-      <td>True</td>
-      <td>386.126082</td>
-      <td>../datasets/midi_dataset/P/P/pink_floyd-money.mid</td>
-      <td>[, , , , , , , , , , , , , , , , , , , , ]</td>
-      <td>False</td>
-      <td>133.0</td>
-      <td>240.0</td>
-      <td>201.178534</td>
-    </tr>
-    <tr>
-      <th>14228</th>
-      <td>3.409090</td>
-      <td>True</td>
-      <td>1078.835489</td>
-      <td>../datasets/midi_dataset/A/A/A change of seaso...</td>
-      <td>[Vocal, Keyboards, Keyboards, Keyboards, Keybo...</td>
-      <td>False</td>
-      <td>130.0</td>
-      <td>192.0</td>
-      <td>216.333673</td>
-    </tr>
-    <tr>
-      <th>39234</th>
-      <td>4.288861</td>
-      <td>False</td>
-      <td>1869.334012</td>
-      <td>../datasets/midi_dataset/W/W/WarioWare Smooth ...</td>
-      <td>[SmartMusic SoftSynth]</td>
-      <td>False</td>
-      <td>121.0</td>
-      <td>1024.0</td>
-      <td>212.127846</td>
-    </tr>
-    <tr>
-      <th>20582</th>
-      <td>3.818178</td>
-      <td>True</td>
-      <td>473.181345</td>
-      <td>../datasets/midi_dataset/M/M/Master-Of-The-Pup...</td>
-      <td>[Voice, Guitar 1, Guitar 2, Guitar 3, Guitar S...</td>
-      <td>False</td>
-      <td>119.0</td>
+      <td>345.0</td>
       <td>120.0</td>
-      <td>214.649922</td>
+      <td>165.797267</td>
     </tr>
     <tr>
-      <th>22510</th>
-      <td>3.818178</td>
+      <th>163342</th>
+      <td>3.333332</td>
       <td>True</td>
-      <td>473.181345</td>
-      <td>../datasets/midi_dataset/M/M/METALLICA.Master ...</td>
-      <td>[, , , , , , ]</td>
+      <td>336.817954</td>
+      <td>../datasets/lmd/lmd_full/2/2021875aa51e2374eb5...</td>
+      <td>[Channel 10 Hi-Hats, Channel 10 Hi-Hats, Chann...</td>
       <td>False</td>
-      <td>119.0</td>
-      <td>120.0</td>
-      <td>214.649922</td>
+      <td>300.0</td>
+      <td>96.0</td>
+      <td>231.269832</td>
     </tr>
     <tr>
-      <th>20790</th>
-      <td>2.205907</td>
-      <td>True</td>
-      <td>465.543723</td>
-      <td>../datasets/midi_dataset/M/M/Master-Of-The-Pup...</td>
-      <td>[SYN BASS 1, FRETLESS, DISTORTION, OVERDRIVE, ...</td>
+      <th>26387</th>
+      <td>8.155336</td>
       <td>False</td>
-      <td>119.0</td>
-      <td>384.0</td>
-      <td>222.749016</td>
+      <td>621.914434</td>
+      <td>../datasets/lmd/lmd_full/7/79cc201f43cb9fba7e6...</td>
+      <td>[, ]</td>
+      <td>False</td>
+      <td>296.0</td>
+      <td>1024.0</td>
+      <td>195.007038</td>
     </tr>
     <tr>
-      <th>21199</th>
-      <td>3.818178</td>
-      <td>True</td>
-      <td>473.181345</td>
-      <td>../datasets/midi_dataset/M/M/Metallica - Maste...</td>
-      <td>[Vocals (left), Vocals (right), Guitar 1, Guit...</td>
+      <th>172851</th>
+      <td>2.384100</td>
       <td>False</td>
-      <td>119.0</td>
-      <td>120.0</td>
-      <td>216.377883</td>
+      <td>311.196005</td>
+      <td>../datasets/lmd/lmd_full/5/526e17017303fc5bbc1...</td>
+      <td>[, , ]</td>
+      <td>False</td>
+      <td>278.0</td>
+      <td>1024.0</td>
+      <td>179.377942</td>
+    </tr>
+    <tr>
+      <th>93577</th>
+      <td>1.764705</td>
+      <td>False</td>
+      <td>197.860502</td>
+      <td>../datasets/lmd/lmd_full/c/c883d35b66bbe8e9fb9...</td>
+      <td>[, ]</td>
+      <td>False</td>
+      <td>278.0</td>
+      <td>1024.0</td>
+      <td>183.250619</td>
+    </tr>
+    <tr>
+      <th>37475</th>
+      <td>1.421050</td>
+      <td>False</td>
+      <td>261.473292</td>
+      <td>../datasets/lmd/lmd_full/6/6c605d6883a3968e79d...</td>
+      <td>[Instrument 1, Instrument2, Instrument3, Instr...</td>
+      <td>False</td>
+      <td>276.0</td>
+      <td>1024.0</td>
+      <td>190.000285</td>
+    </tr>
+    <tr>
+      <th>7226</th>
+      <td>3.692304</td>
+      <td>False</td>
+      <td>507.230262</td>
+      <td>../datasets/lmd/lmd_full/9/9b8851148b17284c11e...</td>
+      <td>[Ken's Stuff, © 1996]</td>
+      <td>False</td>
+      <td>275.0</td>
+      <td>1024.0</td>
+      <td>229.009078</td>
+    </tr>
+    <tr>
+      <th>16617</th>
+      <td>2.107142</td>
+      <td>False</td>
+      <td>232.490176</td>
+      <td>../datasets/lmd/lmd_full/0/0c98c404a173d2ae168...</td>
+      <td>[, ]</td>
+      <td>False</td>
+      <td>267.0</td>
+      <td>1024.0</td>
+      <td>274.023321</td>
+    </tr>
+    <tr>
+      <th>157624</th>
+      <td>2.307690</td>
+      <td>False</td>
+      <td>243.575424</td>
+      <td>../datasets/lmd/lmd_full/2/2f5ba581b764e82e991...</td>
+      <td>[, ]</td>
+      <td>False</td>
+      <td>266.0</td>
+      <td>1024.0</td>
+      <td>234.355089</td>
+    </tr>
+    <tr>
+      <th>101824</th>
+      <td>1.714284</td>
+      <td>True</td>
+      <td>651.247812</td>
+      <td>../datasets/lmd/lmd_full/d/d93e70ee04dec17d544...</td>
+      <td>[Acoustic Bass, Flute, String Ensemble 1, Stri...</td>
+      <td>False</td>
+      <td>261.0</td>
+      <td>1024.0</td>
+      <td>186.672066</td>
+    </tr>
+    <tr>
+      <th>116874</th>
+      <td>0.902254</td>
+      <td>False</td>
+      <td>235.054588</td>
+      <td>../datasets/lmd/lmd_full/4/412b3106915479daf12...</td>
+      <td>[, , , ]</td>
+      <td>False</td>
+      <td>259.0</td>
+      <td>1024.0</td>
+      <td>254.599908</td>
+    </tr>
+    <tr>
+      <th>14333</th>
+      <td>0.757575</td>
+      <td>False</td>
+      <td>285.805082</td>
+      <td>../datasets/lmd/lmd_full/0/01e682c8e1a7dd5b0b7...</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>256.0</td>
+      <td>1024.0</td>
+      <td>231.400347</td>
+    </tr>
+    <tr>
+      <th>13465</th>
+      <td>1.571427</td>
+      <td>False</td>
+      <td>105.217389</td>
+      <td>../datasets/lmd/lmd_full/0/02a4ab472b9071825a3...</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>227.0</td>
+      <td>1024.0</td>
+      <td>182.965443</td>
     </tr>
   </tbody>
 </table>
@@ -1232,7 +1270,7 @@ To keep things simple for now we should maybe allow only songs without any time 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_midi_drums_40_0.png" src="../_images/01_midi_drums_40_0.png" />
+<img alt="../_images/01_midi_drums_38_0.png" src="../_images/01_midi_drums_38_0.png" />
 </div>
 </div>
 <p>We can also take a look at the most common instrument names in our dataset.</p>
@@ -1243,26 +1281,26 @@ To keep things simple for now we should maybe allow only songs without any time 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              55743
-Bass           4526
-Piano          4384
-Drums          3510
-DRUMS          3377
-untitled       2684
-Strings        1922
-MELODY         1863
-Guitar         1827
-STRINGS        1764
-A.PIANO 1      1660
-MIDI out       1484
-Melody         1406
-HitBit         1132
-STEEL GTR      1112
-MIDI           1029
-FINGERDBAS      978
-bass            891
--               874
-ACOU BASS       851
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  354674
+Bass               29531
+Drums              19437
+untitled           18471
+Piano              16342
+Strings            10923
+Soprano            10478
+Guitar             10126
+Alto                9368
+Tenor               8987
+DRUMS               8014
+Melody              6693
+WinJammer Demo      6488
+Voice               6270
+Piano (hi)          4905
+Piano (lo)          4900
+Italian             4679
+STRINGS             4003
+bass                3785
+MELODY              3775
 Name: instrument_names, dtype: int64
 </pre></div>
 </div>
@@ -1313,355 +1351,79 @@ One assumption would be that every file in which we did not detect a drum track 
   <tbody>
     <tr>
       <th>0</th>
-      <td>../datasets/midi_dataset/A/A/Auf-Hoher-See-(Me...</td>
-      <td>3.199920</td>
+      <td>../datasets/lmd/lmd_full/0/0093ffc81428aabfa14...</td>
+      <td>2.210523</td>
       <td>False</td>
-      <td>132.327247</td>
-      <td>DRUMS</td>
+      <td>137.151110</td>
+      <td>Drums</td>
       <td>False</td>
-      <td>2.0</td>
-      <td>384.0</td>
-      <td>226.453749</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>190.000285</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>../datasets/midi_dataset/B/B/Bump_-_Im_Rushing...</td>
-      <td>0.468750</td>
+      <td>../datasets/lmd/lmd_full/0/032e298d9560fdbe954...</td>
+      <td>4.423678</td>
       <td>False</td>
-      <td>838.123047</td>
-      <td>Drum</td>
+      <td>114.947196</td>
+      <td>Drums</td>
       <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>181.677419</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>120.000180</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>../datasets/midi_dataset/B/B/Buy_Now_-_For_Sal...</td>
-      <td>0.468750</td>
+      <td>../datasets/lmd/lmd_full/0/043e1c01e58a4bb4499...</td>
+      <td>18.071422</td>
       <td>False</td>
-      <td>26.248047</td>
-      <td>Drum</td>
+      <td>196.778591</td>
+      <td>Drums</td>
       <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>160.914286</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>139.999977</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>../datasets/midi_dataset/C/C/charlie-willnotcr...</td>
-      <td>12.499995</td>
+      <td>../datasets/lmd/lmd_full/0/06f86377b1dbad0ebf0...</td>
+      <td>1.000000</td>
       <td>False</td>
-      <td>175.564166</td>
-      <td>Drum</td>
+      <td>59.483692</td>
+      <td>DRUMS</td>
       <td>False</td>
       <td>1.0</td>
-      <td>96.0</td>
-      <td>144.000058</td>
+      <td>192.0</td>
+      <td>226.482465</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>../datasets/midi_dataset/D/D/Disney_Themes_-_A...</td>
-      <td>1.454544</td>
+      <td>../datasets/lmd/lmd_full/0/078e2cc7c46eb5de726...</td>
+      <td>1.224488</td>
       <td>False</td>
-      <td>145.454400</td>
+      <td>281.211322</td>
       <td>Drums</td>
       <td>False</td>
       <td>1.0</td>
       <td>192.0</td>
-      <td>178.505517</td>
+      <td>204.052854</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>../datasets/midi_dataset/E/E/ENYA.Memory of Tr...</td>
-      <td>26.250000</td>
-      <td>False</td>
-      <td>253.119792</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>191.219512</td>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>../datasets/midi_dataset/E/E/Evermore_-_Its_To...</td>
-      <td>0.468750</td>
-      <td>False</td>
-      <td>26.248047</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>193.794393</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>../datasets/midi_dataset/F/F/from_a_distance.mid</td>
-      <td>0.909090</td>
-      <td>False</td>
-      <td>284.007707</td>
-      <td>drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>191.384782</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>../datasets/midi_dataset/G/G/GABRIEL.Humdrum.mid</td>
-      <td>4.038461</td>
-      <td>False</td>
-      <td>213.389395</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>240.0</td>
-      <td>208.457171</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>../datasets/midi_dataset/G/G/Gran_Turismo_-_Th...</td>
-      <td>0.468750</td>
-      <td>False</td>
-      <td>26.248047</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>188.235294</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>../datasets/midi_dataset/H/H/HereThereAndEvery...</td>
-      <td>2.010425</td>
-      <td>False</td>
-      <td>153.611880</td>
-      <td>drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>175.895765</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>../datasets/midi_dataset/H/H/Hoxton_Whores_-_F...</td>
-      <td>0.468750</td>
-      <td>False</td>
-      <td>26.248047</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>184.000000</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>../datasets/midi_dataset/L/L/Lang-Zal-Hij-Leve...</td>
-      <td>4.444400</td>
-      <td>False</td>
-      <td>26.689548</td>
-      <td>DRUMS</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>384.0</td>
-      <td>142.028818</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>../datasets/midi_dataset/L/L/LullabyOfBroadway...</td>
-      <td>3.210000</td>
-      <td>False</td>
-      <td>155.736667</td>
-      <td>DRUMS</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>226.014166</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>../datasets/midi_dataset/L/L/led_zeppelin-blac...</td>
-      <td>2.363634</td>
-      <td>False</td>
-      <td>267.454278</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>192.0</td>
-      <td>168.113376</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>../datasets/midi_dataset/M/M/M.A.N.D.Y. VS Boo...</td>
-      <td>2.812500</td>
-      <td>False</td>
-      <td>7.498047</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>210.823529</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>../datasets/midi_dataset/N/N/Nine_Inch_Nails_N...</td>
-      <td>1.348314</td>
-      <td>False</td>
-      <td>199.452157</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>182.144758</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>../datasets/midi_dataset/N/N/new-rigged-ship.mid</td>
-      <td>0.185185</td>
-      <td>False</td>
-      <td>35.493792</td>
-      <td>drum</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>192.0</td>
-      <td>162.000162</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>../datasets/midi_dataset/R/R/Rent-AnotherDay04...</td>
-      <td>0.827586</td>
-      <td>False</td>
-      <td>268.034416</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>192.0</td>
-      <td>248.055425</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>../datasets/midi_dataset/R/R/Royksopp_-_What_E...</td>
-      <td>0.468750</td>
-      <td>False</td>
-      <td>26.248047</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>170.666667</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>../datasets/midi_dataset/R/R/rem-loosing_my_re...</td>
-      <td>2.880000</td>
-      <td>False</td>
-      <td>267.602606</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>480.0</td>
-      <td>224.063597</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>../datasets/midi_dataset/S/S/Sander_Van_Doorn_...</td>
-      <td>1.000000</td>
-      <td>False</td>
-      <td>16.000000</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>480.0</td>
-      <td>240.000000</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>../datasets/midi_dataset/S/S/Skrillex_-_FirstO...</td>
-      <td>1.655172</td>
-      <td>False</td>
-      <td>13.241376</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>15360.0</td>
-      <td>228.484906</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>../datasets/midi_dataset/S/S/SmokeOnTheWater2.mid</td>
-      <td>5.739129</td>
-      <td>False</td>
-      <td>322.543398</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>192.0</td>
-      <td>228.841244</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>../datasets/midi_dataset/S/S/Steve_Lawler_-_Th...</td>
-      <td>0.468750</td>
-      <td>False</td>
-      <td>26.248047</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>180.705882</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>../datasets/midi_dataset/S/S/searching_for_lov...</td>
-      <td>5.597514</td>
-      <td>False</td>
-      <td>201.869019</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>192.0</td>
-      <td>206.218950</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>../datasets/midi_dataset/S/S/strollingthruthep...</td>
-      <td>4.705880</td>
-      <td>False</td>
-      <td>117.151902</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>156.268185</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>../datasets/midi_dataset/T/T/Terranova__Austin...</td>
-      <td>0.937500</td>
-      <td>False</td>
-      <td>7.498047</td>
-      <td>Drum</td>
-      <td>False</td>
-      <td>2.0</td>
-      <td>480.0</td>
-      <td>219.428571</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>../datasets/midi_dataset/T/T/TheMemoryOfTrees.mid</td>
-      <td>27.500000</td>
-      <td>False</td>
-      <td>253.119792</td>
-      <td>Drums</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>240.0</td>
-      <td>191.219512</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>../datasets/midi_dataset/U/U/UnchainedMelody3.mid</td>
+      <th>148</th>
+      <td>../datasets/lmd/lmd_full/f/f2a97c0f7fa26244a77...</td>
       <td>11.999988</td>
       <td>False</td>
       <td>213.553358</td>
@@ -1672,43 +1434,56 @@ One assumption would be that every file in which we did not detect a drum track 
       <td>218.459582</td>
     </tr>
     <tr>
-      <th>30</th>
-      <td>../datasets/midi_dataset/W/W/Wavetraxx_-_Stay(...</td>
-      <td>25.588208</td>
+      <th>149</th>
+      <td>../datasets/lmd/lmd_full/f/f6702b2445a6ce9aa8e...</td>
+      <td>1.066667</td>
       <td>False</td>
-      <td>361.872776</td>
-      <td>drum</td>
+      <td>21.241667</td>
+      <td>Drums</td>
       <td>False</td>
       <td>1.0</td>
       <td>480.0</td>
-      <td>256.078322</td>
+      <td>211.143695</td>
     </tr>
     <tr>
-      <th>31</th>
-      <td>../datasets/midi_dataset/W/W/WhenAMAnLovesAWom...</td>
-      <td>4.363636</td>
+      <th>150</th>
+      <td>../datasets/lmd/lmd_full/f/f8a56c3ebc00bfef70d...</td>
+      <td>6.000000</td>
       <td>False</td>
-      <td>264.409069</td>
+      <td>263.847656</td>
       <td>Drums</td>
       <td>False</td>
       <td>1.0</td>
       <td>192.0</td>
-      <td>167.140954</td>
+      <td>157.793103</td>
     </tr>
     <tr>
-      <th>32</th>
-      <td>../datasets/midi_dataset/W/W/Whiskey-Before-Br...</td>
-      <td>2.231370</td>
+      <th>151</th>
+      <td>../datasets/lmd/lmd_full/f/fa06799e6825c6a4095...</td>
+      <td>8.053700</td>
       <td>False</td>
-      <td>142.777340</td>
-      <td>DRUMS</td>
+      <td>383.315852</td>
+      <td>drums</td>
+      <td>False</td>
+      <td>16.0</td>
+      <td>240.0</td>
+      <td>284.928064</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>../datasets/lmd/lmd_full/f/fd37e5d1258ba97fc0e...</td>
+      <td>0.610000</td>
+      <td>False</td>
+      <td>191.795000</td>
+      <td>Drums</td>
       <td>False</td>
       <td>1.0</td>
-      <td>384.0</td>
-      <td>241.847710</td>
+      <td>120.0</td>
+      <td>235.685752</td>
     </tr>
   </tbody>
 </table>
+<p>153 rows × 9 columns</p>
 </div></div></div>
 </div>
 <p>Listening to those examples reveal that some of them use another instrument than drums for their drums - either by artistic choice or by mistake.
@@ -1764,64 +1539,64 @@ With the analysis above we can verify borders of data we want to allow.</p>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>3.771427</td>
-      <td>True</td>
-      <td>191.371349</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Feuer_F...</td>
-      <td>[FEUER FREI, Begin, untitled, untitled, untitl...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>174.319388</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>3.333330</td>
-      <td>True</td>
-      <td>263.333070</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Wilder_...</td>
-      <td>[, , , , , ]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>144.000144</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.582524</td>
-      <td>True</td>
-      <td>37.281536</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Strippe...</td>
-      <td>[Guitar 1, Guitar 1, Bass, Keyboard, Keyboard,...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>480.0</td>
-      <td>206.000096</td>
-    </tr>
-    <tr>
       <th>5</th>
-      <td>2.999997</td>
+      <td>3.652173</td>
       <td>True</td>
-      <td>241.714044</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Sehnsuc...</td>
-      <td>[Keyboard, Gitarre, Gitarre, Voice, Voice, Voi...</td>
+      <td>296.347752</td>
+      <td>../datasets/lmd/lmd_full/9/9d30679480d0e55a07b...</td>
+      <td>[Piano, Organ, Big Brass, Horns, Horns2, Horns...</td>
       <td>False</td>
       <td>1.0</td>
-      <td>480.0</td>
-      <td>276.801683</td>
+      <td>120.0</td>
+      <td>224.502048</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>0.480000</td>
+      <th>9</th>
+      <td>4.547617</td>
       <td>True</td>
-      <td>247.620000</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Das_Mod...</td>
-      <td>[, , , , , , , , ]</td>
+      <td>225.896259</td>
+      <td>../datasets/lmd/lmd_full/9/974f5b2466a5d5670df...</td>
+      <td>[, , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>184.213982</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>5.419184</td>
+      <td>True</td>
+      <td>216.460946</td>
+      <td>../datasets/lmd/lmd_full/9/952df587b9fff5adbeb...</td>
+      <td>[Track 2, Track 3, Track 4, Track 5, Track 6, ...</td>
       <td>False</td>
       <td>1.0</td>
       <td>480.0</td>
-      <td>248.904881</td>
+      <td>265.636110</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>4.363632</td>
+      <td>True</td>
+      <td>310.029993</td>
+      <td>../datasets/lmd/lmd_full/9/93e2cb3a0c36af361bb...</td>
+      <td>[Chorus Guitar, Overdrive Guita, Overdrive Gui...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>165.000165</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>3.545451</td>
+      <td>True</td>
+      <td>222.766823</td>
+      <td>../datasets/lmd/lmd_full/9/97c1f795ffb676dfaa5...</td>
+      <td>[BASS, E.PIANO, GUITAR, STRINGS, PIANO, New Tr...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>212.877687</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1836,68 +1611,68 @@ With the analysis above we can verify borders of data we want to allow.</p>
       <td>...</td>
     </tr>
     <tr>
-      <th>40469</th>
-      <td>11.314543</td>
+      <th>178555</th>
+      <td>5.999994</td>
       <td>True</td>
-      <td>255.182233</td>
-      <td>../datasets/midi_dataset/S/S/S.ROGERS BAND.Alz...</td>
-      <td>[, , , , , , , , , , ]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>192.0</td>
-      <td>234.768362</td>
-    </tr>
-    <tr>
-      <th>40470</th>
-      <td>0.930232</td>
-      <td>True</td>
-      <td>304.030825</td>
-      <td>../datasets/midi_dataset/W/W/Wollt ihr das bet...</td>
-      <td>[Noise1, Noise2, Synth, Drums, Wood, Gtr, Bass...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>257.422650</td>
-    </tr>
-    <tr>
-      <th>40472</th>
-      <td>4.520833</td>
-      <td>True</td>
-      <td>142.000000</td>
-      <td>../datasets/midi_dataset/S/S/standbyyourman.midi</td>
-      <td>[Piano (Melody), Piano (Melody Doubled), Piano...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>240.335799</td>
-    </tr>
-    <tr>
-      <th>40474</th>
-      <td>7.846146</td>
-      <td>True</td>
-      <td>217.845936</td>
-      <td>../datasets/midi_dataset/M/M/MM-personal jesus...</td>
-      <td>[, , , , , , ]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>194.855643</td>
-    </tr>
-    <tr>
-      <th>40475</th>
-      <td>5.806455</td>
-      <td>True</td>
-      <td>183.871075</td>
-      <td>../datasets/midi_dataset/L/L/littlebrownjug.midi</td>
-      <td>[Jazz Kit, Jazz Bass, Piano, Alto Sax 1, Alto ...</td>
+      <td>250.221166</td>
+      <td>../datasets/lmd/lmd_full/5/5bd52f314b616bf50c4...</td>
+      <td>[Track 1, Track 2, Track 3, Track 4, Track 6, ...</td>
       <td>False</td>
       <td>1.0</td>
       <td>480.0</td>
-      <td>239.287342</td>
+      <td>141.332152</td>
+    </tr>
+    <tr>
+      <th>178556</th>
+      <td>0.000000</td>
+      <td>True</td>
+      <td>299.296908</td>
+      <td>../datasets/lmd/lmd_full/5/5eea68ee369af3ee5cc...</td>
+      <td>[You've Made Me So Very Happy, You've Made Me ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>240.0</td>
+      <td>184.252715</td>
+    </tr>
+    <tr>
+      <th>178557</th>
+      <td>2.962596</td>
+      <td>True</td>
+      <td>139.390142</td>
+      <td>../datasets/lmd/lmd_full/5/5309fb3f62bf73780e6...</td>
+      <td>[, , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>183.172080</td>
+    </tr>
+    <tr>
+      <th>178559</th>
+      <td>3.802815</td>
+      <td>True</td>
+      <td>172.389879</td>
+      <td>../datasets/lmd/lmd_full/5/5538b0174111bcef760...</td>
+      <td>[Std Drums, Jazz Gtr, Muted Gtr (Lead Dbl), Mu...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>274.353398</td>
+    </tr>
+    <tr>
+      <th>178560</th>
+      <td>0.923077</td>
+      <td>True</td>
+      <td>293.317332</td>
+      <td>../datasets/lmd/lmd_full/5/51e756897765aed30af...</td>
+      <td>[, , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>229.821409</td>
     </tr>
   </tbody>
 </table>
-<p>21316 rows × 9 columns</p>
+<p>97615 rows × 9 columns</p>
 </div></div></div>
 </div>
 <p>We now filtered half of our available examples by just looking at the metadata of the MIDI files.
@@ -1905,7 +1680,7 @@ The next step is to extract the drum track of each MIDI filtered MIDI file and s
 <p>As this part is also computational quite heavy we will again use caching here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_drums</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">extract_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;../datasets/midi_dataset_drums_extracted&#39;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_drums</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">extract_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;../datasets/lmd/lmd_drums/&#39;</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extract_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">file_path</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;file_path&#39;</span><span class="p">]</span>
     
@@ -1991,69 +1766,69 @@ The next step is to extract the drum track of each MIDI filtered MIDI file and s
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>3.771427</td>
-      <td>True</td>
-      <td>191.371349</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Feuer_F...</td>
-      <td>[FEUER FREI, Begin, untitled, untitled, untitl...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>174.319388</td>
-      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>3.333330</td>
-      <td>True</td>
-      <td>263.333070</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Wilder_...</td>
-      <td>[, , , , , ]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>144.000144</td>
-      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.582524</td>
-      <td>True</td>
-      <td>37.281536</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Strippe...</td>
-      <td>[Guitar 1, Guitar 1, Bass, Keyboard, Keyboard,...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>480.0</td>
-      <td>206.000096</td>
-      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
-    </tr>
-    <tr>
       <th>5</th>
-      <td>2.999997</td>
+      <td>3.652173</td>
       <td>True</td>
-      <td>241.714044</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Sehnsuc...</td>
-      <td>[Keyboard, Gitarre, Gitarre, Voice, Voice, Voi...</td>
+      <td>296.347752</td>
+      <td>../datasets/lmd/lmd_full/9/9d30679480d0e55a07b...</td>
+      <td>[Piano, Organ, Big Brass, Horns, Horns2, Horns...</td>
       <td>False</td>
       <td>1.0</td>
-      <td>480.0</td>
-      <td>276.801683</td>
-      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
+      <td>120.0</td>
+      <td>224.502048</td>
+      <td>../datasets/lmd/lmd_drums/9d30679480d0e55a07be...</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>0.480000</td>
+      <th>9</th>
+      <td>4.547617</td>
       <td>True</td>
-      <td>247.620000</td>
-      <td>../datasets/midi_dataset/R/Rammstein - Das_Mod...</td>
-      <td>[, , , , , , , , ]</td>
+      <td>225.896259</td>
+      <td>../datasets/lmd/lmd_full/9/974f5b2466a5d5670df...</td>
+      <td>[, , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>184.213982</td>
+      <td>../datasets/lmd/lmd_drums/974f5b2466a5d5670dfd...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>5.419184</td>
+      <td>True</td>
+      <td>216.460946</td>
+      <td>../datasets/lmd/lmd_full/9/952df587b9fff5adbeb...</td>
+      <td>[Track 2, Track 3, Track 4, Track 5, Track 6, ...</td>
       <td>False</td>
       <td>1.0</td>
       <td>480.0</td>
-      <td>248.904881</td>
-      <td>../datasets/midi_dataset_drums_extracted/Ramms...</td>
+      <td>265.636110</td>
+      <td>../datasets/lmd/lmd_drums/952df587b9fff5adbeb5...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>4.363632</td>
+      <td>True</td>
+      <td>310.029993</td>
+      <td>../datasets/lmd/lmd_full/9/93e2cb3a0c36af361bb...</td>
+      <td>[Chorus Guitar, Overdrive Guita, Overdrive Gui...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>480.0</td>
+      <td>165.000165</td>
+      <td>../datasets/lmd/lmd_drums/93e2cb3a0c36af361bb4...</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>3.545451</td>
+      <td>True</td>
+      <td>222.766823</td>
+      <td>../datasets/lmd/lmd_full/9/97c1f795ffb676dfaa5...</td>
+      <td>[BASS, E.PIANO, GUITAR, STRINGS, PIANO, New Tr...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>192.0</td>
+      <td>212.877687</td>
+      <td>../datasets/lmd/lmd_drums/97c1f795ffb676dfaa5a...</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2069,73 +1844,73 @@ The next step is to extract the drum track of each MIDI filtered MIDI file and s
       <td>...</td>
     </tr>
     <tr>
-      <th>40469</th>
-      <td>11.314543</td>
+      <th>178555</th>
+      <td>5.999994</td>
       <td>True</td>
-      <td>255.182233</td>
-      <td>../datasets/midi_dataset/S/S/S.ROGERS BAND.Alz...</td>
-      <td>[, , , , , , , , , , ]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>192.0</td>
-      <td>234.768362</td>
-      <td>../datasets/midi_dataset_drums_extracted/S.ROG...</td>
-    </tr>
-    <tr>
-      <th>40470</th>
-      <td>0.930232</td>
-      <td>True</td>
-      <td>304.030825</td>
-      <td>../datasets/midi_dataset/W/W/Wollt ihr das bet...</td>
-      <td>[Noise1, Noise2, Synth, Drums, Wood, Gtr, Bass...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>384.0</td>
-      <td>257.422650</td>
-      <td>../datasets/midi_dataset_drums_extracted/Wollt...</td>
-    </tr>
-    <tr>
-      <th>40472</th>
-      <td>4.520833</td>
-      <td>True</td>
-      <td>142.000000</td>
-      <td>../datasets/midi_dataset/S/S/standbyyourman.midi</td>
-      <td>[Piano (Melody), Piano (Melody Doubled), Piano...</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>240.335799</td>
-      <td>../datasets/midi_dataset_drums_extracted/stand...</td>
-    </tr>
-    <tr>
-      <th>40474</th>
-      <td>7.846146</td>
-      <td>True</td>
-      <td>217.845936</td>
-      <td>../datasets/midi_dataset/M/M/MM-personal jesus...</td>
-      <td>[, , , , , , ]</td>
-      <td>False</td>
-      <td>1.0</td>
-      <td>120.0</td>
-      <td>194.855643</td>
-      <td>../datasets/midi_dataset_drums_extracted/MM-pe...</td>
-    </tr>
-    <tr>
-      <th>40475</th>
-      <td>5.806455</td>
-      <td>True</td>
-      <td>183.871075</td>
-      <td>../datasets/midi_dataset/L/L/littlebrownjug.midi</td>
-      <td>[Jazz Kit, Jazz Bass, Piano, Alto Sax 1, Alto ...</td>
+      <td>250.221166</td>
+      <td>../datasets/lmd/lmd_full/5/5bd52f314b616bf50c4...</td>
+      <td>[Track 1, Track 2, Track 3, Track 4, Track 6, ...</td>
       <td>False</td>
       <td>1.0</td>
       <td>480.0</td>
-      <td>239.287342</td>
-      <td>../datasets/midi_dataset_drums_extracted/littl...</td>
+      <td>141.332152</td>
+      <td>../datasets/lmd/lmd_drums/5bd52f314b616bf50c40...</td>
+    </tr>
+    <tr>
+      <th>178556</th>
+      <td>0.000000</td>
+      <td>True</td>
+      <td>299.296908</td>
+      <td>../datasets/lmd/lmd_full/5/5eea68ee369af3ee5cc...</td>
+      <td>[You've Made Me So Very Happy, You've Made Me ...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>240.0</td>
+      <td>184.252715</td>
+      <td>../datasets/lmd/lmd_drums/5eea68ee369af3ee5cc5...</td>
+    </tr>
+    <tr>
+      <th>178557</th>
+      <td>2.962596</td>
+      <td>True</td>
+      <td>139.390142</td>
+      <td>../datasets/lmd/lmd_full/5/5309fb3f62bf73780e6...</td>
+      <td>[, , , , , , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>120.0</td>
+      <td>183.172080</td>
+      <td>../datasets/lmd/lmd_drums/5309fb3f62bf73780e61...</td>
+    </tr>
+    <tr>
+      <th>178559</th>
+      <td>3.802815</td>
+      <td>True</td>
+      <td>172.389879</td>
+      <td>../datasets/lmd/lmd_full/5/5538b0174111bcef760...</td>
+      <td>[Std Drums, Jazz Gtr, Muted Gtr (Lead Dbl), Mu...</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>274.353398</td>
+      <td>../datasets/lmd/lmd_drums/5538b0174111bcef760a...</td>
+    </tr>
+    <tr>
+      <th>178560</th>
+      <td>0.923077</td>
+      <td>True</td>
+      <td>293.317332</td>
+      <td>../datasets/lmd/lmd_full/5/51e756897765aed30af...</td>
+      <td>[, , , , , ]</td>
+      <td>False</td>
+      <td>1.0</td>
+      <td>96.0</td>
+      <td>229.821409</td>
+      <td>../datasets/lmd/lmd_drums/51e756897765aed30af2...</td>
     </tr>
   </tbody>
 </table>
-<p>21316 rows × 10 columns</p>
+<p>97615 rows × 10 columns</p>
 </div></div></div>
 </div>
 </div>
