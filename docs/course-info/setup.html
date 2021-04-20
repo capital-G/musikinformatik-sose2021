@@ -212,6 +212,34 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-python">
+     Installing Python
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-virtualenv">
+     Installing
+     <em>
+      virtualenv
+     </em>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-a-new-virtual-environment">
+     Creating a new virtual environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#activating-the-virtual-environment">
+     Activating the virtual environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-dependencies">
+     Installing dependencies
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#start-jupyter-lab">
      Start
      <em>
@@ -274,7 +302,7 @@ directory in which you want to copy the course material and execute the command<
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/capital-G/musikinformatik-sose2021.git
 </pre></div>
 </div>
-<p>If you know what <em>SSH</em>, have a GitHub account and you want to practicipate in the creation of the course
+<p>If you know what <em>SSH</em>, have a GitHub account and you want to participate in the creation of the course
 one should use SSH instead so the command becomes</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:capital-G/musikinformatik-sose2021.git
 </pre></div>
@@ -307,6 +335,8 @@ path where your <em>sclang</em> executable is located.</p>
 </div>
 <div class="section" id="python-setup">
 <h2>Python setup<a class="headerlink" href="#python-setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-python">
+<h3>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this headline">¶</a></h3>
 <p>Please make sure you have installed <em>Python 3.8</em>, <em>pip3</em> and <em>virtualenv</em> on your machine.
 A good guide on how to install <em>Python</em> on your machine can be found <a class="reference external" href="https://realpython.com/installing-python/">here</a>.</p>
 <div class="admonition warning">
@@ -318,16 +348,27 @@ If you use <a class="reference external" href="https://brew.sh/">Homebrew</a> on
 </pre></div>
 </div>
 </div>
-<ul>
-<li><p>Install <em>virtualenv</em> by running</p>
+</div>
+<div class="section" id="installing-virtualenv">
+<span id="virtualenv-install"></span><h3>Installing <em>virtualenv</em><a class="headerlink" href="#installing-virtualenv" title="Permalink to this headline">¶</a></h3>
+<p>Python is a language that relies on libraries - e.g. the parsing of MIDI files is not
+build-in to the language but <a class="reference external" href="https://pypi.org/search/?q=midi">there is a collection of MIDI libraries</a>
+that allows Python to work with MIDI files.
+It turns out that it is a good practice to not mix too many libraries as they are maybe not compatible
+to each other - maybe library <em>A</em> relies on version 0.2 of library <em>B</em> but library <em>C</em> relies on
+version 1.2 of library <em>B</em> - welcome to <a class="reference external" href="https://en.wikipedia.org/wiki/Dependency_hell">dependency hell</a>.</p>
+<p>The solution to this is to create an isolated environment for each project - so the clashing of incompatible
+versions does not occur.
+It is also possible to determine which version of Python we want to use for our project which
+is relevant to us.</p>
+<p><em>virtualenv</em> provides us with such a functionality and we can install it by running</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install virtualenv
 </pre></div>
 </div>
-<p>in a terminal.
-A virtual environment will allow us to have a separate installation of Python for
-every project.</p>
-</li>
-<li><p>After a successful installation please check that you have the following</p>
+<p>in a terminal.</p>
+<p>We use <code class="docutils literal notranslate"><span class="pre">pip3</span></code> for installation of <em>virtualenv</em> which is a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Package_manager">package manager</a> for python libraries.</p>
+<p>After a successful installation please check that you have the following</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 --version
 <span class="c1"># Python 3.8.x</span>
 <span class="c1"># macOS users who installed python 3.8 via homebrew should check</span>
@@ -343,11 +384,13 @@ virtualenv --version
 <span class="c1"># python3 folder from above and not to e.g. python2</span>
 </pre></div>
 </div>
-</li>
-<li><p>Go to the root folder of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>) with a shell and execute
-the following commands in this folder.
-This step is crucial as otherwise the next commands will do not what is intended.</p></li>
-<li><p>Create a new virtual environment in the folder <cite>venv</cite> by executing</p>
+</div>
+<div class="section" id="creating-a-new-virtual-environment">
+<span id="virtualenv-create"></span><h3>Creating a new virtual environment<a class="headerlink" href="#creating-a-new-virtual-environment" title="Permalink to this headline">¶</a></h3>
+<p>After we have installed virtualenv (see <a class="reference internal" href="#virtualenv-install"><span class="std std-ref">Installing virtualenv</span></a>) we now use it to create a new
+virtual environment for our project.</p>
+<p>Go to the root folder of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>) with a shell and execute
+the command in this folder to create a new virtual environment in the folder <code class="docutils literal notranslate"><span class="pre">venv</span></code></p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>virtualenv venv
 </pre></div>
 </div>
@@ -358,42 +401,46 @@ This step is crucial as otherwise the next commands will do not what is intended
 </pre></div>
 </div>
 </div>
-<p>and activate the environment by executing</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
+</div>
+<div class="section" id="activating-the-virtual-environment">
+<span id="virtualenv-activate"></span><h3>Activating the virtual environment<a class="headerlink" href="#activating-the-virtual-environment" title="Permalink to this headline">¶</a></h3>
+<p>After we have installed the virtual environment it is now time to activate it
+so we install the necessary libraries (such as e.g. <em>Jupyter Lab</em>) to the
+isolated environment and not to the <em>global</em> Python installation on your machine.</p>
+<p>Assuming you are in the root folder of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>)
+and created a virtual environment (see <a class="reference internal" href="#virtualenv-install"><span class="std std-ref">Installing virtualenv</span></a>) it is as simple
+as executing the command</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># on linux/macOS</span>
+<span class="nb">source</span> venv/bin/activate
+<span class="c1"># on windows</span>
+<span class="nb">source</span> ./venv/Scripts/activate
 </pre></div>
 </div>
-<p>A virtual environment serves as a isolated environment for all the dependencies that are needed for this project.
-Creating a new virtual environment for each project is a good practice as project <em>a</em> relies on dependency <em>x</em> in
-version 0.7, but project <em>b</em> relies on the same dependency but in version 2.2.
-Welcome to <a class="reference external" href="https://en.wikipedia.org/wiki/Dependency_hell">dependency hell</a>.</p>
-<p>But this also forces us to always activate the virtual environment when we start our project.</p>
-</li>
-<li><p>Install all necessary dependencies by executing</p>
+<p>After the virtual environment has been successfully activated something <code class="docutils literal notranslate"><span class="pre">(venv)</span></code> will
+be shown in the command prompt.</p>
+</div>
+<div class="section" id="installing-dependencies">
+<h3>Installing dependencies<a class="headerlink" href="#installing-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>After we have activated the virtual environment (see <a class="reference internal" href="#virtualenv-activate"><span class="std std-ref">Activating the virtual environment</span></a>)
+we can now install all necessary libraries for our project by running.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements.txt
 </pre></div>
 </div>
-</li>
-</ul>
-<div class="section" id="start-jupyter-lab">
-<h3>Start <em>Jupyter Lab</em><a class="headerlink" href="#start-jupyter-lab" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p>Go to the root directory of the repository (see <a class="reference internal" href="#repository-setup"><span class="std std-ref">Repository setup</span></a>) with a shell window
-and execute the following commands in this folder.</p></li>
-<li><p>Make sure one has activated the virtual environment by executing</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> venv/bin/activate
-</pre></div>
 </div>
-</li>
-<li><p>Start <em>Jupyter Lab</em> by executing</p>
+<div class="section" id="start-jupyter-lab">
+<span id="start-jupyter"></span><h3>Start <em>Jupyter Lab</em><a class="headerlink" href="#start-jupyter-lab" title="Permalink to this headline">¶</a></h3>
+<p>After we have installed all necessary libraries (see <a class="reference internal" href="#installing-dependencies"><span class="std std-ref">Installing dependencies</span></a>)
+it is now time to start <em>Jupyter Lab</em> which is a coding environment for our browser
+in which we can code Python and SuperCollider.</p>
+<p>Please make sure you have activated the virtual environment (see <a class="reference internal" href="#virtualenv-activate"><span class="std std-ref">Activating the virtual environment</span></a>)
+and execute the command</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jupyter lab
 </pre></div>
 </div>
-</li>
-<li><p>To shut down the <em>Jupyter Lab</em> server enter the keyboard combination of <code class="docutils literal notranslate"><span class="pre">&lt;Ctrl&gt;</span> <span class="pre">+</span> <span class="pre">c</span></code>
+<p>To shut down the <em>Jupyter Lab</em> server enter the keyboard combination of <code class="docutils literal notranslate"><span class="pre">&lt;Ctrl&gt;</span> <span class="pre">+</span> <span class="pre">c</span></code>
 in the shell window in which the Jupyter server is running.
 A prompt will appear in which one has to verify that one wants to shut down the
-server by entering <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
-</ul>
+server by entering <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 </div>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
