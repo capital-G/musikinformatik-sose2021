@@ -38,7 +38,7 @@ directory in which you want to copy the course material and execute the command
 
   git clone https://github.com/capital-G/musikinformatik-sose2021.git
 
-If you know what *SSH*, have a GitHub account and you want to practicipate in the creation of the course
+If you know what *SSH*, have a GitHub account and you want to participate in the creation of the course
 one should use SSH instead so the command becomes
 
 .. code-block:: shell
@@ -81,6 +81,9 @@ path where your *sclang* executable is located.
 Python setup
 ------------
 
+Installing Python
+^^^^^^^^^^^^^^^^^
+
 Please make sure you have installed *Python 3.8*, *pip3* and *virtualenv* on your machine.
 A good guide on how to install *Python* on your machine can be found `here <https://realpython.com/installing-python/>`__.
 
@@ -94,93 +97,128 @@ A good guide on how to install *Python* on your machine can be found `here <http
     
     brew install python@3.8
 
-* Install *virtualenv* by running
+.. _virtualenv-install:
 
-  .. code-block:: shell
+Installing *virtualenv*
+^^^^^^^^^^^^^^^^^^^^^^^
 
-    pip3 install virtualenv
+Python is a language that relies on libraries - e.g. the parsing of MIDI files is not
+build-in to the language but `there is a collection of MIDI libraries <https://pypi.org/search/?q=midi>`__
+that allows Python to work with MIDI files.
+It turns out that it is a good practice to not mix too many libraries as they are maybe not compatible
+to each other - maybe library *A* relies on version 0.2 of library *B* but library *C* relies on
+version 1.2 of library *B* - welcome to `dependency hell <https://en.wikipedia.org/wiki/Dependency_hell>`__.
+
+The solution to this is to create an isolated environment for each project - so the clashing of incompatible
+versions does not occur.
+It is also possible to determine which version of Python we want to use for our project which
+is relevant to us.
+
+*virtualenv* provides us with such a functionality and we can install it by running
+
+.. code-block:: shell
+
+  pip3 install virtualenv
+
+in a terminal.
+
+We use ``pip3`` for installation of *virtualenv* which is a
+`package manager <https://en.wikipedia.org/wiki/Package_manager>`__ for python libraries.
+
+After a successful installation please check that you have the following 
+
+.. code-block:: shell
+
+  python3 --version
+  # Python 3.8.x
+  # macOS users who installed python 3.8 via homebrew should check
+  # /usr/local/opt/python@3.8/bin/python3 --version
+
+  pip3 --version
+  # pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip
+  # just about any pip3 version will be fine
+
+  virtualenv --version
+  # virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py
+  # just about any virtualenv version will be fine - make sure that it refers to your
+  # python3 folder from above and not to e.g. python2
+
+.. _virtualenv-create:
+
+Creating a new virtual environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After we have installed virtualenv (see :ref:`virtualenv-install`) we now use it to create a new
+virtual environment for our project.
+
+Go to the root folder of the repository (see :ref:`Repository setup`) with a shell and execute
+the command in this folder to create a new virtual environment in the folder ``venv``
   
-  in a terminal.
-  A virtual environment will allow us to have a separate installation of Python for
-  every project.
+.. code-block:: shell
 
-* After a successful installation please check that you have the following 
+  virtualenv venv
 
-  .. code-block:: shell
+.. warning::
 
-    python3 --version
-    # Python 3.8.x
-    # macOS users who installed python 3.8 via homebrew should check
-    # /usr/local/opt/python@3.8/bin/python3 --version
-
-    pip3 --version
-    # pip 21.0.1 from /usr/local/lib/python3.8/site-packages/pip
-    # just about any pip3 version will be fine
-
-    virtualenv --version
-    # virtualenv 20.4.2 from /usr/local/lib/python3.8/site-packages/virtualenv/__init__.py
-    # just about any virtualenv version will be fine - make sure that it refers to your
-    # python3 folder from above and not to e.g. python2
-
-* Go to the root folder of the repository (see :ref:`Repository setup`) with a shell and execute
-  the following commands in this folder.
-  This step is crucial as otherwise the next commands will do not what is intended.
-
-* Create a new virtual environment in the folder `venv` by executing
+  macOS users who installed python 3.8 with homebrew should instead call
   
   .. code-block:: shell
-
-    virtualenv venv
-
-  .. warning::
-
-    macOS users who installed python 3.8 with homebrew should instead call
     
-    .. code-block:: shell
-      
-      virtualenv --python=/usr/local/opt/python@3.8/bin/python3 venv
+    virtualenv --python=/usr/local/opt/python@3.8/bin/python3 venv
 
-  and activate the environment by executing
+.. _virtualenv-activate:
+
+Activating the virtual environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After we have installed the virtual environment it is now time to activate it
+so we install the necessary libraries (such as e.g. *Jupyter Lab*) to the
+isolated environment and not to the *global* Python installation on your machine.
+
+Assuming you are in the root folder of the repository (see :ref:`Repository setup`)
+and created a virtual environment (see :ref:`virtualenv-install`) it is as simple
+as executing the command
+
+.. code-block:: shell
+
+  # on linux/macOS
+  source venv/bin/activate
+  # on windows
+  source ./venv/Scripts/activate
+
+After the virtual environment has been successfully activated something ``(venv)`` will
+be shown in the command prompt.
+
+Installing dependencies
+^^^^^^^^^^^^^^^^^^^^^^^
+
+After we have activated the virtual environment (see :ref:`virtualenv-activate`)
+we can now install all necessary libraries for our project by running.
+
+.. code-block:: shell
   
-  .. code-block:: shell
+  pip3 install -r requirements.txt
 
-    source venv/bin/activate
-  
-  A virtual environment serves as a isolated environment for all the dependencies that are needed for this project.
-  Creating a new virtual environment for each project is a good practice as project *a* relies on dependency *x* in
-  version 0.7, but project *b* relies on the same dependency but in version 2.2.
-  Welcome to `dependency hell <https://en.wikipedia.org/wiki/Dependency_hell>`_.
-
-  But this also forces us to always activate the virtual environment when we start our project.
-
-* Install all necessary dependencies by executing
-
-  .. code-block:: shell
-    
-    pip3 install -r requirements.txt
+.. _start-jupyter:
 
 Start *Jupyter Lab*
 ^^^^^^^^^^^^^^^^^^^
 
-* Go to the root directory of the repository (see :ref:`Repository setup`) with a shell window
-  and execute the following commands in this folder.
+After we have installed all necessary libraries (see :ref:`Installing dependencies`)
+it is now time to start *Jupyter Lab* which is a coding environment for our browser
+in which we can code Python and SuperCollider.
 
-* Make sure one has activated the virtual environment by executing
+Please make sure you have activated the virtual environment (see :ref:`virtualenv-activate`)
+and execute the command
 
-  .. code-block:: shell
+.. code-block:: shell
 
-    source venv/bin/activate
+  jupyter lab
 
-* Start *Jupyter Lab* by executing
-  
-  .. code-block:: shell
-
-    jupyter lab
-
-* To shut down the *Jupyter Lab* server enter the keyboard combination of ``<Ctrl> + c``
-  in the shell window in which the Jupyter server is running.
-  A prompt will appear in which one has to verify that one wants to shut down the
-  server by entering ``y``.
+To shut down the *Jupyter Lab* server enter the keyboard combination of ``<Ctrl> + c``
+in the shell window in which the Jupyter server is running.
+A prompt will appear in which one has to verify that one wants to shut down the
+server by entering ``y``.
 
 Documentation
 ^^^^^^^^^^^^^
