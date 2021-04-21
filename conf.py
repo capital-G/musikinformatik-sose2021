@@ -28,11 +28,10 @@ release = 'SoSe 2021'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'myst_nb',
+    'sphinxcontrib.bibtex',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
-    'myst_nb',
-    'jupyter_sphinx',
-    'sphinxcontrib.bibtex',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
