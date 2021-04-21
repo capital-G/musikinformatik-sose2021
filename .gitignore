@@ -1,6 +1,7 @@
 venv/
 datasets/
 .vscode/
+.idea/
 _build/
 _static/
 _templates/
