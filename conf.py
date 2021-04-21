@@ -82,3 +82,5 @@ html_context = {
 }
 
 bibtex_bibfiles = ['refs.bib']
+
+jupyter_execute_notebooks = "off"
