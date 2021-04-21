@@ -72,13 +72,16 @@ todo_include_todos = True
 html_theme_options = {
     "use_edit_page_button": True,
     "github_url": "https://github.com/capital-G/musikinformatik-sose2021",
-}
-
-html_context = {
-    "github_user": "capital-G",
-    "github_repo": "musikinformatik-sose2021",
-    "github_version": "main",
-    "doc_path": "",
+    "launch_buttons": {
+        "binderhub_url": "https://mybinder.org",
+    },
+    "repository_url": "https://github.com/capital-G/musikinformatik-sose2021",
+    "repository_branch": "main",
+    "path_to_docs": "",
+    "use_edit_page_button": True,
+    "use_issues_button": True,
+    "use_repository_button": True,
+    "use_download_button": True,
 }
 
 bibtex_bibfiles = ['refs.bib']
