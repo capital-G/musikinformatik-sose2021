@@ -2,8 +2,7 @@ jupyterlab
 numpy
 pandas
 matplotlib
-music21
+note_seq
 pretty_midi
-swifter
 sc-kernel
 notebook==6.*
