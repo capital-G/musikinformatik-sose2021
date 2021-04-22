@@ -8,7 +8,7 @@ _templates/
 */dask-worker-space/
 *.parquet
 Untitled*.ipynb
-
+*.protobuf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
