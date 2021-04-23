@@ -6,3 +6,4 @@ note_seq
 pretty_midi
 sc-kernel
 notebook==6.*
+pre-commit
