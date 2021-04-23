@@ -497,7 +497,7 @@ It is a common practice in data science to write a function which either loads t
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pretty_midi.pretty_midi.PrettyMIDI at 0x104c54430&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pretty_midi.pretty_midi.PrettyMIDI at 0x159b7d760&gt;
 </pre></div>
 </div>
 </div>
@@ -658,16 +658,16 @@ But the problem is that a loading of a MIDI file is pretty slow in Python - we w
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>187 ms ± 6.36 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>186 ms ± 6.59 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 </pre></div>
 </div>
 </div>
 </div>
-<p>Of course this time to parse the MIDI file depends on the complexity of our MIDI file but now its time to do some maths.
+<p>Of course this time to parse the MIDI file depends on the complexity of our MIDI file. But now its time to do some maths.
 For the sake of simplicity we will assume that it takes around 100ms to load a MIDI file.</p>
 <div class="math notranslate nohighlight">
 \[ 0.1 \frac{\text{sec}}{\text{file}} * 178000 \text{ files} = 17800 \text{ sec} \approx 296 \text{ minutes} \approx 4 \text{ hours}\]</div>
-<p>Note that this assumes we do not process multiple files in paralell which is possible but also tricky.
+<p>Note that this assumes that we do not process multiple files in paralell, which is possible but also tricky.
 Also this is only for the loading of the data, we not have acessed yet any data.</p>
 <p>Maybe there is a file format to which we can store the MIDI files and load them quicker whenever we need them.
 <a class="reference external" href="https://github.com/magenta/note-seq"><em>note_seq</em></a> from the <a class="reference external" href="https://magenta.tensorflow.org/">magenata project</a> provide such a format called <em>note sequence</em> which nicely interacts with <em>pretty_midi</em>.</p>
@@ -687,15 +687,15 @@ Also this is only for the loading of the data, we not have acessed yet any data.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13.9 ms ± 305 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14.4 ms ± 381 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
 </div>
-<p>So the conversion of this file works fast compared to the parsing of our MIDI file.
-The problem is that we still need the MIDI file parsed and we have not yet took a look at the saving and loading of a note sequence.</p>
+<p>So the conversion of this file is fast compared to the parsing of our MIDI file.
+The problem is that we still need the MIDI file parsed and we have not yet taken a look at the saving and loading of a note sequence.</p>
 <p><em>note_seq</em> is using a special kind of format for this which is called <a class="reference external" href="https://developers.google.com/protocol-buffers/docs/pythontutorial">protobuf</a> - a binary file format to store and exchange files developed by Google.
-The advantage is that this is really fast and efficient as its binary and we can exchange the files to other programming languages - think of it like a binary version of JSON but with type safety included.</p>
+The advantage is that this is really fast and efficient as it is a binary format and we can exchange the files to other programming languages - think of it like a binary version of JSON but with type safety included.</p>
 <p>We start by saving the note sequence into a protobuf and try loading it again from our harddrive.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -743,7 +743,7 @@ File size of note_seq_test.protobuf: 195.958984375 kbytes
 </div>
 </div>
 <p>It turns out that we are trading storage in favour of computation power.</p>
-<p>Before we can decide if we want to trade we may need to take a look at the file size of our MIDI dataset.
+<p>Before we can decide if we really want to trade, we may need to take a look at the file size of our MIDI dataset.
 For this we can use a functionality of Jupyter to execute commands in a shell from within Jupyter by appending a <code class="docutils literal notranslate"><span class="pre">!</span></code> in front of the command.
 In order to get the size of a dictionary we will use the unix tool <a class="reference external" href="https://linux.die.net/man/1/du">du</a> with the arguments <code class="docutils literal notranslate"><span class="pre">s</span></code> (sum everything within the path) and <code class="docutils literal notranslate"><span class="pre">h</span></code> (convert number of bytes to a human readable format).</p>
 <div class="cell docutils container">
@@ -758,13 +758,13 @@ In order to get the size of a dictionary we will use the unix tool <a class="ref
 </div>
 </div>
 </div>
-<p>We have around 6 gigabytes of files here - when we are converting them to protobuf we will blow them up with a factor of <span class="math notranslate nohighlight">\(\approx 4\)</span> so we will have about 24 GB of protobuf files which is somehow still acceptable.</p>
+<p>We have around 6 gigabytes of files here - when we convert them to protobuf we will blow them up by a factor of <span class="math notranslate nohighlight">\(\approx 4\)</span> so we will have about 24 GB of protobuf files. This is still acceptable somehow.</p>
 </div>
 </div>
 <div class="section" id="processing-all-files">
 <h2>Processing all files<a class="headerlink" href="#processing-all-files" title="Permalink to this headline">¶</a></h2>
-<p>So after we now know how to load, access and convert the files to a nicer format we still need to take a look at how we can do this on our 180k files and maybe save some time here by using some programming.</p>
-<p>First we will start by programming a function in which we combine everything we did before and return us all necessary information as a dictionary.</p>
+<p>So after we now know how to load, access and convert the files to a nicer format, we still need to take a look at how we can do this on our 180k files and maybe save some time here by a little bit of programming effort.</p>
+<p>First we will start by programming a function in which we combine everything we did before and return to us all necessary information as a dictionary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PROTO_SAVE_PATH</span> <span class="o">=</span> <span class="s1">&#39;../datasets/lmd/proto/&#39;</span>
@@ -855,7 +855,7 @@ In order to get the size of a dictionary we will use the unix tool <a class="ref
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>227 ms ± 6.64 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>233 ms ± 10.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 </pre></div>
 </div>
 </div>
@@ -905,8 +905,7 @@ On a recent i9 processor the next step will take around 90 minutes if executed f
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parse 178561 midi files
-Finished parsing midi files
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Use cached parquet file midi_files_full.parquet
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -1435,8 +1434,8 @@ Finished parsing midi files
 </div>
 <div class="section" id="analysis-of-metadata">
 <h2>Analysis of metadata<a class="headerlink" href="#analysis-of-metadata" title="Permalink to this headline">¶</a></h2>
-<p>Lets examine the extracted metadata of those files.
-Before we start plotting its always a good idea to take a look a the dataframe and its description.</p>
+<p>Let’s examine the extracted metadata of those files.
+Before we start plotting it is always a good idea to take a look a the dataframe and its description.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
@@ -1478,229 +1477,229 @@ Before we start plotting its always a good idea to take a look a the dataframe a
   </thead>
   <tbody>
     <tr>
-      <th>36263</th>
-      <td>../datasets/lmd/lmd_full/6/6baa4ca403f1b84c459...</td>
+      <th>160813</th>
+      <td>../datasets/lmd/lmd_full/2/2b03576c2eac6b20c55...</td>
       <td>False</td>
-      <td>151.401507</td>
-      <td>[0.0, 51.9375, 52.1298075, 52.3298075, 52.5381...</td>
-      <td>[80.0, 78.00007800007802, 75.0, 72.00002880001...</td>
-      <td>72.076279</td>
-      <td>False</td>
-      <td>480.0</td>
-      <td>[Piste 1]</td>
-      <td>1.0</td>
-      <td>../datasets/lmd/proto/6baa4ca403f1b84c45926cdf...</td>
-      <td>[Classical_Guitar_classicalguitarmidi.com_MIDI...</td>
-    </tr>
-    <tr>
-      <th>24367</th>
-      <td>../datasets/lmd/lmd_full/7/7bb567d15e85b093c6b...</td>
-      <td>False</td>
-      <td>171.111207</td>
-      <td>[0.0, 0.003125]</td>
-      <td>[120.0, 157.99993153336297]</td>
-      <td>201.718402</td>
-      <td>False</td>
-      <td>480.0</td>
-      <td>[, , , , , , , , ]</td>
-      <td>1.0</td>
-      <td>../datasets/lmd/proto/7bb567d15e85b093c6b1f893...</td>
-      <td>[UNSORTED MIDI/SimplyRed_Perfect-love.mid]</td>
-    </tr>
-    <tr>
-      <th>42753</th>
-      <td>../datasets/lmd/lmd_full/6/66f191d79f99ea38463...</td>
-      <td>False</td>
-      <td>219.289559</td>
+      <td>220.504202</td>
       <td>[0.0]</td>
-      <td>[140.00014000014]</td>
-      <td>119.999880</td>
+      <td>[99.99999999999999]</td>
+      <td>200.200000</td>
       <td>True</td>
-      <td>240.0</td>
-      <td>[Elec Bass Finger, G.MIDI Drums, Distort Guita...</td>
+      <td>384.0</td>
+      <td>[Lead, Bass, Guitar, Rhythm guitar, Voice oohs...</td>
       <td>1.0</td>
-      <td>../datasets/lmd/proto/66f191d79f99ea38463711a0...</td>
-      <td>[j/jjf.mid, J/jjf.mid]</td>
+      <td>../datasets/lmd/proto/2b03576c2eac6b20c5537514...</td>
+      <td>[M/Monday Monday.mid]</td>
     </tr>
     <tr>
-      <th>62991</th>
-      <td>../datasets/lmd/lmd_full/8/830083d28b851a248ab...</td>
+      <th>83189</th>
+      <td>../datasets/lmd/lmd_full/f/fc7280752baa136165c...</td>
       <td>False</td>
-      <td>165.272741</td>
+      <td>149.380190</td>
       <td>[0.0]</td>
-      <td>[160.0]</td>
-      <td>195.935156</td>
+      <td>[160.01024065540196]</td>
+      <td>150.326316</td>
       <td>True</td>
-      <td>480.0</td>
-      <td>[Bass, Bass2, , , Drums]</td>
+      <td>48.0</td>
+      <td>[SYNTH, SYNTH, SYNTH, SYNTH, SYNTH, SYNTH, SYN...</td>
       <td>1.0</td>
-      <td>../datasets/lmd/proto/830083d28b851a248ab26448...</td>
-      <td>[b/Back_To_Shallabal.mid, B/Back_To_Shallabal....</td>
+      <td>../datasets/lmd/proto/fc7280752baa136165c911e0...</td>
+      <td>[e/entreaty.mid]</td>
     </tr>
     <tr>
-      <th>123580</th>
-      <td>../datasets/lmd/lmd_full/3/3af94e33c237092287a...</td>
+      <th>96858</th>
+      <td>../datasets/lmd/lmd_full/c/cb226a46053507ae8a4...</td>
       <td>False</td>
-      <td>231.334686</td>
+      <td>170.000085</td>
       <td>[0.0]</td>
-      <td>[120.0]</td>
-      <td>223.875000</td>
-      <td>True</td>
-      <td>192.0</td>
-      <td>[, , , , , , , ]</td>
+      <td>[170.0000850000425]</td>
+      <td>11.294112</td>
+      <td>False</td>
+      <td>96.0</td>
+      <td>[Neo Cortex - Elements (Styles &amp; Breeze Remix)]</td>
       <td>0.0</td>
-      <td>../datasets/lmd/proto/3af94e33c237092287aa2660...</td>
-      <td>[030 Musikalische Schätze 1/UBERDENW.MID, 030 ...</td>
+      <td>../datasets/lmd/proto/cb226a46053507ae8a47a16c...</td>
+      <td>[N/Neo Cortex - Elements (Breeze &amp; Styles Remi...</td>
     </tr>
     <tr>
-      <th>153664</th>
-      <td>../datasets/lmd/lmd_full/b/b715e7347db1660e14d...</td>
+      <th>34038</th>
+      <td>../datasets/lmd/lmd_full/6/6d12ce4d832f9c39ca6...</td>
       <td>False</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>../datasets/lmd/proto/b715e7347db1660e14dc6064...</td>
-      <td>[Midi/Am7.mid]</td>
+      <td>231.914925</td>
+      <td>[0.0, 2.368422, 3.493422, 11.1907935, 11.19735...</td>
+      <td>[151.99993920002433, 80.0, 151.99993920002433,...</td>
+      <td>503.284151</td>
+      <td>False</td>
+      <td>120.0</td>
+      <td>[Primo RH, Primo LH G, Primo LH F, Secondo RH ...</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/6d12ce4d832f9c39ca683d53...</td>
+      <td>[Mendelsonn/Allegro Brillant for Piano 4-hands...</td>
     </tr>
     <tr>
-      <th>121727</th>
-      <td>../datasets/lmd/lmd_full/4/470d8ebeb3c5544c52f...</td>
+      <th>171000</th>
+      <td>../datasets/lmd/lmd_full/5/586c46e8f1c65beff59...</td>
       <td>False</td>
-      <td>223.881109</td>
+      <td>236.159582</td>
+      <td>[0.0]</td>
+      <td>[130.0023833770286]</td>
+      <td>91.378132</td>
+      <td>True</td>
+      <td>384.0</td>
+      <td>[ACCORDION, A.PIANO 1, FINGERDBAS, CRYSTAL, DR...</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/586c46e8f1c65beff59afe0b...</td>
+      <td>[Byrd, Charlie/The-Girl-From-Ipanema.mid, BYRD...</td>
+    </tr>
+    <tr>
+      <th>103720</th>
+      <td>../datasets/lmd/lmd_full/d/dabbeaf50e6bad0b54d...</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>[Sure.Polyphone.Midi/Entertainer.mid, Various ...</td>
+    </tr>
+    <tr>
+      <th>71588</th>
+      <td>../datasets/lmd/lmd_full/a/aaf2e0398a707b34bbe...</td>
+      <td>False</td>
+      <td>174.928646</td>
+      <td>[0.0]</td>
+      <td>[124.000248000496]</td>
+      <td>131.612640</td>
+      <td>True</td>
+      <td>384.0</td>
+      <td>[ESTCE PR HASARD, ESTCE PR HASARD, ESTCE PR HA...</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/aaf2e0398a707b34bbeaefb9...</td>
+      <td>[E/Est Ce Par Hasard Dave.mid]</td>
+    </tr>
+    <tr>
+      <th>139917</th>
+      <td>../datasets/lmd/lmd_full/e/ebc5edd3c533092d324...</td>
+      <td>False</td>
+      <td>196.431974</td>
+      <td>[0.0]</td>
+      <td>[85.00028333427778]</td>
+      <td>276.574446</td>
+      <td>True</td>
+      <td>384.0</td>
+      <td>[TORN, TORN, TORN, TORN, TORN, TORN, TORN, TOR...</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/ebc5edd3c533092d32461eee...</td>
+      <td>[X/Xgtorn.mid, 097/XGtorn.mid, 097/XGtorn.mid]</td>
+    </tr>
+    <tr>
+      <th>45209</th>
+      <td>../datasets/lmd/lmd_full/1/1450ab4b1e52e25438d...</td>
+      <td>False</td>
+      <td>195.096618</td>
+      <td>[0.0]</td>
+      <td>[107.9999136000691]</td>
+      <td>224.166846</td>
+      <td>False</td>
+      <td>96.0</td>
+      <td>[Soprano, Soprano, Soprano, Soprano, Soprano, ...</td>
+      <td>38.0</td>
+      <td>../datasets/lmd/proto/1450ab4b1e52e25438de8e7e...</td>
+      <td>[civilwar2/61sfttobfa.mid]</td>
+    </tr>
+    <tr>
+      <th>74319</th>
+      <td>../datasets/lmd/lmd_full/a/aae666057efdbc7268d...</td>
+      <td>False</td>
+      <td>240.000000</td>
       <td>[0.0]</td>
       <td>[120.0]</td>
-      <td>222.554688</td>
-      <td>True</td>
-      <td>384.0</td>
-      <td>[, , , , , , , , ]</td>
+      <td>66.010417</td>
+      <td>False</td>
+      <td>96.0</td>
+      <td>[3xOsc (MIDI), 3xOsc #2 (MIDI), 3xOsc #3 (MIDI...</td>
       <td>1.0</td>
-      <td>../datasets/lmd/proto/470d8ebeb3c5544c52f9c874...</td>
-      <td>[Teodoro/Teodoro E Sampaio - Sou Da Turma Do C...</td>
+      <td>../datasets/lmd/proto/aae666057efdbc7268d62b8f...</td>
+      <td>[K/Kara_Sun_-_Into_The_Sun_(Airbase_Dub_Mix)__...</td>
     </tr>
     <tr>
-      <th>105104</th>
-      <td>../datasets/lmd/lmd_full/d/dca8eedff1d3195d94f...</td>
+      <th>90199</th>
+      <td>../datasets/lmd/lmd_full/c/c750e5a017155f06e63...</td>
       <td>False</td>
-      <td>222.089774</td>
+      <td>256.000000</td>
       <td>[0.0]</td>
-      <td>[140.00014000014]</td>
-      <td>348.449652</td>
+      <td>[128.0]</td>
+      <td>15.117188</td>
+      <td>False</td>
+      <td>96.0</td>
+      <td>[Sylenth1 4, Sylenth1 3, Sylenth1 1]</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/c750e5a017155f06e63ae69c...</td>
+      <td>[C/Cascada_-_BadBoy__DjMixdOut_20130211014527....</td>
+    </tr>
+    <tr>
+      <th>99470</th>
+      <td>../datasets/lmd/lmd_full/c/cc6b412aeeb834e8fec...</td>
+      <td>False</td>
+      <td>275.408685</td>
+      <td>[0.0, 182.14267500000003]</td>
+      <td>[140.00014000014, 108.99994368336242]</td>
+      <td>185.995888</td>
       <td>True</td>
       <td>120.0</td>
-      <td>[Guitar, Guitar, Guitar, Guitar, Piano, Piano,...</td>
+      <td>[, , , , , , , , , , ]</td>
       <td>1.0</td>
-      <td>../datasets/lmd/proto/dca8eedff1d3195d94f16ca1...</td>
-      <td>[world/come_back_to_sorrento_ht.mid]</td>
+      <td>../datasets/lmd/proto/cc6b412aeeb834e8fecfd308...</td>
+      <td>[VerucaSalt/Seether.mid, VerucaSalt/Seether.mi...</td>
     </tr>
     <tr>
-      <th>169254</th>
-      <td>../datasets/lmd/lmd_full/5/5edf1c01cb228112e1c...</td>
+      <th>175912</th>
+      <td>../datasets/lmd/lmd_full/5/500a1212bae787f7ef8...</td>
       <td>False</td>
-      <td>254.954472</td>
-      <td>[0.0, 39.8332935, 72.47329350000001, 93.806605...</td>
-      <td>[90.00009000009, 125.0, 90.00009000009, 125.0]</td>
-      <td>207.041606</td>
-      <td>True</td>
-      <td>192.0</td>
-      <td>[, , , , , , , , , , , , , ]</td>
-      <td>0.0</td>
-      <td>../datasets/lmd/proto/5edf1c01cb228112e1ccc968...</td>
-      <td>[G/GRUPO NV.Don't speak  K.mid]</td>
-    </tr>
-    <tr>
-      <th>56497</th>
-      <td>../datasets/lmd/lmd_full/8/8be3302320857416be4...</td>
-      <td>False</td>
-      <td>233.898364</td>
-      <td>[0.0]</td>
-      <td>[115.00002875000717]</td>
-      <td>223.828205</td>
-      <td>True</td>
-      <td>240.0</td>
-      <td>[Guitar, E.Guitar, Bass, Accordion, Vibraphone...</td>
-      <td>1.0</td>
-      <td>../datasets/lmd/proto/8be3302320857416be43aaa4...</td>
-      <td>[P/Pireus.mid]</td>
-    </tr>
-    <tr>
-      <th>139957</th>
-      <td>../datasets/lmd/lmd_full/e/e327dc6821a38a47165...</td>
-      <td>False</td>
-      <td>228.279707</td>
+      <td>240.000000</td>
       <td>[0.0]</td>
       <td>[120.0]</td>
-      <td>156.412500</td>
-      <td>False</td>
-      <td>480.0</td>
-      <td>[, New MIDI Track, , ]</td>
-      <td>1.0</td>
-      <td>../datasets/lmd/proto/e327dc6821a38a47165f6b78...</td>
-      <td>[s/sweetone.mid, S/sweetone.mid]</td>
-    </tr>
-    <tr>
-      <th>115910</th>
-      <td>../datasets/lmd/lmd_full/4/485a3039860b086ce87...</td>
-      <td>False</td>
-      <td>252.380931</td>
-      <td>[0.0]</td>
-      <td>[130.00013000013]</td>
-      <td>171.676751</td>
-      <td>True</td>
-      <td>120.0</td>
-      <td>[Fingered Bass, Fingered Bass, Grand Piano, Gr...</td>
-      <td>1.0</td>
-      <td>../datasets/lmd/proto/485a3039860b086ce870560c...</td>
-      <td>[2009 MIDI/Beatles - A Hard Day_s Night Funk v...</td>
-    </tr>
-    <tr>
-      <th>49008</th>
-      <td>../datasets/lmd/lmd_full/1/10feb9c754d99fa846a...</td>
-      <td>False</td>
-      <td>171.476178</td>
-      <td>[0.0]</td>
-      <td>[88.00002346667293]</td>
-      <td>275.454472</td>
-      <td>True</td>
-      <td>120.0</td>
-      <td>[Percussion, Distortion Guitar, Pad 6 (metalli...</td>
-      <td>1.0</td>
-      <td>../datasets/lmd/proto/10feb9c754d99fa846a3aafb...</td>
-      <td>[T/Terriblelie.mid, l/lie2.mid, NineInchNails/...</td>
-    </tr>
-    <tr>
-      <th>73094</th>
-      <td>../datasets/lmd/lmd_full/a/a136fde4f7718b8d8ec...</td>
-      <td>False</td>
-      <td>180.642168</td>
-      <td>[0.0]</td>
-      <td>[180.00018000018]</td>
-      <td>64.833269</td>
-      <td>True</td>
-      <td>384.0</td>
-      <td>[The Kesh Jig, Sequenced By, Barry Taylor, ]</td>
-      <td>1.0</td>
-      <td>../datasets/lmd/proto/a136fde4f7718b8d8eceffd7...</td>
-      <td>[k/kesh2.mid, K/kesh2.mid]</td>
-    </tr>
-    <tr>
-      <th>142201</th>
-      <td>../datasets/lmd/lmd_full/e/e8792e1e571b49b81ae...</td>
-      <td>False</td>
-      <td>242.076412</td>
-      <td>[0.0]</td>
-      <td>[62.00005993339127]</td>
-      <td>166.461533</td>
+      <td>98.494792</td>
       <td>False</td>
       <td>384.0</td>
-      <td>[Guitar 1, , Vocals, ]</td>
-      <td>3.0</td>
-      <td>../datasets/lmd/proto/e8792e1e571b49b81aedba34...</td>
-      <td>[s/stumble2.mid, Various Artists/STUMBELI.MID,...</td>
+      <td>[The Flowers, Of The Heath, Sequenced By, Barr...</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/500a1212bae787f7ef8fb099...</td>
+      <td>[h/heath.mid, H/heath.mid]</td>
+    </tr>
+    <tr>
+      <th>30403</th>
+      <td>../datasets/lmd/lmd_full/7/7dc2e8000f630ab4e57...</td>
+      <td>False</td>
+      <td>200.644292</td>
+      <td>[0.0, 9.69696, 38.49696, 48.193920000000006, 5...</td>
+      <td>[198.000198000198, 199.99999999999997, 198.000...</td>
+      <td>144.326112</td>
+      <td>True</td>
+      <td>384.0</td>
+      <td>[Drums - Travis, Bass - Mark, Guitar 1 - Tom, ...</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/7dc2e8000f630ab4e57eebd5...</td>
+      <td>[B/blink_182-dumpweed.mid]</td>
+    </tr>
+    <tr>
+      <th>108557</th>
+      <td>../datasets/lmd/lmd_full/d/d864a2adc13ad8b9797...</td>
+      <td>False</td>
+      <td>251.560269</td>
+      <td>[0.0]</td>
+      <td>[126.99998518333504]</td>
+      <td>205.980339</td>
+      <td>True</td>
+      <td>120.0</td>
+      <td>[The Corrs, "Breathless", , ****************, ...</td>
+      <td>1.0</td>
+      <td>../datasets/lmd/proto/d864a2adc13ad8b9797d6be2...</td>
+      <td>[Corrs/The Corrs - Breathless.mid, Various/The...</td>
     </tr>
   </tbody>
 </table>
@@ -1737,7 +1736,7 @@ memory usage: 15.2+ MB
 </div>
 </div>
 <p>With a pandas dataframe we can simply aggregate and plot data into different formats.
-Lets start by taking a look at our success rate of parsing the MIDI files.</p>
+Let’s start by taking a look at our success rate of parsing the MIDI files.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="p">[</span><span class="s1">&#39;midi_error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">()</span>
@@ -1971,8 +1970,8 @@ Lets start by taking a look at our success rate of parsing the MIDI files.</p>
 <p>4084 rows × 12 columns</p>
 </div></div></div>
 </div>
-<p>For now we will simply ignore those files and focus on the ones that we could sucessfully parse.</p>
-<p>For our experiments it is important that the MIDI files contain a drum track - only the files we could succssfully parse and contain a drum track can be used for training of our model.</p>
+<p>For now, we will simply ignore those files and focus on the ones that we could sucessfully parse.</p>
+<p>For our experiments it is important that the MIDI files contain a drum track - only those files that we could parse succssfully and that contain a drum track can be used for training of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">drums</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">()</span>
@@ -2214,9 +2213,9 @@ Lets start by taking a look at our success rate of parsing the MIDI files.</p>
 </div>
 </div>
 <p>We notice a big spork at around 120 bpm which is rather interesting and should be inspected what the exact casue of this spike is.</p>
-<p>It is important to have an understanding and feeling for the data.
-We have an expectation of our data which can help us to see if the data makes sense and if we parsed it correctly but can also always be problematic because we project certain expectations on an projection and simplification of our data.</p>
-<p>We can also count the occurences of tempi changes on songs.</p>
+<p>It is important to get an understanding and feeling for the data.
+We have an expectation of our data which can help us to see if it makes sense and if we parsed it correctly. But that can also  be problematic because we project certain simplifying expectations on our data.</p>
+<p>Let’s count the occurences of tempo changes in each song.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;tempi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;midi_path&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
@@ -2251,7 +2250,7 @@ dtype: int64
 </div>
 </div>
 </div>
-<p>Its worth to inspect those files in e.g. <a class="reference external" href="https://musescore.org/de">MuseScore</a> and try to figure out what exactly happens in thos files.</p>
+<p>Its worth to inspect those files in e.g. <a class="reference external" href="https://musescore.org/de">MuseScore</a> and try to figure out what happens in them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="p">[</span><span class="s1">&#39;end_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
@@ -2263,7 +2262,7 @@ dtype: int64
 <img alt="../_images/01_midi_drums_76_0.png" src="../_images/01_midi_drums_76_0.png" />
 </div>
 </div>
-<p>We see that the <code class="docutils literal notranslate"><span class="pre">end_time</span></code> has some extreme values that are probably wrong - lets inspect those examples closer to see if we can see a pattern.</p>
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">end_time</span></code> has some extreme values that are probably wrong - let’s inspect those examples closer to see if we can see a pattern.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -2383,10 +2382,10 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<p>Regarding this it seems we should filter out those really long pieces as those are most probably wrong files.</p>
+<p>Regarding this, it seems we should filter out those really long pieces as those are most probably wrong files.</p>
 <p>Those errors could be caused by our parsing or by the MIDI files itself - but as we have a big enough corpora it is justifiable by not including those outliers.</p>
 <p>Resolution corresponds to the <a class="reference external" href="https://en.wikipedia.org/wiki/Pulses_per_quarter_note">PPQN</a> of the MIDI file.
-Everything above 1000 should be suspicious, so lets take a look at those examples.</p>
+Everything above 1000 should be suspicious, so let’s take a look at those examples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;resolution&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -2507,7 +2506,7 @@ Everything above 1000 should be suspicious, so lets take a look at those example
 </div></div></div>
 </div>
 <p>Another important metric is the number of time signatures.</p>
-<p>If we use a step-sequencer like approach for our data we will need our data to have exactly one time signature.</p>
+<p>If we use a step-sequencer like approach, we will need our data to have one time signature only.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_df</span><span class="p">[</span><span class="s1">&#39;num_time_signature_changes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
@@ -2637,7 +2636,7 @@ Everything above 1000 should be suspicious, so lets take a look at those example
 </table>
 </div></div></div>
 </div>
-<p>Lets check the amount of files we would loose if we limit our files to exactly one time signature.</p>
+<p>Let’s check the amount of files we would loose if we limit our files to exactly one time signature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">midi_df</span><span class="o">.</span><span class="n">num_time_signature_changes</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">();</span>
@@ -2749,10 +2748,10 @@ Name: original_files, dtype: int64
 </div>
 </div>
 </div>
-<p>An interesting aspect of this analyis reveals that the most common words in a text corpora do not often contain much information what the text is about because the grammar structure of the text introduces noise to the dataset.</p>
-<p>There are basic algorithms such as <a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">tf-idf</a> which allows us to filter out the noise by asserting that a word which is common in many documents has little to no meaning (e.g. <em>the</em> or in our case <em>midi</em>) and therefore give it a low score.
+<p>An interesting aspect of this analysis reveals that the most common words in a text corpora do not often contain much information what the text is about. This is because the words that belong to the grammatical structure of the text introduce noise to the dataset.</p>
+<p>There are basic algorithms such as <a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">tf-idf</a> which allows us to filter out the noise by asserting that a word which is common in many documents has little no meaning (e.g. <em>the</em> or in our case <em>midi</em>) and therefore give it a low score.
 Although if a significant subset of our file names contain a word that is not so common in the other file names (e.g. <em>beatles</em>) this <em>token</em> will receive a high rating.</p>
-<p>For now we dont want to inspect this further but its always good to know such kind of algorithms as it helps to filter out the relevant data.</p>
+<p>For now we don’t want to inspect this further, but its always good to know such kind of algorithms as it helps to filter out the relevant data.</p>
 <p>Its also good to make some sanity checks on our data.
 One assumption would be that every file in which we did not detect a drum track also does not contain an instrument with the name <em>drums</em>.</p>
 <div class="cell docutils container">
@@ -3189,7 +3188,7 @@ With the analysis above we can verify borders of data we want to allow.</p>
     </tr>
   </tbody>
 </table>
-<p>97846 rows × 12 columns</p>
+<p>97848 rows × 12 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -3206,10 +3205,10 @@ With the analysis above we can verify borders of data we want to allow.</p>
 </div>
 <p>We now filtered half of our available examples by just looking at the metadata of the MIDI files.
 The next step is to transform the drum track of each MIDI file into a mathematical representation.</p>
-<p>The notatation within the MIDI file is bound to a strictly timely manner but in music we often put the timely domain in relation to a tempo which remaps the time measured in seconds.
+<p>The notatation within the MIDI file is bound to time, but in music we often represent the time domain in relation to a tempo which remaps the time measured in seconds.
 A common unit for this is <em>beats per minute</em> (bpm) where 60 bpm maps each second to a <em>beat</em> - if we want to shorten the time between two beats (commonly refered to as <em>faster</em>) we increase the <em>bpm</em> and vice versa.</p>
 <p>Another instance for the segmentation of events in time is the <em>time signature</em> of a track.</p>
-<p>One notation which tries to simplify this notation is in the form of a <em>step seqencer</em> in which we snap notes to the nearest step on a grid</p>
+<p>One notation which tries to simplify this notation is in the form of a <em>step seqencer</em> in which we snap notes to the nearest step on a grid.</p>
 <p>For this we can use <em>note_seq</em> with the function <a class="reference external" href="https://github.com/magenta/note-seq/blob/6631a4299092cd52201e2f4a8e36c1223d76561f/note_seq/drums_lib.py#L269">midi_file_to_drum_track</a>.</p>
 </div>
 <div class="section" id="conclusion">
