@@ -273,3 +273,42 @@ while being in the root directory of the repository and click on the appearing l
   therefore SuperCollider is omitted in the docker image.
 
   Any help on this is appreciated.
+
+
+Updating and working with the repository
+----------------------------------------
+
+The course material is stored and distributed via `git <https://git-scm.com/>`__.
+As there are constantly updates on the course material there will be conflicts
+when we have worked locally on a notebook as *git* does not know how to resolve
+the local changes with the remote updates - this is commonly known as
+`merge conflicts <https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts>`__.
+
+The best way is probably to save the notebook on which you work locally to a new
+notebook - this can be done by clicking on the *Save Notebook As ...* button
+under the *File* menu in the upper left corner of Jupyter Lab.
+
+.. figure:: notebook-save-as.png
+  :alt: Save notebook as
+  :scale: 50 %
+
+  Save a notebook under a new name to avoid any problems when updating the course
+  material.
+
+Updating the course material
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Assuming that you have saved all the changes you want to keep in a new notebook
+and you are in the root repository of repository,
+the following commands will update the course material
+
+.. code-block:: shell
+
+  # remove any changes from existing files
+  git reset --hard
+  # get newest changes
+  git pull
+
+It may be necessary that new dependencies got introduced during the update,
+so its always a good idea to quickly install any new dependencies - see
+:ref:`Installing dependencies` on how to do this.
