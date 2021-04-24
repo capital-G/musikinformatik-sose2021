@@ -269,6 +269,18 @@
    Setup via Docker
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#updating-and-working-with-the-repository">
+   Updating and working with the repository
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#updating-the-course-material">
+     Updating the course material
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
             </nav>
@@ -491,6 +503,38 @@ environment variable</p>
 <p>Currently it is difficult to run SuperCollider in an headless environment such as Docker,
 therefore SuperCollider is omitted in the docker image.</p>
 <p>Any help on this is appreciated.</p>
+</div>
+</div>
+<div class="section" id="updating-and-working-with-the-repository">
+<h2>Updating and working with the repository<a class="headerlink" href="#updating-and-working-with-the-repository" title="Permalink to this headline">¶</a></h2>
+<p>The course material is stored and distributed via <a class="reference external" href="https://git-scm.com/">git</a>.
+As there are constantly updates on the course material there will be conflicts
+when we have worked locally on a notebook.
+This is because <em>git</em> does not know how to resolve
+the local changes with the remote updates - this is commonly known as
+<a class="reference external" href="https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts">merge conflicts</a>.</p>
+<p>Probably the best way is to save the notebook on which you work locally to a new
+notebook - this can be done by clicking on the <em>Save Notebook As …</em> button
+under the <em>File</em> menu in the upper left corner of Jupyter Lab.</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="../../_images/notebook-save-as.png"><img alt="Save notebook as" src="../../_images/notebook-save-as.png" style="width: 531.0px; height: 401.0px;" /></a>
+<p class="caption"><span class="caption-text">Save a notebook under a new name to avoid any problems when updating the course
+material.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="updating-the-course-material">
+<h3>Updating the course material<a class="headerlink" href="#updating-the-course-material" title="Permalink to this headline">¶</a></h3>
+<p>Assuming that you have saved all the changes you want to keep in a new notebook
+and you are in the root repository of repository,
+the following commands will update the course material</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove any changes from existing files</span>
+git reset --hard
+<span class="c1"># get newest changes</span>
+git pull
+</pre></div>
+</div>
+<p>It may be necessary that new dependencies got introduced during the update,
+so its always a good idea to quickly install any new dependencies - see
+<a class="reference internal" href="#installing-dependencies"><span class="std std-ref">Installing dependencies</span></a> on how to do this.</p>
 </div>
 </div>
 </div>
