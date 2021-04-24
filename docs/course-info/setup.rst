@@ -280,11 +280,12 @@ Updating and working with the repository
 
 The course material is stored and distributed via `git <https://git-scm.com/>`__.
 As there are constantly updates on the course material there will be conflicts
-when we have worked locally on a notebook as *git* does not know how to resolve
+when we have worked locally on a notebook.
+This is because *git* does not know how to resolve
 the local changes with the remote updates - this is commonly known as
 `merge conflicts <https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts>`__.
 
-The best way is probably to save the notebook on which you work locally to a new
+Probably the best way is to save the notebook on which you work locally to a new
 notebook - this can be done by clicking on the *Save Notebook As ...* button
 under the *File* menu in the upper left corner of Jupyter Lab.
 
