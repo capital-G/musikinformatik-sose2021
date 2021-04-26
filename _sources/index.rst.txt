@@ -34,6 +34,7 @@ generating sounds.
    :caption: Basics
 
    docs/basics/math.rst
+   00_basics/sc_dimensions.ipynb
    docs/basics/python.rst
 
 .. toctree::

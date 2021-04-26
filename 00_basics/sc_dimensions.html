@@ -1,0 +1,1003 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dimensionality in SuperCollider &#8212; Musikinformatik SoSe2021</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Python basics" href="../docs/basics/python.html" />
+    <link rel="prev" title="Math basics" href="../docs/basics/math.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Course information
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/setup.html">
+   Environment setup
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/bib.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Basics
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/math.html">
+   Math basics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Dimensionality in SuperCollider
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/python.html">
+   Python basics
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Lesson 1
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_midi_drums/01_midi_drums.html">
+   Extracting information from MIDI files
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/00_basics/sc_dimensions.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021/issues/new?title=Issue%20on%20page%20%2F00_basics/sc_dimensions.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/capital-G/musikinformatik-sose2021/edit/main/00_basics/sc_dimensions.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/capital-G/musikinformatik-sose2021/main?urlpath=tree/00_basics/sc_dimensions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-scalar-to-vector-to-matrix">
+   From scalar to vector to matrix
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scalar">
+     Scalar
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vector">
+     Vector
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrix">
+     Matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sets">
+     Sets
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#working-with-matrices">
+   Working with matrices
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="dimensionality-in-supercollider">
+<h1>Dimensionality in SuperCollider<a class="headerlink" href="#dimensionality-in-supercollider" title="Permalink to this headline">¶</a></h1>
+<p>After we have taken a look at the math perspective of vectors and matrices we now want to shift and expand our view on the topic by taking a look at how to create and interact with vectors and matrices in SuperCollider.</p>
+<div class="section" id="from-scalar-to-vector-to-matrix">
+<h2>From scalar to vector to matrix<a class="headerlink" href="#from-scalar-to-vector-to-matrix" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="scalar">
+<h3>Scalar<a class="headerlink" href="#scalar" title="Permalink to this headline">¶</a></h3>
+<p>As we discussed a scalar is a single numeric value.
+This can either be a natural number or a real number.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; 5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="mf">1.5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; 1.5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; 1.4142135623731
+</pre></div>
+</div>
+</div>
+</div>
+<p>When working with rational numbers we must take into account that a computer is <a class="reference external" href="https://en.wikipedia.org/wiki/Single-precision_floating-point_format">bound to a limited representation of our number</a> which leads sometimes to unexpected results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.7</span><span class="o">/</span><span class="mf">0.1</span><span class="p">).</span><span class="nx">floor</span><span class="p">.</span><span class="nx">postln</span><span class="p">;</span>
+<span class="mf">7.0</span><span class="p">.</span><span class="nx">floor</span><span class="p">.</span><span class="nx">postln</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.0
+7.0
+-&gt; 7.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Althogh <span class="math notranslate nohighlight">\(\left \lfloor \frac{0.7}{0.1} \right \rfloor = \lfloor 7 \rfloor = 7\)</span>, where <span class="math notranslate nohighlight">\(\lfloor x \rfloor\)</span> is the <a class="reference external" href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions">flooring</a> operator on the variable <span class="math notranslate nohighlight">\(x\)</span>, SuperCollider decides to return a 6 instead which is caused by the limited floating point precision.</p>
+</div>
+<div class="section" id="vector">
+<h3>Vector<a class="headerlink" href="#vector" title="Permalink to this headline">¶</a></h3>
+<p>We can store multiple scalar values into an <a class="reference external" href="https://doc.sccode.org/Classes/Array.html">Array</a>.
+Have in mind that <a class="reference external" href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html">indexing of arrays start at 0 in most programming languages</a> where in math the convention is to start indexing from 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">v</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="nx">v</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ 2, 3 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can scale each element of our array with a scalar by multiplying a scalar with our array <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">v</span><span class="o">*</span><span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ 8, 12 ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">v</span><span class="o">/</span><span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ 0.5, 0.75 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also multiply the array with another array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ 8, 27 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets see what happens when we multiply non-matching dimensions of our arrays.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ 8, 15, 12 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>A bit unexpected that we do not receive an error - SuperCollider expands arrays in such operations to the longest array and cycles through the shorter ones. This allows for very concise code, but you have to take care about the input arrays yourself.
+Lets see how this cascades when we want to multiply 3 arrays with different size.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ 56, 120, 108, 80 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results are calculated as following:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+2 \cdot 4 \cdot 7 &amp;= 7\\
+3 \cdot 5 \cdot 8 &amp;= 120\\
+2 \cdot 6 \cdot 9 &amp;= 108\\
+3 \cdot 4 \cdot 10 &amp;= 80
+\end{aligned}
+\end{split}\]</div>
+</div>
+<div class="section" id="matrix">
+<h3>Matrix<a class="headerlink" href="#matrix" title="Permalink to this headline">¶</a></h3>
+<p>Now we can also take a look at how a matrix is represented in SuperCollider.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">n</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ [ 2, 3, 4 ], [ 4, 5, 6 ] ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>So it is basically just an array of arrays - but let’s take a closer look at this as it is important to get the indices and the dimensions properly when working with matrices.</p>
+<p>Let’s say we want to represent a <span class="math notranslate nohighlight">\(3 \times 2\)</span> matrix
+$<span class="math notranslate nohighlight">\(
+\text{M} =
+\begin{pmatrix}
+   1 &amp; 2\\
+   3 &amp; 4\\
+   5 &amp; 6
+\end{pmatrix}
+\)</span>$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">m</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+<span class="p">];</span>
+<span class="nx">m</span><span class="p">.</span><span class="nx">postln</span><span class="p">;</span>
+<span class="nx">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
+-&gt; 2
+</pre></div>
+</div>
+</div>
+</div>
+<p>We interpret the first dimension as rows, the second dimension (the elements of the arrays) as columns. This fits nicely with our mathematical notation.</p>
+<p>So lets try common operations such as the scaling of a matrix with a scalar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">m</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ [ 2, 4 ], [ 6, 8 ], [ 10, 12 ] ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The multiplication of a matrix with a scalar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">m</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ [ 2, 3 ], [ 4, 5 ], [ 6, 7 ] ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The multiplication of our a matrices with vectors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">m</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ [ 1, 2 ], [ 0, 0 ], [ 10, 12 ] ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">m</span><span class="o">*</span><span class="nx">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ [ 1, 4 ], [ 9, 16 ], [ 25, 36 ] ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">m</span><span class="o">*</span><span class="nx">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ [ 2, 6, 4 ], [ 12, 20, 18 ], [ 10, 18, 20 ] ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Although the dimensions are matching with our mathematical definition the results do not match up.</p>
+</div>
+<div class="section" id="sets">
+<h3>Sets<a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h3>
+<p>The way to declare a set in SuperCollider is straightforward.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">a</span> <span class="o">=</span> <span class="nx">Set</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">];</span>
+<span class="nx">a</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; Set[ 3, 2, 1 ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that although we declared duplicates in the set this duplication is ignored by SuperCollider as a set can only have unique elements.
+We can also quickly take a look at the cardinality of sets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">a</span><span class="p">.</span><span class="nx">size</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; 3
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note also that due the circumstance that a set has no order we can also not access the <em>i</em>-th element of a set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR: Message &#39;at&#39; not understood.
+RECEIVER:
+Instance of Set {    (0x7ff1a052d478, gc=D8, fmt=00, flg=00, set=02)
+  instance variables [2]
+    array : instance of Array (0x7ff210022858, size=8, set=3)
+    size : Integer 3
+}
+ARGS:
+   Integer 0
+
+PROTECTED CALL STACK:
+	Meta_MethodError:new	0x7ff1e02c5100
+		arg this = DoesNotUnderstandError
+		arg what = nil
+		arg receiver = Set[ 3, 2, 1 ]
+	Meta_DoesNotUnderstandError:new	0x7ff1e02c70c0
+		arg this = DoesNotUnderstandError
+		arg receiver = Set[ 3, 2, 1 ]
+		arg selector = at
+		arg args = [ 0 ]
+	Object:doesNotUnderstand	0x7ff1f00ba5c0
+		arg this = Set[ 3, 2, 1 ]
+		arg selector = at
+		arg args = nil
+	a FunctionDef	0x7ff1a0329fd8
+		sourceCode = &quot;{ var result; \&quot;**** JUPYTER ****\&quot;.postln; result = {a[0]}.value(); postf(\&quot;-&gt; %
+\&quot;, result); \&quot;\&quot;.postln;}&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="working-with-matrices">
+<h2>Working with matrices<a class="headerlink" href="#working-with-matrices" title="Permalink to this headline">¶</a></h2>
+<p>Lets start by implementing a function which will multiply two matrices which also checks if this is a valid operation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="o">~</span><span class="nx">matrixMul</span> <span class="o">=</span> <span class="p">{</span> <span class="o">|</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="o">|</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">size</span> <span class="o">!=</span> <span class="nx">b</span><span class="p">.</span><span class="nx">size</span><span class="p">)</span> <span class="p">{</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;matrix dimensions do not match&quot;</span><span class="p">).</span><span class="k">throw</span> <span class="p">};</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">every</span><span class="p">({</span><span class="o">|</span><span class="nx">i</span><span class="o">|</span> <span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">size</span> <span class="o">==</span> <span class="nx">i</span><span class="p">.</span><span class="nx">size</span><span class="p">}).</span><span class="nx">not</span><span class="p">)</span> <span class="p">{</span><span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;input A has non identical dimensions&quot;</span><span class="p">).</span><span class="k">throw</span><span class="p">};</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">every</span><span class="p">({</span><span class="o">|</span><span class="nx">i</span><span class="o">|</span> <span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">size</span> <span class="o">==</span> <span class="nx">i</span><span class="p">.</span><span class="nx">size</span><span class="p">}).</span><span class="nx">not</span><span class="p">)</span> <span class="p">{</span><span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;input B has non identical dimensions&quot;</span><span class="p">).</span><span class="k">throw</span><span class="p">};</span>
+    <span class="nx">a</span><span class="p">.</span><span class="nx">collect</span> <span class="p">{</span> <span class="o">|</span><span class="nx">d</span><span class="o">|</span> <span class="p">(</span><span class="nx">b</span> <span class="o">*</span> <span class="nx">d</span><span class="p">).</span><span class="nx">sum</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; a Function
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets take a look at the formula</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\underbrace{\begin{pmatrix}
+    1 &amp; 1 &amp; 1 \\
+    1 &amp; 1 &amp; 3 \\
+\end{pmatrix}}_{A}
+\underbrace{\begin{pmatrix}
+    2\\
+    1\\
+    1\\
+\end{pmatrix}}_{B}
+\overset{!}{=}
+\underbrace{\begin{pmatrix}
+    4 \\
+    6 
+\end{pmatrix}}_{C}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(A\)</span> is a <span class="math notranslate nohighlight">\(2 \times 3\)</span> matrix and <span class="math notranslate nohighlight">\(B\)</span> a <span class="math notranslate nohighlight">\(3 \times 1\)</span> matrix, so the resulting matrix <span class="math notranslate nohighlight">\(C\)</span> must be a <span class="math notranslate nohighlight">\(2 \times 1\)</span> matrix.
+The values can easily be verified if we take a look at the definition of matrix multiplication</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="o">~</span><span class="nx">matrixMul</span><span class="p">.(</span>
+    <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]],</span>
+    <span class="p">[[</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; [ [ 4 ], [ 6 ] ]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that our function works as intended - although for a proper validation of this we cannot work with examples but need to examine the code.</p>
+<p>We now want to use this function to calculate downmixes in SuperCollider.
+To do this we first need to start the server.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">s</span><span class="p">.</span><span class="nx">boot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; localhost
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets formalise what we want to do before we start coding it.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+A &amp;= \begin{pmatrix}
+    X_{1, 1} &amp; X_{1, 2} &amp; X_{1,3} &amp; X_{1, 4} \\
+    X_{2, 1} &amp; X_{2, 2} &amp; X_{2, 3} &amp; X_{2, 4}
+\end{pmatrix}
+\text{where } \{ X_{i, j} \sim \mathcal{U}(0, 1) | i \in \{1,\dots,2\}, j \in \{1, \dots 4 \}  \}\\
+B &amp;= \begin{pmatrix}
+   \text{SinOsc}_{400} \\
+   \text{Saw}_{45} \\
+   \text{Pulse}_{8000} \\
+   \text{Blip}_{3} \\
+\end{pmatrix} \\
+\end{aligned}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{U}\)</span> is the <a class="reference external" href="https://en.wikipedia.org/wiki/Continuous_uniform_distribution">Continuous uniform distribution</a>.</p>
+<p><span class="math notranslate nohighlight">\(A\)</span> is a <span class="math notranslate nohighlight">\(2 \times 4\)</span> matrix with random values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> and our signals are stored in matrix <span class="math notranslate nohighlight">\(B\)</span> as a <span class="math notranslate nohighlight">\(4 \times 1\)</span> array of Ugens.
+So <span class="math notranslate nohighlight">\(C = A B\)</span> results in a <span class="math notranslate nohighlight">\(2 \times 1\)</span> matrix - so a mixed down stereo signal.</p>
+<p>If we would like to have a mix with <span class="math notranslate nohighlight">\(m\)</span> channels, we would need to modify <span class="math notranslate nohighlight">\(A\)</span> to a <span class="math notranslate nohighlight">\(m \times 4\)</span> matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">Ndef</span><span class="p">(</span><span class="ss">\x</span><span class="p">,</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">mix</span><span class="p">,</span> <span class="nx">selected</span><span class="p">,</span> <span class="nx">gater</span><span class="p">;</span>
+
+    <span class="nx">gater</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">Trig1</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span>
+            <span class="k">in</span><span class="o">:</span> <span class="nx">PulseDivider</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span>
+                <span class="nx">trig</span><span class="o">:</span> <span class="nx">Impulse</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span> 
+                <span class="nx">div</span><span class="o">:</span> <span class="nx">IRand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+                <span class="nx">start</span><span class="o">:</span> <span class="nx">IRand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)),</span>
+            <span class="nx">dur</span><span class="o">:</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span>
+        <span class="p">)</span>
+    <span class="p">};</span>
+    
+    <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">].</span><span class="nx">rand</span> <span class="p">}</span> <span class="o">!</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">SinOsc</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="mi">400</span><span class="p">)</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+        <span class="nx">Saw</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="mi">45</span><span class="p">)</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+        <span class="nx">Pulse</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="mi">8000</span><span class="p">)</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+        <span class="nx">Blip</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">numharm</span><span class="o">:</span> <span class="mi">140</span><span class="p">)</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="s2">&quot;Mixing Matrix A %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="s2">&quot;A shape %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="s2">&quot;B shape %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+
+    <span class="c1">// calculate a mixdown</span>
+    <span class="nx">mix</span> <span class="o">=</span> <span class="o">~</span><span class="nx">matrixMul</span><span class="p">.(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+    <span class="s2">&quot;Mixdown shape: %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">mix</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="nx">mix</span><span class="o">*</span><span class="mf">0.2</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">play</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mixing Matrix A [ [ 0.38767051696777, 0.12795674800873, 0.51681995391846, 0.76382398605347 ], [ 0.45636820793152, 0.66525650024414, 0.13446116447449, 0.029584407806396 ] ]
+A shape [ 2, 4 ]
+B shape [ 4 ]
+Mixdown shape: [ 2 ]
+-&gt; Ndef(&#39;x&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In Jupyter Notebook, we stop the audio playback of the SuperCollider server by executing a single dot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; CmdPeriod
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can spin this example further by adding additional row vectors to our Synth matrix <em>B</em>, so</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+A &amp;= \begin{pmatrix}
+    X_{1, 1} &amp; X_{1, 2} &amp; X_{1,3} &amp; X_{1, 4} \\
+    X_{2, 1} &amp; X_{2, 2} &amp; X_{2, 3} &amp; X_{2, 4}
+\end{pmatrix}
+\text{where } \{ X_{i, j} \sim \mathcal{U}(0, 1) | i \in \{1,\dots,2\}, j \in \{1, \dots 4 \}  \}\\
+B &amp;= \begin{pmatrix}
+   \text{SinOsc}_{440} &amp; \text{SinOsc}_{226} &amp; \text{SinOsc}_{782} \\
+   \text{Saw}_{45} &amp; \text{Saw}_{200} &amp; \text{Saw}_{420} \\
+   \text{Pulse}_{300} &amp; \text{Pulse}_{200} &amp; \text{Pulse}_{100} \\
+   \text{Blip}_{3} &amp; \text{Blip}_{5} &amp; \text{Blip}_{2}  \\
+\end{pmatrix} \\
+\end{aligned}
+\end{split}\]</div>
+<p>The problem is that now the operation <span class="math notranslate nohighlight">\(AB\)</span> returns a <span class="math notranslate nohighlight">\(2 \times 3\)</span> matrix which do not fit most representations of speakers.</p>
+<p>But we can solve this problem by multiplying a <span class="math notranslate nohighlight">\(3 \times 1\)</span> matrix <span class="math notranslate nohighlight">\(D\)</span> with uniform distributed values as in A so we obtain a <span class="math notranslate nohighlight">\(2\times1\)</span> matrix <span class="math notranslate nohighlight">\(C\)</span> by calculating <span class="math notranslate nohighlight">\(C = (AB)D\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+D = \begin{pmatrix}
+    X_{1, 1} \\
+    X_{2, 1} \\
+    X_{3, 1}
+\end{pmatrix}
+\text{where } \{ X_{i, 1} \sim \mathcal{U}(0, 1) | i \in \{1,\dots,3\} \}  \}
+\end{split}\]</div>
+<p>We see that working with matrices really comes in handy once we start to think in matrices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">Ndef</span><span class="p">(</span><span class="ss">\x</span><span class="p">,</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">mix</span><span class="p">,</span> <span class="nx">selected</span><span class="p">,</span> <span class="nx">gater</span><span class="p">;</span>
+
+    <span class="nx">gater</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">Trig1</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span>
+            <span class="k">in</span><span class="o">:</span> <span class="nx">PulseDivider</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span>
+                <span class="nx">trig</span><span class="o">:</span> <span class="nx">Impulse</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span> 
+                <span class="nx">div</span><span class="o">:</span> <span class="nx">IRand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+                <span class="nx">start</span><span class="o">:</span> <span class="nx">IRand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)),</span>
+            <span class="nx">dur</span><span class="o">:</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span>
+        <span class="p">)</span>
+    <span class="p">};</span>
+    
+    <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">].</span><span class="nx">rand</span> <span class="p">}</span> <span class="o">!</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">SinOsc</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mi">226</span><span class="p">,</span> <span class="mi">782</span><span class="p">])</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+        <span class="nx">Saw</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="p">[</span><span class="mi">45</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">420</span><span class="p">])</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+        <span class="nx">Pulse</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+        <span class="nx">Blip</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="nx">numharm</span><span class="o">:</span> <span class="mi">140</span><span class="p">)</span> <span class="o">*</span> <span class="nx">gater</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="nx">d</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">].</span><span class="nx">rand</span> <span class="p">}</span> <span class="o">!</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="s2">&quot;A shape %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="s2">&quot;B shape %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="s2">&quot;D shape %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+
+    <span class="c1">// calculate a mixdown</span>
+    <span class="nx">mix</span> <span class="o">=</span> <span class="o">~</span><span class="nx">matrixMul</span><span class="p">.(</span><span class="o">~</span><span class="nx">matrixMul</span><span class="p">.(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">),</span> <span class="nx">d</span><span class="p">);</span>
+    <span class="s2">&quot;Mixdown shape: %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">mix</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="nx">mix</span><span class="o">*</span><span class="mf">0.2</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">play</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A shape [ 2, 4 ]
+B shape [ 4, 3 ]
+D shape [ 3, 1 ]
+Mixdown shape: [ 2, 1 ]
+-&gt; Ndef(&#39;x&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; CmdPeriod
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets develop this a bit further.</p>
+<p>Lets define a <span class="math notranslate nohighlight">\(10\times5\)</span> signal matrix <span class="math notranslate nohighlight">\(S\)</span> - we want to use the cursor to distribute the matrix across the screen and use the cursor to smoothly transit between each signal of our matrix.</p>
+<p>As we want to result in a <span class="math notranslate nohighlight">\(2\times1\)</span> stereo mix <span class="math notranslate nohighlight">\(C\)</span> we know thanks to the dimension rules of matrix multiplication that we need</p>
+<div class="math notranslate nohighlight">
+\[
+C = \underbrace{\underbrace{(\underbrace{A}_{2 \times 10} \underbrace{S}_{10 \times 5})}_{2 \times 5} \underbrace{B}_{5 \times 1}}_{2 \times 1}
+\]</div>
+<p>The <span class="math notranslate nohighlight">\(2 \times 10\)</span> matrix controls the volume of the rows, where the <span class="math notranslate nohighlight">\(5 \times 1\)</span> matrix controls the volume of the columns.</p>
+<p>As we gradually want to have a transition between the signals that are close to each other, we have to think about a way how to determine the volume of each signal based on the position of the cursor.
+The problem is that we cannot solve this with a purely linear function as we need an increasing slope and an decreasing slope (if we approach a point it should go louder but if we pass the point it should go quieter again).
+But we can combine two linear functions to mimic this behavior by combining an increasing and a decreasing linear function and taking the lowest value of each while they intersect at the <span class="math notranslate nohighlight">\(i\)</span>-th fraction with an co-domain value of 1 (so <span class="math notranslate nohighlight">\(y=1\)</span>).</p>
+<p>With some basic calculus we can come up with two simple linear functions which have for <span class="math notranslate nohighlight">\(f_i\)</span> which have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+    f_{\text{up}_i}(x) &amp;= ax + (2-i) \\
+    f_{\text{down}_i}(x) &amp;= -ax + i \\
+    f_{\text{combined}_i}(x) &amp;= \max \left( \min \left( f_{\text{up}_i}(x) , f_{\text{down}_i} (x) \right) , 0 \right)
+\end{aligned}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(a\)</span> is the number of distinct, even distributed points we want to separate and <span class="math notranslate nohighlight">\(i\)</span> is the <span class="math notranslate nohighlight">\(i\)</span>-th point we want to separate (<span class="math notranslate nohighlight">\(i\)</span> starts counting at 1).
+We combine both functions by taking the lower of both functions, but also add a <span class="math notranslate nohighlight">\(\max\)</span> function to not go below 0.</p>
+<p>In our case the <span class="math notranslate nohighlight">\(x\)</span> of our function is the position of the cursor on the screen.</p>
+<p>Note that by multiplying a factor to <span class="math notranslate nohighlight">\(a\)</span> we could in- or decrease the separation of our signals in the mix.</p>
+<p>Here is an example plot of the two functions combined where we want to distribute 5 points and looking at the separation of the 3th point.</p>
+<p><img alt="" src="../_images/mouse_plot.svg" /></p>
+<p>The plot was generated with Python using</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x_up</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="n">x_down</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+<span class="n">left_floor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">right_floor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_up</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="n">x_up</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f_up&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_down</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="n">x_down</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_down</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="o">*</span><span class="n">x_down</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f_down&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_up</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="o">*</span><span class="n">x_up</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">left_floor</span><span class="p">,</span> <span class="mi">0</span><span class="o">*</span><span class="n">left_floor</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;0 floor&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">right_floor</span><span class="p">,</span> <span class="mi">0</span><span class="o">*</span><span class="n">right_floor</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">Ndef</span><span class="p">(</span><span class="ss">\x</span><span class="p">,</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">mix</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">allRatios</span><span class="p">,</span> <span class="nx">numRatios</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nx">numSines</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="nx">baseFreq</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="nx">numOutChannels</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+    
+    <span class="c1">// array of numRatios rows, each with numSine sine tones in a series</span>
+    <span class="nx">allRatios</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="nx">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">11</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="nx">pi</span><span class="p">,</span> <span class="mi">13</span><span class="o">/</span><span class="mi">4</span><span class="p">][</span><span class="mi">0</span><span class="p">..</span><span class="nx">numRatios</span><span class="p">];</span>
+    <span class="nx">s</span> <span class="o">=</span> <span class="nx">allRatios</span><span class="p">.</span><span class="nx">collect</span> <span class="p">{</span> <span class="o">|</span><span class="nx">ratio</span><span class="o">|</span> 
+        <span class="nx">numSines</span><span class="p">.</span><span class="nx">collect</span> <span class="p">{</span> <span class="o">|</span><span class="nx">i</span><span class="o">|</span>
+            <span class="kd">var</span> <span class="nx">freq</span> <span class="o">=</span> <span class="nx">baseFreq</span> <span class="o">*</span> <span class="p">(</span><span class="nx">ratio</span> <span class="o">**</span> <span class="nx">i</span><span class="p">);</span>
+            <span class="nx">SinOsc</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="nx">freq</span><span class="p">)</span> <span class="o">*</span> <span class="nx">AmpComp</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="nx">freq</span><span class="p">,</span> <span class="nx">root</span><span class="o">:</span> <span class="nx">baseFreq</span><span class="p">)</span>
+        <span class="p">}</span> <span class="o">*</span> <span class="nx">LFNoise2</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="mi">70</span><span class="p">).</span><span class="nx">max</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">};</span>
+    
+    <span class="c1">// in SC indices start at 0 so we write i+1 and j+1 here</span>
+    <span class="nx">a</span> <span class="o">=</span> <span class="nx">numOutChannels</span><span class="p">.</span><span class="nx">collect</span><span class="p">({</span><span class="o">|</span><span class="nx">i</span><span class="o">|</span>
+        <span class="nx">numRatios</span><span class="p">.</span><span class="nx">collect</span><span class="p">({</span><span class="o">|</span><span class="nx">j</span><span class="o">|</span>
+            <span class="c1">// to make it more interesting we offset the i-th channel by i</span>
+            <span class="nx">max</span><span class="p">(</span>
+                <span class="nx">min</span><span class="p">(</span>
+                    <span class="nx">numRatios</span><span class="o">*</span><span class="nx">MouseY</span><span class="p">.</span><span class="nx">kr</span><span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="p">(</span><span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="nx">i</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nx">numRatios</span><span class="o">*</span><span class="nx">MouseY</span><span class="p">.</span><span class="nx">kr</span> <span class="o">+</span> <span class="p">(</span><span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="nx">i</span><span class="p">),</span>
+                <span class="p">),</span>
+            <span class="mi">0</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">});</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="nx">numSines</span><span class="p">.</span><span class="nx">collect</span><span class="p">({</span><span class="o">|</span><span class="nx">i</span><span class="o">|</span>
+        <span class="mi">1</span><span class="p">.</span><span class="nx">collect</span><span class="p">({</span>
+            <span class="nx">max</span><span class="p">(</span>
+                <span class="nx">min</span><span class="p">(</span>
+                    <span class="nx">numSines</span><span class="o">*</span><span class="nx">MouseX</span><span class="p">.</span><span class="nx">kr</span><span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nx">numSines</span><span class="o">*</span><span class="nx">MouseX</span><span class="p">.</span><span class="nx">kr</span> <span class="o">+</span> <span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+                <span class="p">),</span>
+            <span class="mi">0</span><span class="p">)</span> 
+        <span class="p">})</span>
+    <span class="p">});</span>
+    
+    <span class="nx">mix</span> <span class="o">=</span> <span class="o">~</span><span class="nx">matrixMul</span><span class="p">.(</span><span class="o">~</span><span class="nx">matrixMul</span><span class="p">.(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">s</span><span class="p">),</span> <span class="nx">b</span><span class="p">);</span>
+    
+    <span class="s2">&quot;Shape of A: %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="s2">&quot;Shape of S: %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="s2">&quot;Shape of B: %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    <span class="s2">&quot;Shape of C: %&quot;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">mix</span><span class="p">.</span><span class="nx">shape</span><span class="p">).</span><span class="nx">postln</span><span class="p">;</span>
+    
+    <span class="nx">mix</span><span class="o">*</span><span class="mf">0.3</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">play</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of A: [ 2, 10 ]
+Shape of S: [ 10, 5 ]
+Shape of B: [ 5, 1 ]
+Shape of C: [ 2, 1 ]
+-&gt; Ndef(&#39;x&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-&gt; CmdPeriod
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="../docs/basics/math.html" title="previous page">Math basics</a>
+    <a class='right-next' id="next-link" href="../docs/basics/python.html" title="next page">Python basics</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dennis Scheiba<br/>
+        
+            &copy; Copyright 2021, Dennis Scheiba.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  None
+  </body>
+</html>
