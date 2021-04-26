@@ -12,14 +12,23 @@ A recommended read for a quick introduction is :cite:p:`2019:burkov`.
 Data structures
 ---------------
 
+Scalar
+^^^^^^
+
 We define a *scalar* :math:`x` as a single numerical value and we note it as a single lowercase letter.
 Examples for a *scalar* can be a whole number like :math:`2` or a real number like :math:`0.25`.
+
+Vector
+^^^^^^
 
 A *vector* :math:`\text{x}` is a list of :math:`n` *scalar* values with a fixed ordering of this collection.
 We call this an *n-dimensional vector*.
 For example :math:`\text{a} = [3, 2]` is a 2-dimensional vector.
 We denote the :math:`i`-th value of a vector :math:`\text{x}` via :math:`x^{(i)}`, so in our example :math:`a^{(1)} = 3`.
 This index also denotes the dimension of a vector.
+
+Matrix
+^^^^^^
 
 A :math:`n \times m` *matrix* :math:`\text{A}` is an collection of numerical values which consists of :math:`m` *rows* and :math:`n` *columns*.
 The values of such are matrix are arranged as
@@ -33,6 +42,9 @@ The values of such are matrix are arranged as
        a_{m,1} & \cdots & a_{m,n}
     \end{pmatrix}
 
+
+Set
+^^^
 
 A *set* :math:`\mathcal{S}` is a collection of unique elements, so e.g. :math:`\mathcal{A} = \lbrace 5, 4 , 20 \rbrace` or :math:`\mathcal{B} = \lbrace x_1, x_2, \dots, x_{n} \rbrace`.
 Common sets are the set of all real numbers :math:`\mathbb{R}` or the set of all natural numbers :math:`\mathbb{N}`.
@@ -73,6 +85,9 @@ Although we provide high dimensions as input for our function we will receive a 
 The euclidian metric is an instance of a *metric* which defines a distance between two points in a vector space and therefore has to `meet certain criteria <https://en.wikipedia.org/wiki/Metric_(mathematics)#Definition>`_.
 A metric will be a crucial guideline for us when we are working in high, non-imaginable dimensions.
 
+Minimum maximum
+^^^^^^^^^^^^^^^
+
 We define the *local minimum* of a function :math:`f: \mathcal{X} \rightarrow \mathcal{Y}` at a point :math:`c \in \mathcal{X}` if :math:`f(x) \gt f(c)` for every
 :math:`x` in an open interval around :math:`c`.
 The minimum value across all local minima is defined as the *global minimum*.
@@ -91,6 +106,9 @@ Also in order to take a look at a graph we need to calculate every point of it w
 
 Before taking a look at `the problem of higher dimensions <https://en.wikipedia.org/wiki/Curse_of_dimensionality>`__ we want to define
 a way no how to calculate the local and global minimum.
+
+Derivative
+^^^^^^^^^^
 
 The *derivative* :math:`f'` of a function :math:`f` is a function which describes the growth and decrease of the function :math:`f`.
 A function :math:`f: \mathcal{A} \rightarrow \mathcal{B}` is derivable at a point :math:`a \in \mathcal{A}` if
@@ -134,6 +152,9 @@ Working with vectors and matrices
 
 After we have defined vectors and matrices in :ref:`Data structures` we also want to take a look at how to work with them.
 
+Vector operations
+^^^^^^^^^^^^^^^^^
+
 The *sum* of two vectors :math:`\text{a},\text{b}` is defined by
 
 .. math::
@@ -157,6 +178,9 @@ The *dot product* :math:`\cdot` of two vectors :math:`\text{a}, \text{b}` is giv
 
 which returns a scalar.
 Once again this is only defined if both dimensions match.
+
+Matrix operations
+^^^^^^^^^^^^^^^^^
 
 The addition of two :math:`m \times n` matrices :math:`\text{A},\text{B}` is defined as
 
@@ -284,92 +308,236 @@ Statistics
 `Machine learning is not just statistics on big-data <https://towardsdatascience.com/the-actual-difference-between-statistics-and-machine-learning-64b49f07ea3>`__
 but machine learning relies heavily on statistics to work properly.
 Statistics helps us to navigate, interpret and understand a dataset and is therefore a mighty tool as it tries to make simplifications on complex structures.
+A recommended read to dive deeper into the fundamentals of statistics is :cite:p:`2016:statistik`.
 
-A *random variable* :math:`X: \Omega \rightarrow E` is a function which accounts the possibility of outcomes in the *space of all possible outcomes* :math:`\Omega`
-to a *measurable space* :math:`E`.
-What a *measurable space* is exactly is `a lecture on its own <https://en.wikipedia.org/wiki/Measure_(mathematics)>`__.
-The *realization* :math:`x` of :math:`X(\omega) = x` for :math:`\omega \in \Omega` can be regarded as an *outcome* of an *experiment*.
+Random variable
+^^^^^^^^^^^^^^^
 
-Taking a coin toss as an example: The possible outcomes are *heads* (0) or *tails* (1), so :math:`\Omega_{\text{coin}} = \lbrace 0, 1 \rbrace`.
-
-.. todo::
-
-    We define the *probability* that :math:`X` has an *outcome* :math:`S \subset E` by
-
-    .. math::
-
-        \mathbb{P} (X \in S) = \mathbb{P}(\lbrace \omega \in \Omega | X(\omega) \in S \rbrace )
-
-    where :math:`\mathbb{P}` is a
-
-We can also write down the *possibilities* of the random variable :math:`X` in this example:
+A *random variable* :math:`X: \Omega \rightarrow \mathbb{R}` is a function which maps all possible outcomes :math:`\omega \in \Omega` of a *probability space*
+to :math:`\mathbb{R}`, so
 
 .. math::
 
-    \mathbb{P}_X(x) = 
+    \begin{aligned}
+        X: \Omega &\rightarrow \mathbb{R}\\
+        \omega &\mapsto X(\omega) = x
+    \end{aligned}
+
+The *realization* :math:`x` of :math:`X(\omega) = x` for :math:`\omega \in \Omega` can be regarded as an *outcome* of an *experiment*,
+also called an *event*. We will define events with
+
+.. math::
+
+    \begin{aligned}
+        \{ X = x \} &\text{ with } \{ \omega : X(\omega) = x \}\\
+        \{ X \leq x \} &\text{ with } \{ \omega: X(\omega) \leq x \}\\
+        \{ X \in I \} &\text{ with } \{ \omega \in \Omega | X(\omega) \in I \}
+    \end{aligned}
+
+where :math:`I` is an interval on :math:`\mathbb{R}`.
+
+.. admonition:: Example
+
+    To understand the definitions a bit better it is maybe good to work through an example.
+    Lets say we throw two dices at once and sum up both of their values.
+    All possilblities of the experiment are the tuples
+    :math:`\Omega = \{ \omega = (i, j), 1 \leq i, j \leq 6 \}`.
+    We define the sum of both dices as a random variable by
+    :math:`X(\omega) = x = i+j`.
+    Taking a look at the events we can see
+
+    .. math::
+
+        \begin{aligned}
+            \{ X = 4 \} &= \left\{ (1,3), (2,2), (3,1) \right\}\\
+            \{ X \leq 4 \} &= \left\{ (1, 1), (1, 2), (1, 3), (2,1), (2, 2), (3, 1) \right\}
+        \end{aligned}
+
+Density function and distribution
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We can also write down the *likeliness* of the possibilities of a random variable :math:`X`,
+also called the *probability density function* (PDF) :math:`f` via
+
+.. math::
+
+    f(x) = 
     \begin{cases}
-        \frac{1}{2}, &x \in \{0,\}\\
-        \frac{1}{2}, &x \in \{1\}
+        \mathbb{P}_X \left[ X = x_i \right] = p_i, &x = x_i \in \lbrace x_1, x_2, \dots \rbrace \\
+        0, &\text{otherwhise}
     \end{cases}
 
-We call this the *probability mass function*.
+This tells us how likely a certain event of our *probability space* is likely to occur.
+Most of the time we are interested in this distribution rather than the mapping of the random variable
+because this is often unknown and is one of the topics of statistics to re-construct this mapping.
 
-But this seems pretty obvious but what do we do if we do not have a discrete, finite set of outcomes but an
-infinite, continuous set of outcomes?
-We do not want to write down infinite outcomes and even then: To probability to observe a single outcome :math:`c` in
-an infinite space of outcomes is :math:`0`.
-But what we can do is describe the likelihood of to observe this particular sample relative to all observable samples.
-A *probability density function* (pdf) is exactly this and gives us a way to calculate the 
-probabilities of a continuous random variables.
+We also often work with the *cumulative distribution function* (CDF), also often just called the
+*distribution function*, of a random variable :math:`X` defined by
+
+.. math::
+
+    F_X (x) = \mathbb{P}_X \left[ X \leq x \right] = \sum_{i:x_i \leq x} f(x_i)
+
+
+.. admonition:: Example
+
+    Considering a coin drop :math:`X` with probability space :math:`\Omega = \{ 0, 1 \}`
+    where :math:`0` maps to *heads* and :math:`0` to tails we can provide the
+    probability density function via
+
+    .. math::
+
+        \mathbb{P}_X(x) = 
+        \begin{cases}
+            \frac{1}{2}, &x  = 0\\
+            \frac{1}{2}, &x  = 1\\
+        \end{cases}
+    
+    as both events are equally likely.
+
+Continuous random variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When we do not want to limit us to working with discrete random variables we need to refine the
+definitions when working with continuous random variables.
+Lets say we have a random variable :math:`X` which can be any value between 0 and 1.
+As there are infinite many rational numbers between 0 and 1 the question remains how we can map a probability
+to each of these values without making the sum of possibilities of all possible events exceed 1.
+
+Because of this we call a random variable :math:`X` *continuous* if there exists a *density function* :math:`f(x) \geq 0`
+that for an interval :math:`[a, b]`
+
+.. math::
+
+    \mathbb{P} [a \leq X \leq b] = \int_a^b f(x) dx
+
+There are certain requirements to such a *density function* like :math:`\int_{- \infty}^\infty f(x) dx = 1` as
+the sum of all probabilities can not exceed 1 but also must some up to 1.
+The circumstance that a single value of a continuous random variable has the likelihood of 0 is now clear because
+
+.. math::
+
+    \mathbb{P} [ X = a ] = \mathbb{P} [ a \leq X \leq a ] = \int_a^a f(x) dx = F(a) - F(a) = 0
+
+The distribution :math:`F_X` of a continuous random variable :math:`X` with density function :math:`f` is defined by
+
+.. math::
+
+    F_X (x) = \mathbb{P} [ X \leq x ] = \int_{- \infty}^{x} f(x) dx
+
+Quantiles
+^^^^^^^^^
+
+:math:`x_p` is a *p-quantile* of a random variable :math:`X` if
+
+.. math::
+
+    \begin{aligned}
+        \mathbb{P}[X \leq x_p] \geq p \\
+        \mathbb{P}[x_p \leq X] \geq (1-p)\\
+    \end{aligned}
+
+An important *p-quantile* is for :math:`p=0.5` which is commonly referred to as the *median*
+and must not be the same as the *mean*.
 
 .. figure:: https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg
     :alt: plot of the standard normal distribution
 
     A common probability density function is the *standard normal distribution*.
+    Here it is displayed with its quantiles.
     `Source <https://en.wikipedia.org/wiki/Normal_distribution#/media/File:Standard_deviation_diagram.svg>`__
 
-The *expectation* :math:`\mathbb{E}[X]` of a discrete random variable :math:`X` with :math:`\Omega = \{ x_i \}_{i=1}^{m}` is given by
+Expectation and variance
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The *expectation* :math:`\mathbb{E}[X]` of a discrete random variable :math:`X` with :math:`\Omega = \{ x_i \}_{i=1}^{m}`
+and density function :math:`p` is given by
 
 .. math::
 
-    \mu_{X} = \mathbb{E}[X] := \sum_{i=1}^{m} x_i \mathbb{P}(X = x_i)
+    \mu_{X} = \mathbb{E}[X] := \sum_{i=1}^{m} x_i \mathbb{P}(X = x_i) = \sum_{i \geq 1} x_i * p_i
 
-Once again an example: Consider a dice - its possible outcomes are all numbers between 1 and 6, so
-:math:`\Omega_{\text{dice}} = \{ 1, 2, 3, 4, 5, 6 \}`.
-To dice any of the numbers is equally likely so :math:`\mathbb{P}_X(x) = \frac{1}{|\Omega_{\text{dice}}|} = \frac{1}{6}`.
-Putting everything together we can now calculate the expectation :math:`\mathbb{E}[X_{\text{dice}}]`:
+For a continuous random variable :math:`X` it is with density function :math:`f_X` it is defined by
 
 .. math::
 
-    \mu_{X_{\text{dice}}} = \mathbb{E}[X_{\text{dice}}] = \sum_{i=1}^{6} i \frac{1}{6} = 1\frac{1}{6} + 2 \frac{1}{6} + \cdots + 6\frac{1}{6} = 3.5
+    \mu_{X} = \mathbb{E}[X] := \int_{- \infty}^{\infty} xf_X(x)dx
 
-It is important to understand that :math:`\mu_{X_{\text{dice}}} \notin \Omega_{\text{dice}}` - the *expectation* itself must not be possible - it is
-more like the average value that can be expected.
+But most of the time we not solely rely on the expectation of a random variable as a metric but also how far the realizations of the
+random variable are spread away from the expected value, which is called *variance*.
 
-But most of the time we not only take a look at the expected value of a random variable but also how far the realizations of the
-random variable are away from the expected value.
-For example we create a new dice :math:`\alpha` - but this time the surface only has two numbers on all 6 sides,
-so :math:`\Omega_{\text{dice}_{\alpha}} = \{ 2,5 \}`.
-We can also calculate the expectation for our new dice:
+The *variance* :math:`\sigma^2_X` of a random variable :math:`X` is defined by
 
 .. math::
 
-    \mu_{X_{\text{dice}_\alpha}} = \mathbb{E}[X_{\text{dice}_\alpha}] = \sum_{i \in \Omega_{\text{dice}_{\alpha}}} i \frac{1}{|\Omega_{\text{dice}_{\alpha}}|} = 2\frac{1}{2} + 5 \frac{1}{2} = 3.5
-
-We can use the *variance* :math:`\sigma^2` to still distinguish the random variables from our normal dice and dice :math:`\alpha`.
-
-.. math::
-
-    \sigma_X^2 = \text{var}_X = \mathbb{E}[(X - \mu_X)]
-
+    \sigma^2_X = \text{var}_X = \mathbb{E}[ (X - \mu_X) ]
+    
 For a discrete random variable :math:`X` we can use
 
 .. math::
 
-    \sigma_X = \sqrt{\sum_{\omega \in \Omega} \mathbb{P}(X=\omega) (\omega - \mu_X)^2}
+    \sigma^2_X = \text{var}_X =  \sqrt{\sum_{\omega \in \Omega} \mathbb{P}(X=\omega) (\omega - \mu_X)^2}
 
-.. todo::
+and for a continuous random variable :math:`X` we use
 
-    * Quantiles
-    * Distributions
-    * Accuracy vs precision
+.. math::
+
+    \sigma^2_X = \text{var}_X = \int_{- \infty}^{\infty} (x - \mu)^2 f(x) dx 
+
+We also often talk about the *standard deviation* :math:`\sigma_X` of a random variable :math:`X` which is simply the square root of the variance, so
+
+.. math::
+
+    \sigma_X = \sqrt{\text{var}_X}
+
+
+.. admonition:: Example
+
+    Consider a dice - its possible outcomes are all numbers between 1 and 6, so
+    :math:`\Omega_{\text{dice}} = \{ 1, 2, 3, 4, 5, 6 \}`.
+    To throw any number is equally likely so :math:`\mathbb{P}_X(x) = \frac{1}{|\Omega_{\text{dice}}|} = \frac{1}{6}`.
+    Putting everything together we can now calculate the expectation :math:`\mathbb{E}[X_{\text{dice}}]`:
+
+    .. math::
+
+        \mu_{X_{\text{dice}}} = \mathbb{E}[X_{\text{dice}}] = \sum_{i=1}^{6} i \frac{1}{6} = 1\frac{1}{6} + 2 \frac{1}{6} + \cdots + 6\frac{1}{6} = 3.5
+
+    It is important to understand that the *expectation* itself must not be possible to throw with a dice - it is
+    more like the average value that can be expected.
+
+    We create another dice :math:`\alpha` - but this time the surface only has only 3 time the number 2 and three times number 5 its 6 sides,
+    so :math:`\Omega_{\text{dice}_{\alpha}} = \{ 2,5 \}`.
+    We can also calculate the expectation for our new dice:
+
+    .. math::
+
+        \mu_{X_{\text{dice}_\alpha}} = \mathbb{E}[X_{\text{dice}_\alpha}] = \sum_{i \in \Omega_{\text{dice}_{\alpha}}} i \frac{1}{|\Omega_{\text{dice}_{\alpha}}|} = 2\frac{1}{2} + 5 \frac{1}{2} = 3.5
+
+    We can use the *variance* :math:`\sigma^2` to still distinguish the random variables from our normal dice and dice :math:`\alpha`.
+
+    .. math::
+
+        \begin{aligned}
+            \sigma_{X_{\text{dice}}}^2 &= \frac{\sum_{i=1}^{6} \left(i - \mathbb{E}[X_{\text{dice}}] \right)^2}{6} = \frac{105}{36} \approx 2.916667\\
+            \sigma_{X_{\text{dice}_\alpha}}^2 &= \frac{\sum_{i \in \{ 2, 5 \}} \left(i - \mathbb{E}[X_{\text{dice}_\alpha}] \right)^2}{2} = \frac{9}{4} = 2.25
+        \end{aligned}
+
+
+Precision and recall
+^^^^^^^^^^^^^^^^^^^^
+
+As a big part of machine learning is based on classification we need to learn the most basic terms to
+understand the rate our estimator.
+
+.. math::
+
+    \begin{aligned}
+        \text{precision} &= \frac{\# \{ \text{True positive predictions} \}}{\# \{ \text{Positive predictions} \}}\\
+        \text{recall} &= \frac{\# \{ \text{True positive predictions} \}}{\# \{ \text{Positive examples} \}}\\ 
+    \end{aligned}
+
+.. figure:: https://upload.wikimedia.org/wikipedia/commons/2/26/Precisionrecall.svg
+    :alt: Illustration of precision and recall.
+    
+    Illustration of precision and recall.
+    `Source <https://commons.wikimedia.org/wiki/File:Precisionrecall.svg>`__.

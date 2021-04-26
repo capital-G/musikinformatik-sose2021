@@ -212,21 +212,99 @@
   <a class="reference internal nav-link" href="#data-structures">
    Data structures
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scalar">
+     Scalar
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vector">
+     Vector
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrix">
+     Matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set">
+     Set
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#functions">
    Functions
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#minimum-maximum">
+     Minimum maximum
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivative">
+     Derivative
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#working-with-vectors-and-matrices">
    Working with vectors and matrices
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vector-operations">
+     Vector operations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrix-operations">
+     Matrix operations
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#statistics">
    Statistics
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#random-variable">
+     Random variable
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#density-function-and-distribution">
+     Density function and distribution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continuous-random-variables">
+     Continuous random variables
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quantiles">
+     Quantiles
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expectation-and-variance">
+     Expectation and variance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#precision-and-recall">
+     Precision and recall
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -248,13 +326,21 @@ This guide can not even scratch the surface of the tremendous amount of topics w
 <p>A recommended read for a quick introduction is <span id="id1">[<a class="reference internal" href="../bib.html#id2">Bur19</a>]</span>.</p>
 <div class="section" id="data-structures">
 <h2>Data structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="scalar">
+<h3>Scalar<a class="headerlink" href="#scalar" title="Permalink to this headline">¶</a></h3>
 <p>We define a <em>scalar</em> <span class="math notranslate nohighlight">\(x\)</span> as a single numerical value and we note it as a single lowercase letter.
 Examples for a <em>scalar</em> can be a whole number like <span class="math notranslate nohighlight">\(2\)</span> or a real number like <span class="math notranslate nohighlight">\(0.25\)</span>.</p>
+</div>
+<div class="section" id="vector">
+<h3>Vector<a class="headerlink" href="#vector" title="Permalink to this headline">¶</a></h3>
 <p>A <em>vector</em> <span class="math notranslate nohighlight">\(\text{x}\)</span> is a list of <span class="math notranslate nohighlight">\(n\)</span> <em>scalar</em> values with a fixed ordering of this collection.
 We call this an <em>n-dimensional vector</em>.
 For example <span class="math notranslate nohighlight">\(\text{a} = [3, 2]\)</span> is a 2-dimensional vector.
 We denote the <span class="math notranslate nohighlight">\(i\)</span>-th value of a vector <span class="math notranslate nohighlight">\(\text{x}\)</span> via <span class="math notranslate nohighlight">\(x^{(i)}\)</span>, so in our example <span class="math notranslate nohighlight">\(a^{(1)} = 3\)</span>.
 This index also denotes the dimension of a vector.</p>
+</div>
+<div class="section" id="matrix">
+<h3>Matrix<a class="headerlink" href="#matrix" title="Permalink to this headline">¶</a></h3>
 <p>A <span class="math notranslate nohighlight">\(n \times m\)</span> <em>matrix</em> <span class="math notranslate nohighlight">\(\text{A}\)</span> is an collection of numerical values which consists of <span class="math notranslate nohighlight">\(m\)</span> <em>rows</em> and <span class="math notranslate nohighlight">\(n\)</span> <em>columns</em>.
 The values of such are matrix are arranged as</p>
 <div class="math notranslate nohighlight">
@@ -264,6 +350,9 @@ The values of such are matrix are arranged as</p>
    \vdots &amp; \ddots &amp; \vdots \\
    a_{m,1} &amp; \cdots &amp; a_{m,n}
 \end{pmatrix}\end{split}\]</div>
+</div>
+<div class="section" id="set">
+<h3>Set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
 <p>A <em>set</em> <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is a collection of unique elements, so e.g. <span class="math notranslate nohighlight">\(\mathcal{A} = \lbrace 5, 4 , 20 \rbrace\)</span> or <span class="math notranslate nohighlight">\(\mathcal{B} = \lbrace x_1, x_2, \dots, x_{n} \rbrace\)</span>.
 Common sets are the set of all real numbers <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> or the set of all natural numbers <span class="math notranslate nohighlight">\(\mathbb{N}\)</span>.
 We call a set of vectors a <em>vector set</em>.</p>
@@ -276,6 +365,7 @@ such as <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.</p>
 <p>Suppose we have two elements <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>.
 If a set includes everything between <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> and also <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> itself we define it as a <em>closed interval</em> which is denoted as <span class="math notranslate nohighlight">\([a,b]\)</span>.
 If <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are not included in this set we define it as an <em>open interval</em> denoted as <span class="math notranslate nohighlight">\((a,b)\)</span>.</p>
+</div>
 </div>
 <div class="section" id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
@@ -293,20 +383,25 @@ We see that the notion of the domain and co-domain is quite important and also a
 Although we provide high dimensions as input for our function we will receive a single scalar value as output of the equation.
 The euclidian metric is an instance of a <em>metric</em> which defines a distance between two points in a vector space and therefore has to <a class="reference external" href="https://en.wikipedia.org/wiki/Metric_(mathematics)#Definition">meet certain criteria</a>.
 A metric will be a crucial guideline for us when we are working in high, non-imaginable dimensions.</p>
+<div class="section" id="minimum-maximum">
+<h3>Minimum maximum<a class="headerlink" href="#minimum-maximum" title="Permalink to this headline">¶</a></h3>
 <p>We define the <em>local minimum</em> of a function <span class="math notranslate nohighlight">\(f: \mathcal{X} \rightarrow \mathcal{Y}\)</span> at a point <span class="math notranslate nohighlight">\(c \in \mathcal{X}\)</span> if <span class="math notranslate nohighlight">\(f(x) \gt f(c)\)</span> for every
 <span class="math notranslate nohighlight">\(x\)</span> in an open interval around <span class="math notranslate nohighlight">\(c\)</span>.
 The minimum value across all local minima is defined as the <em>global minimum</em>.
 This will be another crucial point of this course as this is <a class="reference external" href="https://en.wikipedia.org/wiki/Optimization_problem">a research field on its own</a>.
 Much of machine learning is tied to the riddle of finding the best solution to a problem - e.g. finding the lowest cost.</p>
-<div class="figure align-default" id="id4">
+<div class="figure align-default" id="id3">
 <img alt="Global and local maximum/minimum" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Extrema_example.svg" /><p class="caption"><span class="caption-text">Example of a global and local minimum/maximum.
-<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Extrema_example.svg">Source</a></span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Extrema_example.svg">Source</a></span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>Looking at this graph it seems quiet obvious to find the minimum and maximum - but when we working in non-imaginary and viewable dimensions
 we can not take a look at it.
 Also in order to take a look at a graph we need to calculate every point of it which can get quite tricky at higher dimensions.</p>
 <p>Before taking a look at <a class="reference external" href="https://en.wikipedia.org/wiki/Curse_of_dimensionality">the problem of higher dimensions</a> we want to define
 a way no how to calculate the local and global minimum.</p>
+</div>
+<div class="section" id="derivative">
+<h3>Derivative<a class="headerlink" href="#derivative" title="Permalink to this headline">¶</a></h3>
 <p>The <em>derivative</em> <span class="math notranslate nohighlight">\(f'\)</span> of a function <span class="math notranslate nohighlight">\(f\)</span> is a function which describes the growth and decrease of the function <span class="math notranslate nohighlight">\(f\)</span>.
 A function <span class="math notranslate nohighlight">\(f: \mathcal{A} \rightarrow \mathcal{B}\)</span> is derivable at a point <span class="math notranslate nohighlight">\(a \in \mathcal{A}\)</span> if</p>
 <div class="math notranslate nohighlight">
@@ -317,26 +412,29 @@ If we replace <span class="math notranslate nohighlight">\(x\)</span> with <span
 \[\lim_{h \rightarrow 0} = \frac{f(x_0 + h) - f(x_0)}{h} := f'(x_0)\]</div>
 <p>which describes the derivative of <span class="math notranslate nohighlight">\(f\)</span> at the point <span class="math notranslate nohighlight">\(x_0\)</span>.
 Understanding the meaning of this is not trivial but basically it limits the growth of a function within a region.</p>
-<div class="figure align-default" id="id5">
+<div class="figure align-default" id="id4">
 <img alt="Calculation of the tangent" src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Tangent_animation.gif" />
 <p class="caption"><span class="caption-text">By approaching <span class="math notranslate nohighlight">\(\Delta x \rightarrow 0\)</span> we obtain a tangent which describes the growth
 at the point <span class="math notranslate nohighlight">\(x\)</span>.
-<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Tangent_animation.gif">Source</a></span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Tangent_animation.gif">Source</a></span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>The derivative of the basic function <span class="math notranslate nohighlight">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> for <span class="math notranslate nohighlight">\(f(x)=x^2\)</span> is <span class="math notranslate nohighlight">\(f'(x)=2x\)</span>.
 The <em>second order derivative</em> <span class="math notranslate nohighlight">\(f''\)</span> is defined as the derivative of the derivative - in our example it is
 <span class="math notranslate nohighlight">\(f''=2\)</span> and <span class="math notranslate nohighlight">\(f''' = f^{(3)} = 0\)</span>.
 The reverse procedure of derivation is called <em>integration</em> of a function.</p>
-<div class="figure align-default" id="id6">
+<div class="figure align-default" id="id5">
 <img alt="Plot of :math:`f(x) = |x|`." src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Absolute_value.svg" /><p class="caption"><span class="caption-text">Not every function is differentable. E.g. <span class="math notranslate nohighlight">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> with <span class="math notranslate nohighlight">\(f(x)=|x|\)</span> is not
 differentable at <span class="math notranslate nohighlight">\(x=0\)</span>.
 This will become important when working with neural networks.
-<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Absolute_value.svg">Source</a></span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Absolute_value.svg">Source</a></span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 </div>
 <div class="section" id="working-with-vectors-and-matrices">
 <h2>Working with vectors and matrices<a class="headerlink" href="#working-with-vectors-and-matrices" title="Permalink to this headline">¶</a></h2>
 <p>After we have defined vectors and matrices in <a class="reference internal" href="#data-structures"><span class="std std-ref">Data structures</span></a> we also want to take a look at how to work with them.</p>
+<div class="section" id="vector-operations">
+<h3>Vector operations<a class="headerlink" href="#vector-operations" title="Permalink to this headline">¶</a></h3>
 <p>The <em>sum</em> of two vectors <span class="math notranslate nohighlight">\(\text{a},\text{b}\)</span> is defined by</p>
 <div class="math notranslate nohighlight">
 \[\text{a} + \text{b} = [a_1 + b_1, a_2 + b_2, \dots, a_m + b_m]\]</div>
@@ -350,6 +448,9 @@ If they do not match the addition of 2 vectors is not defined.</p>
 \[\text{a} \cdot \text{b} = \sum_{i=1}^{m} a_i b_i\]</div>
 <p>which returns a scalar.
 Once again this is only defined if both dimensions match.</p>
+</div>
+<div class="section" id="matrix-operations">
+<h3>Matrix operations<a class="headerlink" href="#matrix-operations" title="Permalink to this headline">¶</a></h3>
 <p>The addition of two <span class="math notranslate nohighlight">\(m \times n\)</span> matrices <span class="math notranslate nohighlight">\(\text{A},\text{B}\)</span> is defined as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\text{A} + \text{B} =
@@ -393,9 +494,9 @@ results in a <span class="math notranslate nohighlight">\(m \times p\)</span> ma
 <p>where <span class="math notranslate nohighlight">\(c_{i,j} = \sum_{k=1}^{n} a_{i,k} b_{k, j}\)</span>.</p>
 <p>The multiplication of matrices is not commutative as <span class="math notranslate nohighlight">\(\text{A} \text{B}\)</span> returns a <span class="math notranslate nohighlight">\(m \times p\)</span> matrix but
 <span class="math notranslate nohighlight">\(\text{B} \text{A}\)</span> is not defined if <span class="math notranslate nohighlight">\(m \neq p\)</span>.</p>
-<div class="figure align-default" id="id7">
+<div class="figure align-default" id="id6">
 <img alt="Matrix multiplication" src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Matrix_multiplication_diagram_2.svg" /><p class="caption"><span class="caption-text">A visual representation of matrix multiplication.
-<a class="reference external" href="https://en.wikipedia.org/wiki/File:Matrix_multiplication_diagram_2.svg">Source</a></span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://en.wikipedia.org/wiki/File:Matrix_multiplication_diagram_2.svg">Source</a></span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 <p>Now lets take a look at the multiplication of a <span class="math notranslate nohighlight">\(m \times n\)</span> matrix <span class="math notranslate nohighlight">\(\text{A}\)</span> with a <span class="math notranslate nohighlight">\(n \times 1\)</span> column vector <span class="math notranslate nohighlight">\(\text{b}\)</span>.
 We say <em>column vector</em> because for this operation we will simply add a single dimension to <span class="math notranslate nohighlight">\(\text{b}\)</span> so it becomes basically a matrix.</p>
@@ -448,73 +549,173 @@ dimensions of the matrix.</p>
 \end{pmatrix}\end{split}\]</div>
 <p>The result is now a <span class="math notranslate nohighlight">\(n\)</span> dimensional row vector.</p>
 </div>
+</div>
 <div class="section" id="statistics">
 <h2>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://towardsdatascience.com/the-actual-difference-between-statistics-and-machine-learning-64b49f07ea3">Machine learning is not just statistics on big-data</a>
 but machine learning relies heavily on statistics to work properly.
-Statistics helps us to navigate, interpret and understand a dataset and is therefore a mighty tool as it tries to make simplifications on complex structures.</p>
-<p>A <em>random variable</em> <span class="math notranslate nohighlight">\(X: \Omega \rightarrow E\)</span> is a function which accounts the possibility of outcomes in the <em>space of all possible outcomes</em> <span class="math notranslate nohighlight">\(\Omega\)</span>
-to a <em>measurable space</em> <span class="math notranslate nohighlight">\(E\)</span>.
-What a <em>measurable space</em> is exactly is <a class="reference external" href="https://en.wikipedia.org/wiki/Measure_(mathematics)">a lecture on its own</a>.
-The <em>realization</em> <span class="math notranslate nohighlight">\(x\)</span> of <span class="math notranslate nohighlight">\(X(\omega) = x\)</span> for <span class="math notranslate nohighlight">\(\omega \in \Omega\)</span> can be regarded as an <em>outcome</em> of an <em>experiment</em>.</p>
-<p>Taking a coin toss as an example: The possible outcomes are <em>heads</em> (0) or <em>tails</em> (1), so <span class="math notranslate nohighlight">\(\Omega_{\text{coin}} = \lbrace 0, 1 \rbrace\)</span>.</p>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>We define the <em>probability</em> that <span class="math notranslate nohighlight">\(X\)</span> has an <em>outcome</em> <span class="math notranslate nohighlight">\(S \subset E\)</span> by</p>
+Statistics helps us to navigate, interpret and understand a dataset and is therefore a mighty tool as it tries to make simplifications on complex structures.
+A recommended read to dive deeper into the fundamentals of statistics is <span id="id2">[<a class="reference internal" href="../bib.html#id3">FHK+16</a>]</span>.</p>
+<div class="section" id="random-variable">
+<h3>Random variable<a class="headerlink" href="#random-variable" title="Permalink to this headline">¶</a></h3>
+<p>A <em>random variable</em> <span class="math notranslate nohighlight">\(X: \Omega \rightarrow \mathbb{R}\)</span> is a function which maps all possible outcomes <span class="math notranslate nohighlight">\(\omega \in \Omega\)</span> of a <em>probability space</em>
+to <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>, so</p>
 <div class="math notranslate nohighlight">
-\[\mathbb{P} (X \in S) = \mathbb{P}(\lbrace \omega \in \Omega | X(\omega) \in S \rbrace )\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> is a</p>
+\[\begin{split}\begin{aligned}
+    X: \Omega &amp;\rightarrow \mathbb{R}\\
+    \omega &amp;\mapsto X(\omega) = x
+\end{aligned}\end{split}\]</div>
+<p>The <em>realization</em> <span class="math notranslate nohighlight">\(x\)</span> of <span class="math notranslate nohighlight">\(X(\omega) = x\)</span> for <span class="math notranslate nohighlight">\(\omega \in \Omega\)</span> can be regarded as an <em>outcome</em> of an <em>experiment</em>,
+also called an <em>event</em>. We will define events with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \{ X = x \} &amp;\text{ with } \{ \omega : X(\omega) = x \}\\
+    \{ X \leq x \} &amp;\text{ with } \{ \omega: X(\omega) \leq x \}\\
+    \{ X \in I \} &amp;\text{ with } \{ \omega \in \Omega | X(\omega) \in I \}
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(I\)</span> is an interval on <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>To understand the definitions a bit better it is maybe good to work through an example.
+Lets say we throw two dices at once and sum up both of their values.
+All possilblities of the experiment are the tuples
+<span class="math notranslate nohighlight">\(\Omega = \{ \omega = (i, j), 1 \leq i, j \leq 6 \}\)</span>.
+We define the sum of both dices as a random variable by
+<span class="math notranslate nohighlight">\(X(\omega) = x = i+j\)</span>.
+Taking a look at the events we can see</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \{ X = 4 \} &amp;= \left\{ (1,3), (2,2), (3,1) \right\}\\
+    \{ X \leq 4 \} &amp;= \left\{ (1, 1), (1, 2), (1, 3), (2,1), (2, 2), (3, 1) \right\}
+\end{aligned}\end{split}\]</div>
 </div>
-<p>We can also write down the <em>possibilities</em> of the random variable <span class="math notranslate nohighlight">\(X\)</span> in this example:</p>
+</div>
+<div class="section" id="density-function-and-distribution">
+<h3>Density function and distribution<a class="headerlink" href="#density-function-and-distribution" title="Permalink to this headline">¶</a></h3>
+<p>We can also write down the <em>likeliness</em> of the possibilities of a random variable <span class="math notranslate nohighlight">\(X\)</span>,
+also called the <em>probability density function</em> (PDF) <span class="math notranslate nohighlight">\(f\)</span> via</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f(x) =
+\begin{cases}
+    \mathbb{P}_X \left[ X = x_i \right] = p_i, &amp;x = x_i \in \lbrace x_1, x_2, \dots \rbrace \\
+    0, &amp;\text{otherwhise}
+\end{cases}\end{split}\]</div>
+<p>This tells us how likely a certain event of our <em>probability space</em> is likely to occur.
+Most of the time we are interested in this distribution rather than the mapping of the random variable
+because this is often unknown and is one of the topics of statistics to re-construct this mapping.</p>
+<p>We also often work with the <em>cumulative distribution function</em> (CDF), also often just called the
+<em>distribution function</em>, of a random variable <span class="math notranslate nohighlight">\(X\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[F_X (x) = \mathbb{P}_X \left[ X \leq x \right] = \sum_{i:x_i \leq x} f(x_i)\]</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>Considering a coin drop <span class="math notranslate nohighlight">\(X\)</span> with probability space <span class="math notranslate nohighlight">\(\Omega = \{ 0, 1 \}\)</span>
+where <span class="math notranslate nohighlight">\(0\)</span> maps to <em>heads</em> and <span class="math notranslate nohighlight">\(0\)</span> to tails we can provide the
+probability density function via</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbb{P}_X(x) =
 \begin{cases}
-    \frac{1}{2}, &amp;x \in \{0,\}\\
-    \frac{1}{2}, &amp;x \in \{1\}
+    \frac{1}{2}, &amp;x  = 0\\
+    \frac{1}{2}, &amp;x  = 1\\
 \end{cases}\end{split}\]</div>
-<p>We call this the <em>probability mass function</em>.</p>
-<p>But this seems pretty obvious but what do we do if we do not have a discrete, finite set of outcomes but an
-infinite, continuous set of outcomes?
-We do not want to write down infinite outcomes and even then: To probability to observe a single outcome <span class="math notranslate nohighlight">\(c\)</span> in
-an infinite space of outcomes is <span class="math notranslate nohighlight">\(0\)</span>.
-But what we can do is describe the likelihood of to observe this particular sample relative to all observable samples.
-A <em>probability density function</em> (pdf) is exactly this and gives us a way to calculate the
-probabilities of a continuous random variables.</p>
-<div class="figure align-default" id="id8">
-<img alt="plot of the standard normal distribution" src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg" /><p class="caption"><span class="caption-text">A common probability density function is the <em>standard normal distribution</em>.
-<a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution#/media/File:Standard_deviation_diagram.svg">Source</a></span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+<p>as both events are equally likely.</p>
 </div>
-<p>The <em>expectation</em> <span class="math notranslate nohighlight">\(\mathbb{E}[X]\)</span> of a discrete random variable <span class="math notranslate nohighlight">\(X\)</span> with <span class="math notranslate nohighlight">\(\Omega = \{ x_i \}_{i=1}^{m}\)</span> is given by</p>
+</div>
+<div class="section" id="continuous-random-variables">
+<h3>Continuous random variables<a class="headerlink" href="#continuous-random-variables" title="Permalink to this headline">¶</a></h3>
+<p>When we do not want to limit us to working with discrete random variables we need to refine the
+definitions when working with continuous random variables.
+Lets say we have a random variable <span class="math notranslate nohighlight">\(X\)</span> which can be any value between 0 and 1.
+As there are infinite many rational numbers between 0 and 1 the question remains how we can map a probability
+to each of these values without making the sum of possibilities of all possible events exceed 1.</p>
+<p>Because of this we call a random variable <span class="math notranslate nohighlight">\(X\)</span> <em>continuous</em> if there exists a <em>density function</em> <span class="math notranslate nohighlight">\(f(x) \geq 0\)</span>
+that for an interval <span class="math notranslate nohighlight">\([a, b]\)</span></p>
 <div class="math notranslate nohighlight">
-\[\mu_{X} = \mathbb{E}[X] := \sum_{i=1}^{m} x_i \mathbb{P}(X = x_i)\]</div>
-<p>Once again an example: Consider a dice - its possible outcomes are all numbers between 1 and 6, so
+\[\mathbb{P} [a \leq X \leq b] = \int_a^b f(x) dx\]</div>
+<p>There are certain requirements to such a <em>density function</em> like <span class="math notranslate nohighlight">\(\int_{- \infty}^\infty f(x) dx = 1\)</span> as
+the sum of all probabilities can not exceed 1 but also must some up to 1.
+The circumstance that a single value of a continuous random variable has the likelihood of 0 is now clear because</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P} [ X = a ] = \mathbb{P} [ a \leq X \leq a ] = \int_a^a f(x) dx = F(a) - F(a) = 0\]</div>
+<p>The distribution <span class="math notranslate nohighlight">\(F_X\)</span> of a continuous random variable <span class="math notranslate nohighlight">\(X\)</span> with density function <span class="math notranslate nohighlight">\(f\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[F_X (x) = \mathbb{P} [ X \leq x ] = \int_{- \infty}^{x} f(x) dx\]</div>
+</div>
+<div class="section" id="quantiles">
+<h3>Quantiles<a class="headerlink" href="#quantiles" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(x_p\)</span> is a <em>p-quantile</em> of a random variable <span class="math notranslate nohighlight">\(X\)</span> if</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbb{P}[X \leq x_p] \geq p \\
+    \mathbb{P}[x_p \leq X] \geq (1-p)\\
+\end{aligned}\end{split}\]</div>
+<p>An important <em>p-quantile</em> is for <span class="math notranslate nohighlight">\(p=0.5\)</span> which is commonly referred to as the <em>median</em>
+and must not be the same as the <em>mean</em>.</p>
+<div class="figure align-default" id="id7">
+<img alt="plot of the standard normal distribution" src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Standard_deviation_diagram.svg" /><p class="caption"><span class="caption-text">A common probability density function is the <em>standard normal distribution</em>.
+Here it is displayed with its quantiles.
+<a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution#/media/File:Standard_deviation_diagram.svg">Source</a></span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="expectation-and-variance">
+<h3>Expectation and variance<a class="headerlink" href="#expectation-and-variance" title="Permalink to this headline">¶</a></h3>
+<p>The <em>expectation</em> <span class="math notranslate nohighlight">\(\mathbb{E}[X]\)</span> of a discrete random variable <span class="math notranslate nohighlight">\(X\)</span> with <span class="math notranslate nohighlight">\(\Omega = \{ x_i \}_{i=1}^{m}\)</span>
+and density function <span class="math notranslate nohighlight">\(p\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\mu_{X} = \mathbb{E}[X] := \sum_{i=1}^{m} x_i \mathbb{P}(X = x_i) = \sum_{i \geq 1} x_i * p_i\]</div>
+<p>For a continuous random variable <span class="math notranslate nohighlight">\(X\)</span> it is with density function <span class="math notranslate nohighlight">\(f_X\)</span> it is defined by</p>
+<div class="math notranslate nohighlight">
+\[\mu_{X} = \mathbb{E}[X] := \int_{- \infty}^{\infty} xf_X(x)dx\]</div>
+<p>But most of the time we not solely rely on the expectation of a random variable as a metric but also how far the realizations of the
+random variable are spread away from the expected value, which is called <em>variance</em>.</p>
+<p>The <em>variance</em> <span class="math notranslate nohighlight">\(\sigma^2_X\)</span> of a random variable <span class="math notranslate nohighlight">\(X\)</span> is defined by</p>
+<div class="math notranslate nohighlight">
+\[\sigma^2_X = \text{var}_X = \mathbb{E}[ (X - \mu_X) ]\]</div>
+<p>For a discrete random variable <span class="math notranslate nohighlight">\(X\)</span> we can use</p>
+<div class="math notranslate nohighlight">
+\[\sigma^2_X = \text{var}_X =  \sqrt{\sum_{\omega \in \Omega} \mathbb{P}(X=\omega) (\omega - \mu_X)^2}\]</div>
+<p>and for a continuous random variable <span class="math notranslate nohighlight">\(X\)</span> we use</p>
+<div class="math notranslate nohighlight">
+\[\sigma^2_X = \text{var}_X = \int_{- \infty}^{\infty} (x - \mu)^2 f(x) dx\]</div>
+<p>We also often talk about the <em>standard deviation</em> <span class="math notranslate nohighlight">\(\sigma_X\)</span> of a random variable <span class="math notranslate nohighlight">\(X\)</span> which is simply the square root of the variance, so</p>
+<div class="math notranslate nohighlight">
+\[\sigma_X = \sqrt{\text{var}_X}\]</div>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>Consider a dice - its possible outcomes are all numbers between 1 and 6, so
 <span class="math notranslate nohighlight">\(\Omega_{\text{dice}} = \{ 1, 2, 3, 4, 5, 6 \}\)</span>.
-To dice any of the numbers is equally likely so <span class="math notranslate nohighlight">\(\mathbb{P}_X(x) = \frac{1}{|\Omega_{\text{dice}}|} = \frac{1}{6}\)</span>.
+To throw any number is equally likely so <span class="math notranslate nohighlight">\(\mathbb{P}_X(x) = \frac{1}{|\Omega_{\text{dice}}|} = \frac{1}{6}\)</span>.
 Putting everything together we can now calculate the expectation <span class="math notranslate nohighlight">\(\mathbb{E}[X_{\text{dice}}]\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\mu_{X_{\text{dice}}} = \mathbb{E}[X_{\text{dice}}] = \sum_{i=1}^{6} i \frac{1}{6} = 1\frac{1}{6} + 2 \frac{1}{6} + \cdots + 6\frac{1}{6} = 3.5\]</div>
-<p>It is important to understand that <span class="math notranslate nohighlight">\(\mu_{X_{\text{dice}}} \notin \Omega_{\text{dice}}\)</span> - the <em>expectation</em> itself must not be possible - it is
+<p>It is important to understand that the <em>expectation</em> itself must not be possible to throw with a dice - it is
 more like the average value that can be expected.</p>
-<p>But most of the time we not only take a look at the expected value of a random variable but also how far the realizations of the
-random variable are away from the expected value.
-For example we create a new dice <span class="math notranslate nohighlight">\(\alpha\)</span> - but this time the surface only has two numbers on all 6 sides,
+<p>We create another dice <span class="math notranslate nohighlight">\(\alpha\)</span> - but this time the surface only has only 3 time the number 2 and three times number 5 its 6 sides,
 so <span class="math notranslate nohighlight">\(\Omega_{\text{dice}_{\alpha}} = \{ 2,5 \}\)</span>.
 We can also calculate the expectation for our new dice:</p>
 <div class="math notranslate nohighlight">
 \[\mu_{X_{\text{dice}_\alpha}} = \mathbb{E}[X_{\text{dice}_\alpha}] = \sum_{i \in \Omega_{\text{dice}_{\alpha}}} i \frac{1}{|\Omega_{\text{dice}_{\alpha}}|} = 2\frac{1}{2} + 5 \frac{1}{2} = 3.5\]</div>
 <p>We can use the <em>variance</em> <span class="math notranslate nohighlight">\(\sigma^2\)</span> to still distinguish the random variables from our normal dice and dice <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
 <div class="math notranslate nohighlight">
-\[\sigma_X^2 = \text{var}_X = \mathbb{E}[(X - \mu_X)]\]</div>
-<p>For a discrete random variable <span class="math notranslate nohighlight">\(X\)</span> we can use</p>
+\[\begin{split}\begin{aligned}
+    \sigma_{X_{\text{dice}}}^2 &amp;= \frac{\sum_{i=1}^{6} \left(i - \mathbb{E}[X_{\text{dice}}] \right)^2}{6} = \frac{105}{36} \approx 2.916667\\
+    \sigma_{X_{\text{dice}_\alpha}}^2 &amp;= \frac{\sum_{i \in \{ 2, 5 \}} \left(i - \mathbb{E}[X_{\text{dice}_\alpha}] \right)^2}{2} = \frac{9}{4} = 2.25
+\end{aligned}\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="precision-and-recall">
+<h3>Precision and recall<a class="headerlink" href="#precision-and-recall" title="Permalink to this headline">¶</a></h3>
+<p>As a big part of machine learning is based on classification we need to learn the most basic terms to
+understand the rate our estimator.</p>
 <div class="math notranslate nohighlight">
-\[\sigma_X = \sqrt{\sum_{\omega \in \Omega} \mathbb{P}(X=\omega) (\omega - \mu_X)^2}\]</div>
-<div class="admonition-todo admonition" id="id3">
-<p class="admonition-title">Todo</p>
-<ul class="simple">
-<li><p>Quantiles</p></li>
-<li><p>Distributions</p></li>
-<li><p>Accuracy vs precision</p></li>
-</ul>
+\[\begin{split}\begin{aligned}
+    \text{precision} &amp;= \frac{\# \{ \text{True positive predictions} \}}{\# \{ \text{Positive predictions} \}}\\
+    \text{recall} &amp;= \frac{\# \{ \text{True positive predictions} \}}{\# \{ \text{Positive examples} \}}\\
+\end{aligned}\end{split}\]</div>
+<div class="figure align-default" id="id8">
+<img alt="Illustration of precision and recall." src="https://upload.wikimedia.org/wikipedia/commons/2/26/Precisionrecall.svg" /><p class="caption"><span class="caption-text">Illustration of precision and recall.
+<a class="reference external" href="https://commons.wikimedia.org/wiki/File:Precisionrecall.svg">Source</a>.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 </div>
 </div>
