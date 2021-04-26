@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python basics &#8212; Musikinformatik SoSe2021</title>
+    <title>Contribute &#8212; Musikinformatik SoSe2021</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -38,8 +38,8 @@
     <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Extracting information from MIDI files" href="../../01_midi_drums/01_midi_drums.html" />
-    <link rel="prev" title="Dimensionality in SuperCollider" href="../../00_basics/sc_dimensions.html" />
+    <link rel="next" title="Bibliography" href="../bib.html" />
+    <link rel="prev" title="Environment setup" href="setup.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -72,14 +72,14 @@
   Course information
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../course-info/setup.html">
+  <a class="reference internal" href="setup.html">
    Environment setup
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../course-info/contribute.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Contribute
   </a>
  </li>
@@ -94,9 +94,9 @@
   Basics
  </span>
 </p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="math.html">
+  <a class="reference internal" href="../basics/math.html">
    Math basics
   </a>
  </li>
@@ -105,8 +105,8 @@
    Dimensionality in SuperCollider
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../basics/python.html">
    Python basics
   </a>
  </li>
@@ -163,7 +163,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/docs/basics/python.rst.txt"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/docs/course-info/contribute.rst.txt"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.rst</button></a>
         <!-- Download PDF via print -->
@@ -183,10 +183,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/capital-G/musikinformatik-sose2021/issues/new?title=Issue%20on%20page%20%2Fdocs/basics/python.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/capital-G/musikinformatik-sose2021/issues/new?title=Issue%20on%20page%20%2Fdocs/course-info/contribute.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/capital-G/musikinformatik-sose2021/edit/main/docs/basics/python.rst"><button
+        <a class="edit-button" href="https://github.com/capital-G/musikinformatik-sose2021/edit/main/docs/course-info/contribute.rst"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -206,6 +206,29 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jupyter-notebook-conventions">
+   Jupyter notebook conventions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pre-commit">
+   pre-commit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-the-documentation">
+   Building the documentation
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -214,29 +237,66 @@
         
               <div>
                 
-  <div class="section" id="python-basics">
-<h1>Python basics<a class="headerlink" href="#python-basics" title="Permalink to this headline">¶</a></h1>
-<p>To not exceed the scope of this course we will refer to external
-resources to learn <em>Python</em>.
-As we are focussing on local experiments we do not need to
-rely on advanced software engineering skills, although some fundamentals
-are required such as</p>
-<ul class="simple">
-<li><p>Functions</p></li>
-<li><p>Scope of variables</p></li>
-<li><p>Control flows (<code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">for</span></code>)</p></li>
-<li><p>Basic understanding of object oriented programming</p></li>
-</ul>
-<p>Here is a list of online resources that are worth checking out:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://capital-g.github.io/programmierkurs/">Programmierkurs &#64; RSH Düsseldorf</a>
-is a course in german where the basic fundaments of programming are taught using
-the programming language Python.</p></li>
-<li><p><a class="reference external" href="https://realpython.com/">realpython.com</a> is a good website which covers basic
-and advanced topics.</p></li>
-<li><p>The <a class="reference external" href="https://docs.python.org/3/tutorial/index.html">official tutorial</a> is also worth
-checking out.</p></li>
-</ul>
+  <div class="section" id="contribute">
+<h1>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">¶</a></h1>
+<p>This document will guide you through the necessary setup
+and conventions on order to contribute to this project.</p>
+<div class="section" id="jupyter-notebook-conventions">
+<h2>Jupyter notebook conventions<a class="headerlink" href="#jupyter-notebook-conventions" title="Permalink to this headline">¶</a></h2>
+<p>The versioning of Jupyter Notebooks is not the greatest as for example
+the execution count of each cell is stored in the notebook.
+We will use an automatic tool called <em>pre-commit</em> to clean the notebook
+of any unnecessary content (see <a class="reference internal" href="#pre-commit-setup"><span class="std std-ref">pre-commit</span></a>).</p>
+<p>Also storing binary blobs such as images can lead to a big repository
+soon - so if we decide to include such blobs it is best to make
+the generation of these as stateless as possible.
+To achieve this one can use tools such as
+<a class="reference external" href="https://stackoverflow.com/questions/21494489/what-does-numpy-random-seed0-do">setting the random seed</a>
+to make any randomness deterministic.</p>
+</div>
+<div class="section" id="pre-commit">
+<span id="pre-commit-setup"></span><h2>pre-commit<a class="headerlink" href="#pre-commit" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pre-commit.com/">pre-commit</a> allows us to run certain checks before a commit is made,
+so much like <a class="reference external" href="https://git-scm.com/book/pl/v2/Customizing-Git-Git-Hooks">git hooks</a>
+but configurable through a <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> file.</p>
+<p>This gives us the ability to e.g. clean the notebooks of the execution count of each cell
+as this can lead to lot of noise in the VCS.</p>
+<p><em>pre-commit</em> is already installed as a dependency (see <a class="reference internal" href="setup.html#installing-dependencies"><span class="std std-ref">Installing dependencies</span></a>),
+but in order to activate it we need to install the necessary hooks to our git
+repository by running</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pre-commit install
+</pre></div>
+</div>
+<p>After this just use your normal git workflow - keep in mind that
+<em>pre-commit</em> can prevent you from committing files because <em>pre-commit</em>
+found an issue with them - most often <em>pre-commit</em> will automatically
+try to fix the issue and you need to stage this changes to your commit
+after which the commit should work without issues.</p>
+</div>
+<div class="section" id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>In order to build the documentation locally one also needs to install the dependencies of the documentation
+by executing the following command in the root directory of the repository (see <a class="reference internal" href="setup.html#repository-setup"><span class="std std-ref">Repository setup</span></a>)
+and activating the virtual environment (see <a class="reference internal" href="setup.html#virtualenv-activate"><span class="std std-ref">Activating the virtual environment</span></a>).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements-docs.txt
+</pre></div>
+</div>
+<p>After this the documentation can be build by executing the shell script</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./build_docs.sh
+</pre></div>
+</div>
+<p>from the root directory of the repository.</p>
+<div class="admonition-convention admonition">
+<p class="admonition-title">Convention</p>
+<p>If you want to open the documentation in a browser after it has been build you can set the
+environment variable</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">OPEN_BROWSER_AFTER_TEST</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+<p>when using the <code class="docutils literal notranslate"><span class="pre">./build_docs.sh</span></code> script.</p>
+<p>Remember that this has to be set every time you open a shell or you add it to your <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code> or else.</p>
+</div>
+</div>
 </div>
 
 
@@ -245,8 +305,8 @@ checking out.</p></li>
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../../00_basics/sc_dimensions.html" title="previous page">Dimensionality in SuperCollider</a>
-    <a class='right-next' id="next-link" href="../../01_midi_drums/01_midi_drums.html" title="next page">Extracting information from MIDI files</a>
+    <a class='left-prev' id="prev-link" href="setup.html" title="previous page">Environment setup</a>
+    <a class='right-next' id="next-link" href="../bib.html" title="next page">Bibliography</a>
 
         </div>
         

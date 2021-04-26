@@ -21,12 +21,14 @@ generating sounds.
 
    If one comes across any mistake or has an suggestion for any improvements - do not hesitate to contribute!
    The source code for this course is open source and can be reviewed and improved by anybody.
+   See :ref:`Contribute`.
 
 .. toctree::
    :maxdepth: 2
    :caption: Course information
 
    docs/course-info/setup.rst
+   docs/course-info/contribute.rst
    docs/bib.rst
 
 .. toctree::
