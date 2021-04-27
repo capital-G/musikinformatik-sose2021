@@ -30,16 +30,16 @@ This index also denotes the dimension of a vector.
 Matrix
 ^^^^^^
 
-A :math:`n \times m` *matrix* :math:`\text{A}` is an collection of numerical values which consists of :math:`m` *rows* and :math:`n` *columns*.
+A :math:`n \times m` *matrix* :math:`\text{A}` is an collection of numerical values which consists of :math:`n` *rows* and :math:`m` *columns*.
 The values of such are matrix are arranged as
 
 .. math::
 
     \text{A} =
     \begin{pmatrix}
-       a_{1,1} & \cdots & a_{1,n} \\
+       a_{1,1} & \cdots & a_{1,m} \\
        \vdots & \ddots & \vdots \\
-       a_{m,1} & \cdots & a_{m,n}
+       a_{n,1} & \cdots & a_{n,m}
     \end{pmatrix}
 
 
