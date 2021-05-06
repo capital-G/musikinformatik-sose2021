@@ -43,6 +43,12 @@ generating sounds.
 
 .. toctree::
    :maxdepth: 2
+   :caption: Using Python to synthesize sound
+
+   01_spect_resynth/canvas.ipynb
+
+.. toctree::
+   :maxdepth: 2
    :caption: Lesson 1
 
    01_midi_drums/01_midi_drums.ipynb
