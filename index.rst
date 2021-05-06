@@ -39,6 +39,7 @@ generating sounds.
    00_basics/sc_dimensions.ipynb
    docs/basics/python.rst
    00_basics/py_dimensions.ipynb
+   00_basics/machine_learning.ipynb
 
 .. toctree::
    :maxdepth: 2
