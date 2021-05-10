@@ -46,6 +46,7 @@ generating sounds.
    :caption: Using Python to synthesize sound
 
    01_spect_resynth/canvas.ipynb
+   01_spect_resynth/02_spect.ipynb
 
 .. toctree::
    :maxdepth: 2
