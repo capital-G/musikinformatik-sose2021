@@ -88,7 +88,7 @@ A metric will be a crucial guideline for us when we are working in high, non-ima
 Minimum maximum
 ^^^^^^^^^^^^^^^
 
-We define the *local minimum* of a function :math:`f: \mathcal{X} \rightarrow \mathcal{Y}` at a point :math:`c \in \mathcal{X}` if :math:`f(x) \gt f(c)` for every
+We define the *local minimum* of a function :math:`f: \mathcal{X} \rightarrow \mathcal{Y}` at a point :math:`c \in \mathcal{X}` if :math:`f(x) > f(c)` for every
 :math:`x` in an open interval around :math:`c`.
 The minimum value across all local minima is defined as the *global minimum*.
 This will be another crucial point of this course as this is `a research field on its own <https://en.wikipedia.org/wiki/Optimization_problem>`__.
