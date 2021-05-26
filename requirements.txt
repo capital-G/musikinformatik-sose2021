@@ -7,3 +7,4 @@ pretty_midi
 sc-kernel
 notebook==6.*
 pre-commit
+python-osc
