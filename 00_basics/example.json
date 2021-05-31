@@ -1,0 +1,7 @@
+{
+    "key_a": "value",
+    "key_b": [1, 2, 3],
+    "key_c": {
+        "nested_key": 42.0
+    }
+}
