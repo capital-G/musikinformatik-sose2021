@@ -189,6 +189,8 @@ as executing the command
 After the virtual environment has been successfully activated something ``(venv)`` will
 be shown in the command prompt.
 
+.. _install-dependencies:
+
 Installing dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^
 
