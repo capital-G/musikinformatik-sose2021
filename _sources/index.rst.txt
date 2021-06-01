@@ -40,6 +40,7 @@ generating sounds.
    docs/basics/python.rst
    00_basics/py_dimensions.ipynb
    00_basics/machine_learning.ipynb
+   00_basics/osc_communication.ipynb
 
 .. toctree::
    :maxdepth: 2

@@ -1,0 +1,905 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Communicating between SuperCollider and Python &#8212; Musikinformatik SoSe2021</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Generating sounds via Python" href="../01_spect_resynth/canvas.html" />
+    <link rel="prev" title="Machine Learning basics" href="machine_learning.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Course information
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/setup.html">
+   Environment setup
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/contribute.html">
+   Contribute
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/bib.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Basics
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/math.html">
+   Math basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sc_dimensions.html">
+   Dimensionality in SuperCollider
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/python.html">
+   Python basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="py_dimensions.html">
+   Dimensionality in Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="machine_learning.html">
+   Machine Learning basics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Communicating between SuperCollider and Python
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Using Python to synthesize sound
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/canvas.html">
+   Generating sounds via Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/02_spect.html">
+   Resynthesizing sound via spectogram
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/03_nmf.html">
+   Matrix decomposition on STFT
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Lesson 1
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_midi_drums/01_midi_drums.html">
+   Extracting information from MIDI files
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/00_basics/osc_communication.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021/issues/new?title=Issue%20on%20page%20%2F00_basics/osc_communication.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/capital-G/musikinformatik-sose2021/edit/main/00_basics/osc_communication.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/capital-G/musikinformatik-sose2021/main?urlpath=tree/00_basics/osc_communication.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#osc">
+   OSC
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#from-python-to-supercollider">
+     From Python to SuperCollider
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#supercollider">
+       SuperCollider
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#python">
+       Python
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#debugging-communication">
+       Debugging communication
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#from-supercollider-to-python">
+     From SuperCollider to Python
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#error-handling-in-python">
+       Error handling in Python
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#freeing-resources">
+       Freeing resources
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#setting-up-the-osc-server-in-python">
+       Setting up the OSC server in Python
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-with-python-from-supercollider-via-osc">
+     Calculating with Python from Supercollider via OSC
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#json">
+   JSON
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#markov-chains">
+     Markov chains
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-markov-chains-with-tsne">
+     Using markov chains with tSNE
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Python
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#supercolllider">
+     SuperColllider
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="communicating-between-supercollider-and-python">
+<h1>Communicating between SuperCollider and Python<a class="headerlink" href="#communicating-between-supercollider-and-python" title="Permalink to this headline">¶</a></h1>
+<p>One may ask the question why there are so many different programming languages in the first place is valid.
+One of the reasons is that certain programming languages follow ceration aproaches that fit certain domain specific needs.</p>
+<p>The programming language <em>sclang</em> of SuperCollider platform is an <em>interpreted</em> language which means <a class="reference external" href="https://stackoverflow.com/a/3265602/3475778">each instruction gets dynamically evaluated</a>.
+Of course there is the question how <em>sclang</em> itself has been written which is C++, a <em>compiled</em> language.
+Basically compiled languages have the advantage of being fast where interpreted languages allow for a more dynamic aproach which comes handy during live situations but are therefore slower.</p>
+<p>As audio processing is time critical (see <a class="reference external" href="https://en.wikipedia.org/wiki/Real-time_computing">real time computing</a>) we need a fast language (C++) to generate the audio signal but we want also a language on a more abstract level to control the audio generation and not care about e.g. memory allocation, which <em>sclang</em> delivers.
+A different aproach is used by e.g. <a class="reference external" href="https://openframeworks.cc/">openFrameworks</a> in which one programs directly in C++ but <em>openFrameworks</em> delivers convenience function for often used tasks - this aproach is often called a library or framework and is not a new programming language like <em>sclang</em>.</p>
+<p>As <em>sclang</em> itself is not fast enough to generate audio signals we need to send send control commands to the audio generating server <em>scsynth</em> which is written in C++.
+In order to communicate between both entities <em>sclang</em> and <em>scsynth</em> uses <em>OSC</em> (Open Sounc Control) which defines a protocol to send data between both entities.</p>
+<p><img alt="Drawing" src="../_images/scsynth_sclang.svg" /></p>
+<p>As we now have lurked into the topic of the motivation behind the multitude of programming languages we now introduce a new programming language <a class="reference external" href="https://www.python.org/">Python</a>.
+The first paragraph of the <a class="reference external" href="https://en.wikipedia.org/wiki/Python_(programming_language)">Wikipedia article about Python</a> says</p>
+<blockquote>
+<div><p>Python is an interpreted high-level general-purpose programming language. Python’s design philosophy emphasizes code readability with its notable use of significant indentation. Its language constructs as well as its object-oriented approach aim to help programmers write clear, logical code for small and large-scale projects.</p>
+</div></blockquote>
+<p>Sounds great, but as it is an interpreted language it is still not fast enough for audio generation like <em>scsynth</em> and as it is not designed specifically to control audio synthesis like <em>sclang</em> but nonetheless it has the advantage that a lot of people adapt a variety of applications and libraries for Python.
+In particular Python gained popularity within the last years as it is the de-facto standard for data analysis as lots Data Science and Machine Learning applications rely on the simplicity and readability of Python.
+We could implement these algorithms in sclang as both languages are turing complete but this is a big task as these algorithms can be tricky to implement properly so we need to find a way to communicate between both languages what this chapter is about.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;560&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;315&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.youtube-nocookie.com/embed/RPQD7-AOjMI&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;YouTube video player&quot;</span> <span class="na">frameborder</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">allow</span><span class="o">=</span><span class="s">&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot;</span> <span class="na">allowfullscreen</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/RPQD7-AOjMI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div></div>
+</div>
+<div class="section" id="osc">
+<h2>OSC<a class="headerlink" href="#osc" title="Permalink to this headline">¶</a></h2>
+<p>A message is send from a sender to a receiver - so when we want to implement a messanging system between SuperCollider and Python using OSC we need to consider who is the sender (the client) and who is the receiver (the server).</p>
+<p>But before we can start building the messanging infrastructure we need to teach Python the OSC protocol.
+By doing some research we find the Python library <a class="reference external" href="https://github.com/attwad/python-osc">python-osc</a> which implements the OSC protocol for Python so we do not need to take care of this.
+Now it comes down to reading documentation.</p>
+<div class="section" id="from-python-to-supercollider">
+<h3>From Python to SuperCollider<a class="headerlink" href="#from-python-to-supercollider" title="Permalink to this headline">¶</a></h3>
+<p>We start by sending an OSC message from Python to SuperCollider which controls the frequency of a synth.
+It is good practice to set up the receiver first before sending a message from the client so we focus on the SuperCollider part first.</p>
+<p><img alt="Python as a OSC client" src="../_images/python_client.svg" /></p>
+<div class="section" id="supercollider">
+<h4>SuperCollider<a class="headerlink" href="#supercollider" title="Permalink to this headline">¶</a></h4>
+<p>We start by booting the scsynth server</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">s</span><span class="p">.</span><span class="nx">boot</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and adding a SynthDef to it</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">SynthDef</span><span class="p">(</span><span class="ss">\foo</span><span class="p">,</span> <span class="p">{</span><span class="o">|</span><span class="nx">out</span><span class="o">|</span>
+    <span class="kd">var</span> <span class="nx">sig</span> <span class="o">=</span> <span class="nx">Saw</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">freq</span><span class="o">:</span> <span class="ss">\freq</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span><span class="mi">200</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">env</span> <span class="o">=</span> <span class="nx">EnvGen</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span><span class="nx">Env</span><span class="p">.</span><span class="nx">linen</span><span class="p">(</span>
+        <span class="nx">sustainTime</span><span class="o">:</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="nx">releaseTime</span><span class="o">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="p">),</span> <span class="nx">doneAction</span><span class="o">:</span> <span class="nx">Done</span><span class="p">.</span><span class="nx">freeSelf</span><span class="p">);</span>
+    <span class="nx">Out</span><span class="p">.</span><span class="nx">ar</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span> <span class="nx">sig</span><span class="o">*</span><span class="nx">env</span><span class="o">*</span><span class="ss">\amp</span><span class="p">.</span><span class="nx">kr</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span><span class="o">!</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">add</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and testing it</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">Synth</span><span class="p">(</span><span class="ss">\foo</span><span class="p">,</span> <span class="p">[</span><span class="ss">\freq</span><span class="p">,</span> <span class="mi">400</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>Now it is time to take a look at the <a class="reference external" href="https://doc.sccode.org/Guides/OSC_communication.html">documentation of the OSC communication in SuperCollider</a>.</p>
+<p>A good starting point is to verify the port of the <em>sclang</em> instance by executing</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">NetAddr</span><span class="p">.</span><span class="nx">langPort</span><span class="p">;</span>
+<span class="o">-&gt;</span> <span class="mi">57120</span>
+</pre></div>
+</div>
+<p>This port can change if the port is already taken by e.g. another sclang instance so it is good practice to verify this port as it will be important when writing the Python section.</p>
+<p>We can use <a class="reference external" href="https://doc.sccode.org/Classes/OSCdef.html"><code class="docutils literal notranslate"><span class="pre">OSCdef</span></code></a> to register a function which will be called when we receive an OSC message on a <em>path</em> which is like a sub-URL.
+A parameter of the function we need to provide is the actually received message - we call this kind of function a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Glossary/Callback_function"><em>callback function</em></a> which are often used with an <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">event loop</a> like in JavaScript.</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span>OSCdef(key: \myOscDef, func: {|msg|
+    # msg[0] is the path that the message was received on
+    Synth(\foo, [\freq, msg[1]]);
+}, path: &quot;/my_path&quot;);
+</pre></div>
+</div>
+<p>We have now setup a SuperCollider server which listens on OSC messages on channel <code class="docutils literal notranslate"><span class="pre">/my_path</span></code> and expects a frequency value in this message which will be used to play our synth.</p>
+</div>
+<div class="section" id="python">
+<h4>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h4>
+<p>Taking a look at the documentation of <em>python-osc</em> we find an <a class="reference external" href="https://github.com/attwad/python-osc#simple-client">example</a> which implements an OSC client so we only need to adjust the code for our needs.</p>
+<p>As always we need to import the libraries we want to use before we can use them.
+If this part fails check that you have installed all necesarry dependencies - see <a class="reference internal" href="../docs/course-info/setup.html#install-dependencies"><span class="std std-ref">Installing dependencies</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pythonosc</span> <span class="kn">import</span> <span class="n">udp_client</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to specify the address of the OSC server which we want to send our message to.
+The IP address <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> is our own machine (also often called <code class="docutils literal notranslate"><span class="pre">localhost</span></code>) and we identified the port via <code class="docutils literal notranslate"><span class="pre">NetAddr.langPort;</span></code> before.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">osc_client</span> <span class="o">=</span> <span class="n">udp_client</span><span class="o">.</span><span class="n">SimpleUDPClient</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">57120</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we simply send a message from Python to OSC on channel <code class="docutils literal notranslate"><span class="pre">/my_path</span></code>.
+If everything worked correctly we should hear a sound from SuperCollider.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">osc_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;/my_path&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="debugging-communication">
+<h4>Debugging communication<a class="headerlink" href="#debugging-communication" title="Permalink to this headline">¶</a></h4>
+<p>If no sound was played there are some steps that can help you to find the issue.</p>
+<ul class="simple">
+<li><p>Check ports and adresses twice! Prefer copy &amp; pasting over typing as transposed digits <em>(“Zahlendreher”)</em> are notorious for wasting precios lifetime</p></li>
+<li><p>Do not miss the slash in the osc path: For SuperCollider and for Python</p></li>
+<li><p>Use <a class="reference external" href="https://doc.sccode.org/Classes/OSCFunc.html#*trace"><code class="docutils literal notranslate"><span class="pre">OSCFunc.trace(false,</span> <span class="pre">true);</span></code></a> in SuperCollider to dump all incoming OSC messages. If you do not receive any kind of messages here there is something wrong with the addresses.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="from-supercollider-to-python">
+<h3>From SuperCollider to Python<a class="headerlink" href="#from-supercollider-to-python" title="Permalink to this headline">¶</a></h3>
+<p>After we have seen how to send messages from Python to SuperCollider we want to take a look at how we can send messages from SuperCollider to Python.</p>
+<p>Before we start by setting up a OSC server in Python we want to discuss two things: Error handling and freeing resources.</p>
+<div class="section" id="error-handling-in-python">
+<h4>Error handling in Python<a class="headerlink" href="#error-handling-in-python" title="Permalink to this headline">¶</a></h4>
+<p>SuperCollider has a different philosophy of error handling than most commonly used programming languages such as Python which are a bit stricter on errors.
+This does not mean that SuperCollider will simply follow blindly everything without giving us feedback if something failed but it will often try to <em>fix</em> something instead of throwing an error.</p>
+<p>This strictness seems maybe annoying at first but when working with databases or files this strictness of error handling is useful - imagine if we want to copy files from location A to location B and delete them afterwards but while copying we run out of space.
+This would be a good time to stop the program with an error instead of continuing with the deletion of the files in location A and this is where exceptions come into play.</p>
+<p>A good example of this is the <a class="reference external" href="https://en.wikipedia.org/wiki/Division_by_zero">division by zero</a> which is undefined an <em>not</em> infinity and can <a class="reference external" href="https://www.wired.com/1998/07/sunk-by-windows-nt/">lead to real life consequences</a></p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+<span class="o">-&gt;</span> <span class="kc">inf</span>
+</pre></div>
+</div>
+<p>Compare this to Python</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mf">9e1622</span><span class="n">b385b6</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+
+<span class="ne">ZeroDivisionError</span>: division by zero
+</pre></div>
+</div>
+</div>
+</div>
+<p>which yields on exception and therefore stops the execution our program.
+This does not mean that anytime we want to divide by 0 our Python program will stop, we just have catch this exception and explicitly tell Python what to do in this case.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">safe_division</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Do not divide by zero&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+<span class="n">safe_division</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Do not divide by zero
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+<p>SuperCollider has also an <a class="reference external" href="https://doc.sccode.org/Classes/Exception.html">Exception</a> class but as seen above is not as used as much.</p>
+<p>The motivation on the more relaxed (or implicit) error handling of SuperCollider is to not stop the audio output on ambigious inputs during live coding - one discipline where Python is not often used for.</p>
+</div>
+<div class="section" id="freeing-resources">
+<h4>Freeing resources<a class="headerlink" href="#freeing-resources" title="Permalink to this headline">¶</a></h4>
+<p>Coming from SuperCollide one is familiar with the <a class="reference external" href="https://doc.sccode.org/Classes/Done.html"><code class="docutils literal notranslate"><span class="pre">Done</span></code></a> class which adds the posibilty to free a synth based on certain occasions (e.g. by reaching the end of an amplitude envelope).
+Although on high level languages like Python or sclang we do not have to care so much about allocation and freeing of resources like in more low level languages like C++ (which is one of the reasons it is so fast) it is still necessary to think about this on a higher level.
+We only have limited resources on a computer and need to clean up unused resources like silent synths that will never generate any sounds anymore - this gets even more relevant the more these resources are limited.</p>
+<p>A really limited resource are ports on a computer - only one application can serve a port and if this port is already in use we can not use this port for our application.
+As a server needs to listen on a port it is best practice to also tell the operating system that we are not using the port anymore if we stop listening for messages with our server so this port can be re-used again later.
+We can combine this with our Exception handling discussed above which we will see in a minute.</p>
+<p>When working with network or file resources (which are actually <a class="reference external" href="https://en.wikipedia.org/wiki/Everything_is_a_file">quiet similiar</a>) it is best practice to clean up after oneself after the work is done.
+It gets problematic if an error occures while we do some work because then our clean up routine will maybe not executed.
+Python has a <code class="docutils literal notranslate"><span class="pre">finally</span></code> block for this which gets called if any exception occured or if everything worked as expected.</p>
+</div>
+<div class="section" id="setting-up-the-osc-server-in-python">
+<h4>Setting up the OSC server in Python<a class="headerlink" href="#setting-up-the-osc-server-in-python" title="Permalink to this headline">¶</a></h4>
+<p>Now we can start by setting up a OSC server in Python.</p>
+<p>We start by setting up a <em>dispatcher</em> which simply tells Python what to do when a message on a certain path is received.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pythonosc.dispatcher</span> <span class="kn">import</span> <span class="n">Dispatcher</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">dispatcher</span> <span class="o">=</span> <span class="n">Dispatcher</span><span class="p">()</span>
+
+<span class="c1"># **kwargs collects any arguments we forgot to set explicitly </span>
+<span class="k">def</span> <span class="nf">print_osc</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{time}</span><span class="s2"> - </span><span class="si">{message}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+    <span class="p">))</span>
+
+<span class="c1"># we map the print_osc function as *handler* on path my_python_path</span>
+<span class="n">dispatcher</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;/my_python_path&quot;</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="n">print_osc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pythonosc.dispatcher.Handler at 0x11040fe50&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>After we set up the logic of how to respond to messages we can now bind this to a port and therefore acting as a server.</p>
+<p>This will show a difference between sclang and Python: normally Python can only do one thing at once - so when Python is listening for messages we can not do something else in the meantime like in sclang.</p>
+<p>Therefore we should discuss on how to stop the server - once started we can not do something else in Python!
+In <em>Jupyter Lab</em> one can click on <em>Interrupt Kernel</em> in the <em>Kernel</em> tab or enter the shortcut <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">i</span></code> - this wil trigger a <em>keyboard interrupt</em> which is normally triggered by hitting <code class="docutils literal notranslate"><span class="pre">cmd/control</span>&#160; <span class="pre">c</span></code> - but for now we want to keep the server running.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pythonosc.osc_server</span> <span class="kn">import</span> <span class="n">ThreadingOSCUDPServer</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">ThreadingOSCUDPServer</span><span class="p">(</span>
+    <span class="c1"># sclang is listening on port 57320 so we take 57310 for python</span>
+    <span class="n">server_address</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">57310</span><span class="p">),</span>
+    <span class="n">dispatcher</span><span class="o">=</span><span class="n">dispatcher</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start OSC server on port </span><span class="si">{</span><span class="n">server</span><span class="o">.</span><span class="n">server_address</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shutdown Python server on port </span><span class="si">{</span><span class="n">server</span><span class="o">.</span><span class="n">server_address</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c1"># we tell the OS that we do not need any longer the port</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">server_close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Start OSC server on port 57310
+23:11:15.004284 - hello from supercollider
+Shutdown Python server on port 57310
+</pre></div>
+</div>
+</div>
+</div>
+<p>As the server is now running (indicated by <code class="docutils literal notranslate"><span class="pre">*</span></code> next to the code cell in Jupyter) we can send a message from SuperCollider to Python.
+SuperCollider is built around OSC (but also quiet restricted to OSC) so we can easily set up a client and send a message.</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="c1">// our python osc server is listening on port 57310</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nx">NetAddr</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">57310</span><span class="p">)</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">sendMsg</span><span class="p">(</span><span class="s2">&quot;/my_python_path&quot;</span><span class="p">,</span> <span class="s2">&quot;hello from supercollider&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once we run these lines in sclang we will see the message appear in Python.
+We can now close the server by running <em>Interrup Kernel</em>.</p>
+</div>
+</div>
+<div class="section" id="calculating-with-python-from-supercollider-via-osc">
+<h3>Calculating with Python from Supercollider via OSC<a class="headerlink" href="#calculating-with-python-from-supercollider-via-osc" title="Permalink to this headline">¶</a></h3>
+<p>We have now seen the communication from <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">-&gt;</span> <span class="pre">SuperCollider</span></code> and <code class="docutils literal notranslate"><span class="pre">SuperCollider</span> <span class="pre">-&gt;</span> <span class="pre">Python</span></code> so now we want to build an example where both languages can communicate with each other, so <code class="docutils literal notranslate"><span class="pre">SuperCollider</span> <span class="pre">&lt;-&gt;</span> <span class="pre">Python</span></code>.</p>
+</div>
+</div>
+<div class="section" id="json">
+<h2>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h2>
+<p>There are a variety of formats to exchange and store information.
+One of the most commonly used is JSON which found wide adaption because it mimics the data structure of JavaScript which is the only available programming language in browsers.
+In SuperCollider and Python the data structure of JSON is closely related to a dictionary, where under a <em>key</em> (traditionally a string) a <em>value</em> is stored which makes accessing data properties more easy than in an array.
+OSC on the other hand is more related to a list which lacks the mapping of its items because I need to know what the first, secound, … value actually represents and I can not change this order without modifying code.</p>
+<p>Although OSC can also be stored as a file it is used most of the time in a network domain.
+JSON finds adaption in networking and in file storage and trades human-readability for performance by not relying on a binary encoding for its messages like OSC and instead using human readable string representations for its data, therefore we can take a look at an example JSON.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;key_a&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;key_b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="nt">&quot;key_c&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;nested_key&quot;</span><span class="p">:</span> <span class="mf">42.0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Nesting dictionaries and storing arrays are really handy and <a class="reference external" href="https://doc.sccode.org/Guides/OSC_communication.html">are not (well) supported by OSC</a>.
+Another benefit is that we can store large data in JSON (multiple GBs are not uncommon but also not the best format for such endeavours) which gets difficult when relying on the OSC network protocol UDP.</p>
+<p>As mentioned before the SuperCollider environment is built around OSC and although we can set up easily an OSC server and client in sclang it is <a class="reference external" href="https://github.com/supercollider/supercollider/issues/5310">not possible</a> to set up a server or client which responds to something differently than OSC (keep in mind that quarks like <a class="reference external" href="https://github.com/supercollider-quarks/API">API</a> set up a server in another language and this server will transfer the data back to sclang via OSC).</p>
+<p>This does not mean that we can not use JSON in SuperCollider but only through exchanging files by using <a class="reference external" href="https://doc.sccode.org/Classes/String.html#-parseYAMLFile"><code class="docutils literal notranslate"><span class="pre">parseYAMLFile</span></code></a> (a bit misleading as this YAML is another format like JSON but the YAML parser can parse JSON and YAML - <code class="docutils literal notranslate"><span class="pre">parseJSON</span></code> was added in SC 3.11).</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="nx">j</span> <span class="o">=</span> <span class="s2">&quot;example.json&quot;</span><span class="p">.</span><span class="nx">parseYAMLFile</span><span class="p">;</span>
+
+<span class="nx">j</span><span class="p">[</span><span class="s2">&quot;key_b&quot;</span><span class="p">];</span>
+<span class="o">-&gt;</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>As the benefit of JSON over OSC is that we can transfer nested arrays of arbitrary length we can come up with an example where we make use of this.</p>
+<div class="section" id="markov-chains">
+<h3>Markov chains<a class="headerlink" href="#markov-chains" title="Permalink to this headline">¶</a></h3>
+<p>Before we implement our little example we need to re-visit markov chains.</p>
+<p>A markov chain <span class="math notranslate nohighlight">\(M\)</span> of first order and <span class="math notranslate nohighlight">\(n\)</span> states is a <em>stochastic process</em> which relies only on the former state <span class="math notranslate nohighlight">\(i\)</span> to calculate the probabibilty of the next state <span class="math notranslate nohighlight">\(j\)</span>.
+We can write every probability to get from state <span class="math notranslate nohighlight">\(i\)</span> to state <span class="math notranslate nohighlight">\(j\)</span> for every state <span class="math notranslate nohighlight">\(n\)</span> into a <span class="math notranslate nohighlight">\(n \times n\)</span> matrix <span class="math notranslate nohighlight">\(P\)</span> which we call a transition matrix.</p>
+<p>One convention of stochastic processes is that all posibilities must sum up to <span class="math notranslate nohighlight">\(1\)</span>, therefore the sum of each row of <span class="math notranslate nohighlight">\(P\)</span> must sum up to <span class="math notranslate nohighlight">\(1\)</span> (<span class="math notranslate nohighlight">\(=100\%\)</span>), so</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=1}^{n} p_{i,j} = p_{1, j}~+~p_{2,j}~+~\cdots~+~p_{n,j} = 1
+\]</div>
+<p>for every row <span class="math notranslate nohighlight">\(j \in {1, \dots n}\)</span> of our matrix <span class="math notranslate nohighlight">\(P\)</span>.</p>
+<p><img alt="markov transition matrix" src="../_images/markov.svg" /></p>
+</div>
+<div class="section" id="using-markov-chains-with-tsne">
+<h3>Using markov chains with tSNE<a class="headerlink" href="#using-markov-chains-with-tsne" title="Permalink to this headline">¶</a></h3>
+<p>We can schedule the playback of buffer grains according to a Markov transition matrix <span class="math notranslate nohighlight">\(P\)</span> which stores the probabilities to get from grain <span class="math notranslate nohighlight">\(i\)</span> to grain <span class="math notranslate nohighlight">\(j\)</span>.
+The question is what kind of probabilites we want to have for our matrix <span class="math notranslate nohighlight">\(P\)</span> but for this we can use some techniques like <em>tSNE</em> for which we need to rely on Python.</p>
+<p>In Python we can calculate the matrix <span class="math notranslate nohighlight">\(A\)</span> of a buffer which stores the audio data as <span class="math notranslate nohighlight">\(\# \text{channels} \times \# \text{samples}\)</span> and of this matrix <span class="math notranslate nohighlight">\(A\)</span> we can calculate the spectogram <span class="math notranslate nohighlight">\(S\)</span> of size <span class="math notranslate nohighlight">\(\# \text{frequency bins} \times \# \text{grains}\)</span>.</p>
+<p>Instead of the usual dimensionality reduction on the time domain we want to reduce the number of frequency bins of <span class="math notranslate nohighlight">\(S\)</span> this time because we want to keep the number of grains so they are deterministic and we can schedule them easily.
+Via a 3-dimensional tSNE we obtain a matrix <span class="math notranslate nohighlight">\(T\)</span> of size <span class="math notranslate nohighlight">\(\text{grains} \times 3\)</span>.
+This matrix <span class="math notranslate nohighlight">\(T\)</span> is not a quadratic matrix so we need to think of a way to turn this into a quadratic matrix of form <span class="math notranslate nohighlight">\(\text{grains} \times \text{grains}\)</span>.
+For each grain we have a 3 dimensional reduction of its frequency bins which can be considered a 3 dimensional vector which can be considered a point.
+We can now calculate the distance of the 3 dimensional frequency point to all the other 3 dimensional point representation of each grain.
+By doing this for each grain we can convert <span class="math notranslate nohighlight">\(T\)</span> to a <span class="math notranslate nohighlight">\(\# \text{grains} \times \# \text{grains}\)</span> matrix <span class="math notranslate nohighlight">\(D\)</span> which we can use as a transition matrix <span class="math notranslate nohighlight">\(P\)</span> for a markov chain for the scheduling of grains by nomalizing the rows (which we will do in SC).</p>
+<p>The workflow shown below illustrates the workflow for the communication between SuperCollider and Python.</p>
+<p><img alt="JSON workflow" src="../_images/json.svg" /></p>
+</div>
+<div class="section" id="id1">
+<h3>Python<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">librosa</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">distance_matrix</span>
+<span class="kn">from</span> <span class="nn">pythonosc.udp_client</span> <span class="kn">import</span> <span class="n">SimpleUDPClient</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">def</span> <span class="nf">calculate_markov</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">grain_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hop_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sc_port</span><span class="o">=</span><span class="mi">57120</span><span class="p">,</span> <span class="n">sc_path</span><span class="o">=</span><span class="s2">&quot;/calc_finished&quot;</span><span class="p">):</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">melspectrogram</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">win_length</span><span class="o">=</span><span class="n">grain_size</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_size</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="n">grain_size</span><span class="p">)</span>
+    <span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">distance_matrix</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    
+    <span class="c1"># save into json</span>
+    <span class="n">json_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.json&quot;</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;P&quot;</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s2">&quot;grainSize&quot;</span><span class="p">:</span> <span class="n">grain_size</span><span class="p">,</span>
+        <span class="s2">&quot;hopSize&quot;</span><span class="p">:</span> <span class="n">hop_size</span><span class="p">,</span>
+        <span class="s2">&quot;audioPath&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    
+    <span class="c1"># send OSC message</span>
+    <span class="n">SimpleUDPClient</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">sc_port</span><span class="p">)</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span>
+        <span class="n">sc_path</span><span class="p">,</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">json_path</span><span class="p">),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pythonosc.dispatcher</span> <span class="kn">import</span> <span class="n">Dispatcher</span>
+<span class="kn">from</span> <span class="nn">pythonosc.osc_server</span> <span class="kn">import</span> <span class="n">ThreadingOSCUDPServer</span>
+
+<span class="k">def</span> <span class="nf">start_calc</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="o">*</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received new message for </span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">calculate_markov</span><span class="p">(</span><span class="o">*</span><span class="n">message</span><span class="p">)</span>
+
+<span class="n">dispatcher</span> <span class="o">=</span> <span class="n">Dispatcher</span><span class="p">()</span>
+<span class="n">dispatcher</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;/start_calc&quot;</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="n">start_calc</span><span class="p">)</span>
+
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">ThreadingOSCUDPServer</span><span class="p">(</span>
+    <span class="n">server_address</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">57310</span><span class="p">),</span>
+    <span class="n">dispatcher</span><span class="o">=</span><span class="n">dispatcher</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start OSC server on port </span><span class="si">{</span><span class="n">server</span><span class="o">.</span><span class="n">server_address</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shutdown Python server on port </span><span class="si">{</span><span class="n">server</span><span class="o">.</span><span class="n">server_address</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c1"># we tell the OS that we do not need any longer the port</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">server_close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Start OSC server on port 57310
+Received new message for /Applications/SuperCollider.app/Contents/Resources/sounds/a11wlk01.wav
+Shutdown Python server on port 57310
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="supercolllider">
+<h3>SuperColllider<a class="headerlink" href="#supercolllider" title="Permalink to this headline">¶</a></h3>
+<p>Once we run the python server we can take a look at the SuperCollider code which is also included in <code class="docutils literal notranslate"><span class="pre">markovPlayer.scd</span></code> in the directory of this notebook.</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span>// start server
+s.boot;
+
+// verify port
+NetAddr.langPort
+
+(
+// python server is listening on port 57310
+b = NetAddr(&quot;127.0.0.1&quot;, 57310);
+
+// our function to send a message to python
+~startCalc = {|audioPath, grainSize, hopSize|
+    b.sendMsg(&quot;/start_calc&quot;, audioPath, grainSize, hopSize);
+};
+
+// will store our shared data
+q = ();
+// empty matrix P
+q[\P] = [[1]];
+// default buffer
+q[\buffer] = Buffer.read(s, Platform.resourceDir +/+ &quot;sounds/a11wlk01.wav&quot;);
+q[\grainSize] = 44100;
+q[\hopSize] = 4000;
+
+// our callback function in which we parse the results from python
+OSCdef(\calcFinished, {|msg|
+    var json = msg[1].asString.parseYAMLFile;
+    q[\P] = json[&quot;P&quot;].asFloat;
+    q[\buffer] = Buffer.read(s, json[&quot;audioPath&quot;]);
+    q[\grainSize] = json[&quot;grainSize&quot;].asFloat;
+    q[\hopSize] = json[&quot;hopSize&quot;].asFloat;
+    &quot;Switched out data&quot;.postln;
+}, &quot;/calc_finished&quot;);
+
+// a synthdef which can play a section of a buffer
+SynthDef(\bplaySection, {|out|
+    var bufNum = \bufnum.kr(0);
+    var start = \start.kr(0);
+    var env = EnvGen.kr(Env.linen(
+        attackTime: \attack.kr(0.001),
+        sustainTime: (\end.kr(1000)-start)/BufSampleRate.kr(bufNum),
+        releaseTime: \release.kr(0.001),
+    ), doneAction: Done.freeSelf);
+    var sig = PlayBuf.ar(
+        numChannels: 2,
+        bufnum: bufNum,
+        rate: BufRateScale.kr(bufNum) * \rate.kr(1.0),
+        startPos: start,
+    );
+    sig = sig*env*\amp.kr(0.5);
+    Out.ar(out, sig);
+}).add;
+
+// a tdef which will playback the buffer according to our markov transition matrix P
+Tdef(\playMarkov, {
+    var curState=0;
+    loop {
+        // calculate next state which aka the next grain
+        curState = (0..q[\P].shape[0]).wchoose(q[\P][curState].normalizeSum);
+        // playback
+        Synth(\bplaySection, [
+            \bufnum, q[\buffer].bufnum,
+            \start, curState*q[\hopSize],
+             \end, curState*q[\hopSize] + q[\grainSize],
+            \amp, 0.5,
+            \attack, 0.1,
+        ]);
+        // by reducing the factor of our wait time
+        // the played back samples will overlap more
+        ((q[\grainSize]/s.sampleRate)*0.5).wait;
+    };
+}).play;
+)
+
+// now we can change parameters from within supercollider
+(
+~startCalc.(
+    // use absolute paths
+    // the examlp is mono and we build for stereo so we will get some problems
+    audioPath: Platform.resourceDir +/+ &quot;sounds/a11wlk01.wav&quot;,
+    grainSize: 10000,
+    // pay attention when reducing hop size
+    // as the calculated data grows exponentially
+    // because we obtain more grains and for each
+    // grain we calulate the distance to all other
+    // grains
+    hopSize: 1000,
+)
+)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="machine_learning.html" title="previous page">Machine Learning basics</a>
+    <a class='right-next' id="next-link" href="../01_spect_resynth/canvas.html" title="next page">Generating sounds via Python</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dennis Scheiba<br/>
+        
+            &copy; Copyright 2021, Dennis Scheiba.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
