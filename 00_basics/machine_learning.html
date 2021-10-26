@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     
@@ -61,13 +61,14 @@
     <a class="navbar-brand text-wrap" href="../index.html">
       
       
+      
       <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <p class="caption">
  <span class="caption-text">
@@ -265,7 +266,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#datasets">
@@ -346,7 +347,7 @@
 <h1>Machine Learning basics<a class="headerlink" href="#machine-learning-basics" title="Permalink to this headline">¶</a></h1>
 <p>Now its time to take a look at the first machine learning algorithms.
 Thanks to the third-party library <a class="reference external" href="https://scikit-learn.org/stable/index.html">scikit-learn</a>, also called <em>sklearn</em>, we can quickly use and exchange machine learning algorithms to solve tasks - even without understanding the inner mechanics of these algorithms, although it is advantageous to understand the inner mechanics of each algorithm to choose the best algorithm for each problem.</p>
-<p>A recommended general read read is <span id="id1">[<a class="reference internal" href="../docs/bib.html#id4">Ger19</a>]</span> which will cover more details on using machine learning algorithms with sklearn.</p>
+<p>A recommended general read read is <span id="id1">[<a class="reference internal" href="../docs/bib.html#id4" title="Aurélien Géron. Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow - Concepts, Tools, and Techniques to Build Intelligent Systems. &quot;O'Reilly Media, Inc.&quot;, Sebastopol, edition, 2019. ISBN 978-1-492-03261-8.">Ger19</a>]</span> which will cover more details on using machine learning algorithms with sklearn.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1399,16 +1400,36 @@ Using these dimensionality reduction algorithms can also be used in an artistic 
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="py_dimensions.html" title="previous page">Dimensionality in Python</a>
-    <a class='right-next' id="next-link" href="osc_communication.html" title="next page">Communicating between SuperCollider and Python</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="py_dimensions.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Dimensionality in Python</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="osc_communication.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Communicating between SuperCollider and Python</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
