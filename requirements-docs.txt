@@ -1,9 +1,9 @@
 -r requirements.txt
-jupyter-book
-sphinx
-sphinx-book-theme
-jupyter-sphinx
-pydata-sphinx-theme
-MyST-NB
-imageio
+jupyter-book==0.8.3
+sphinx==3.5.4
+sphinx-book-theme==0.0.42
+jupyter-sphinx==0.3.1
+pydata-sphinx-theme==0.4.3
+MyST-NB==0.10.2
+imageio==2.9.0
 git+https://github.com/mcmtroffaes/sphinxcontrib-bibtex.git
