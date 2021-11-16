@@ -8,3 +8,4 @@ sc-kernel==0.3.2
 notebook==6.3.0
 pre-commit==2.12.1
 python-osc==1.7.6
+tensorflow==2.7.0
