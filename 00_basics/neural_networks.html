@@ -1,0 +1,831 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to neural networks &#8212; Musikinformatik SoSe2021</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Communicating between SuperCollider and Python" href="osc_communication.html" />
+    <link rel="prev" title="Machine Learning basics" href="machine_learning.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Course information
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/setup.html">
+   Environment setup
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/contribute.html">
+   Contribute
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/bib.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Basics
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/math.html">
+   Math basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sc_dimensions.html">
+   Dimensionality in SuperCollider
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/python.html">
+   Python basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="py_dimensions.html">
+   Dimensionality in Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="machine_learning.html">
+   Machine Learning basics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction to neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="osc_communication.html">
+   Communicating between SuperCollider and Python
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Using Python to synthesize sound
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/canvas.html">
+   Generating sounds via Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/02_spect.html">
+   Resynthesizing sound via spectogram
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/03_nmf.html">
+   Matrix decomposition on STFT
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Lesson 1
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_midi_drums/01_midi_drums.html">
+   Extracting information from MIDI files
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/00_basics/neural_networks.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021/issues/new?title=Issue%20on%20page%20%2F00_basics/neural_networks.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/capital-G/musikinformatik-sose2021/edit/main/00_basics/neural_networks.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/capital-G/musikinformatik-sose2021/main?urlpath=tree/00_basics/neural_networks.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-mnist-dataset">
+   Loading the MNIST dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-our-first-neural-network">
+   Creating our first neural network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-a-neural-network">
+   Training a neural network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tuning-the-neural-network">
+   Tuning the neural network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysing-the-results">
+   Analysing the results
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="introduction-to-neural-networks">
+<h1>Introduction to neural networks<a class="headerlink" href="#introduction-to-neural-networks" title="Permalink to this headline">¶</a></h1>
+<p>After we took a look at the different algorithms in the introduction to machine learning chapter we want to take a look at some special kind of machine learning algorithms which are called <em>neural networks</em>.
+This documents sikps the math part of neural networks in order to demonstrate those quickly.
+Those artifical neural networks were invented in the middle of the 20th century but due to the massive amount of data and computation needed for them to work they were put <em>on the shelf</em> until the beginnig of 21st century when such companies as Google collected much data and the GPU development increased rapidly thanks to the gaming industry.</p>
+<p>The <em>hello world</em> of more <em>advanced</em> machine learning problems is the <a class="reference external" href="https://en.wikipedia.org/wiki/MNIST_database">MNIST dataset</a>, where e.g. a more basic but still interesting dataset is the <a class="reference external" href="https://www.dcc.fc.up.pt/~ltorgo/Regression/cal_housing.html">Californa Housing dataset</a>.
+The California Housing dataset can somehow tackled with linear regression, but problems like MNIST need much more context of each variable, which we call a <a class="reference external" href="https://en.wikipedia.org/wiki/Dependent_and_independent_variables">dependent variable</a> in statistics.
+One could say that the more dependent a variable is, the harder the problem.</p>
+<p>As neural networks tend to be complex and demanding on the computational side there emerged some libraries in Python which allow to setup and train such networks, where the 2 biggest frameworks are <a class="reference external" href="https://www.tensorflow.org/">TensorFlow</a> by <em>Google</em> and <a class="reference external" href="https://pytorch.org/">PyTorch</a> by <em>Facebook</em>.
+For this seminar we will focus on TensorFlow.
+These libraries are somehow quite similiar to SuperCollider as they allow to describe a graph of matehmatical operations via a high-level language (Python/sclang) which is then executed in the more performant language C++.
+Although they are somehow similar they have a different purpose: SuperCollider tries to calculate an audio stream in real time (which means we need to be fast as we do not have much time for the calculation) where TensorFlow needs to transport Gigabytes of data within secounds to multiple special devices like GPU or <a class="reference external" href="https://en.wikipedia.org/wiki/Tensor_Processing_Unit">TPU</a>.
+Also there are some algorithms implemented in TensorFlow which are missing in scsynth, such as the much important <a class="reference external" href="https://en.wikipedia.org/wiki/Automatic_differentiation">autodiff algorithm</a> which makes neural networks feasible.</p>
+<p>Although TensorFlow is a alread a Python library for the complicated C++ library there is a libary on top of TensorFlow which is called <a class="reference external" href="https://keras.io/">Keras</a> which became the default library to interact with TensorFlow as writing native TensorFlow code can be exhausting.</p>
+<p>Keep in mind that we are using <em>TensorFlow 2</em> which is not compatible with <em>TensorFlow (1)</em> if you look up some examples online.</p>
+<p>Like always we start with our imports, but now extended with <em>tensorflow</em> and <em>keras</em> (which comes bundled with tensorflow).
+If the import fails make sure to check the update procedure of the course material as tensorflow was originally not a dependency for this course and therefore needs to be installed manually in such a case.
+Check the docs on how to do this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># make the results reproducible</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="loading-the-mnist-dataset">
+<h2>Loading the MNIST dataset<a class="headerlink" href="#loading-the-mnist-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Now its time to once again load the <em>MNIST</em> dataset which is mostly used to train a classifier to identify handwritten digits.
+We can use <em>keras</em> for this.
+Note that we already get a dataset which is split in <code class="docutils literal notranslate"><span class="pre">x</span></code> (the <em>input</em>, in our case the <span class="math notranslate nohighlight">\(28 \times 28\)</span> images) and <code class="docutils literal notranslate"><span class="pre">y</span></code> (the <em>target</em>, in our case the digit we want to predict) as well as <em>train</em> and <em>test</em> set (for serious working we would need a validation dataset as well).
+We must hide the test set from the neural network during its training phase so we can evaluate how well the neural networks performs on example it has not seen before.
+This is extremly important as the goal is to train a network which <a class="reference external" href="https://en.wikipedia.org/wiki/Generalization">generalizes</a> and not just work on input it already knows (which would be useless) which may sound trivial as a human but is suprisingly difficult to achieve this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As always it is good to get familiar with the data in order to know what kind of structure the data is in and if it matches our expectations or if we made some error during loading and parsing of the data.
+On a real life example one would perform extensive statistical analysis on the dataset in order to ensure it lies within the expected order of deviations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">array</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;x_train&quot;</span><span class="p">,</span> <span class="s2">&quot;y_train&quot;</span><span class="p">,</span> <span class="s2">&quot;x_test&quot;</span><span class="p">,</span> <span class="s2">&quot;y_test&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">]):</span>
+	<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">:</span><span class="se">\t</span><span class="si">{</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of x_train:	(60000, 28, 28)
+Shape of y_train:	(60000,)
+Shape of x_test:	(10000, 28, 28)
+Shape of y_test:	(10000,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="n">random_index</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label of example #</span><span class="si">{</span><span class="n">random_index</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">random_index</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Label of example #56422 is 4
+</pre></div>
+</div>
+<img alt="../_images/neural_networks_6_1.png" src="../_images/neural_networks_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_rows</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">n_cols</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">)):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="k">n_rows</span>][i//n_rows]
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/neural_networks_7_0.png" src="../_images/neural_networks_7_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribution of digits in train set&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/neural_networks_8_0.png" src="../_images/neural_networks_8_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="creating-our-first-neural-network">
+<h2>Creating our first neural network<a class="headerlink" href="#creating-our-first-neural-network" title="Permalink to this headline">¶</a></h2>
+<p>After we quickly analyzed the files we want to use for traning it is now time to write our first neural network.
+We will decide for a <strong>fully connected neural network</strong> (also called <em>densely connected NN</em>) as this is the most basic neural network.
+In a <em>FCNN</em> we create <em>layers</em> of <em>neurons</em> where each neuron of the layer is connected with each neuron of the following layer.</p>
+<p>The graphic shows for example a neural network with one (also called <em>hidden</em> layer).</p>
+<p><img alt="Neural network with one layer" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Colored_neural_network.svg/399px-Colored_neural_network.svg.png" /></p>
+<p>Source: <a class="reference external" href="https://commons.wikimedia.org/wiki/File:Colored_neural_network.svg">https://commons.wikimedia.org/wiki/File:Colored_neural_network.svg</a></p>
+<p>We start on the left side with a flat input vector and where each of the vectors scalar is connected with each scalar/neuron of the next layer.
+This connection often includes an <em>activation function</em> which allows the (de-)activation of neurons.
+This hidden layer is then connected with the output layer but could also be connected with another layer which allows to represent more complicated neuronal connections.</p>
+<p>In the case of MNIST dataset our input is an image with <span class="math notranslate nohighlight">\(28 \times 28\)</span> pixels which each have a value between <span class="math notranslate nohighlight">\(0\)</span> (black) and <span class="math notranslate nohighlight">\(255\)</span> (white).
+As a vector needs to be 1-dimensional we simply <em>flatten</em> this image, so we obtain a <span class="math notranslate nohighlight">\(28*28=784\)</span> dimensional vector.
+The output of our neural network system is not the predicted number directly but the probability for each digit according to the neural network which results in a 10 dimensional output vector as we have 10 digits (from 0 to 9).
+Wo do this because the neural network can learn much better this way as we can describe mathematically more easily what we are searching for.</p>
+<p>Our neural network is therefore much like a <a class="reference external" href="https://en.wikipedia.org/wiki/Probability_density_function">probibilty density function</a> which shall output the proper digit according to its input.
+During training we will tell the neural network that the best solution for an handwritten 2 as input should be the vector <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>.
+This notation is also called <a class="reference external" href="https://en.wikipedia.org/wiki/One-hot"><em>one-hot-encoding</em></a> which is often used for categorical problems.</p>
+<p>Engouh talk, lets use kears to write a NN with one layer with 40 neurons.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)),</span> <span class="c1"># our 28x28 image gets flattened</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span> <span class="c1"># the (hidden) layer</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="c1"># the 10 dimensional output vector</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Seems not so hard and keras also allows us to simply inspect the model as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ flatten (Flatten)           (None, 784)               0         
+                                                                 
+ dense (Dense)               (None, 40)                31400     
+                                                                 
+ dense_1 (Dense)             (None, 10)                410       
+                                                                 
+=================================================================
+Total params: 31,810
+Trainable params: 31,810
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<p>Just a quick remark on the number of parameters.
+Our input layer has no trainable parameters as we shall not modify the input.</p>
+<p>As every neuron of the input layer is connected with every neuron of our hidden layers the number of parameters grow rapidly:</p>
+<div class="math notranslate nohighlight">
+\[
+784 * 40 = 31360
+\]</div>
+<p>The missing <span class="math notranslate nohighlight">\(40\)</span> parameters are due to the <em>bias</em> neuron which get added for each layer for mathematical reasions.</p>
+<p>The next layer has</p>
+<div class="math notranslate nohighlight">
+\[
+(40+1)*10 = 410
+\]</div>
+<p>parameters - in this case we already included the additional bias neuron.</p>
+</div>
+<div class="section" id="training-a-neural-network">
+<h2>Training a neural network<a class="headerlink" href="#training-a-neural-network" title="Permalink to this headline">¶</a></h2>
+<p>For now we only iniated some matrices and vectors and connected them in a somehow senseful manner, yet we have now discussed <em>how</em> the computer really <em>learns</em> the neural network.</p>
+<p>For this we will need to define a goal when a neural networks performs good or not via a so called <a class="reference external" href="https://en.wikipedia.org/wiki/Loss_function">loss-function</a> (also called cost-function) which will tell us how good the neural network is performing right now.
+We can then calculate a gradient for the cost function with the parameter space of our neural networks as input which will tell us in which direction to modify the parameters of our neural network in order to get better results (this step is is actually not trivial but tensorflow helps us here).</p>
+<p>In our case we use some knowledge from information theory to construct a good loss function and use an off-the-shelve optimizer from the keras library which drives the calculation of the derivative and applies the change in the parameterspace.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(),</span>
+    <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After all is said and done we can finally train our first neural network.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/5
+1875/1875 [==============================] - 2s 796us/step - loss: 10.5197 - accuracy: 0.8514
+Epoch 2/5
+1875/1875 [==============================] - 1s 796us/step - loss: 3.4047 - accuracy: 0.8784
+Epoch 3/5
+1875/1875 [==============================] - 1s 791us/step - loss: 1.0116 - accuracy: 0.8836
+Epoch 4/5
+1875/1875 [==============================] - 2s 828us/step - loss: 0.5160 - accuracy: 0.8802
+Epoch 5/5
+1875/1875 [==============================] - 1s 785us/step - loss: 0.5351 - accuracy: 0.8725
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x162eee790&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We remember that we need to check the perfomance of our neural network on examples that it has not seen during training where the test set comes into play.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>313/313 [==============================] - 0s 598us/step - loss: 0.6544 - accuracy: 0.8518
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.6544067859649658, 0.8518000245094299]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get an accuracy of about 87% which is already quite good but we can do better by applying some data pre-processing, making it easier for the algorithm to find good parameters in our neural network.</p>
+</div>
+<div class="section" id="tuning-the-neural-network">
+<h2>Tuning the neural network<a class="headerlink" href="#tuning-the-neural-network" title="Permalink to this headline">¶</a></h2>
+<p>Currently our input parameters (the brightness of each pixel) is between 0 and 255.
+Transforming this to be between 0 and 1 our algorithm can already learn faster as it is used to these kind of values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_train_scaled</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">/</span><span class="mf">255.0</span>
+<span class="n">x_test_scaled</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">/</span><span class="mf">255.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will also add a so called <a class="reference external" href="https://keras.io/api/layers/regularization_layers/dropout/"><em>dropout layer</em></a> and add another hidden layer and just apply all the same steps from above on our new model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_scaled</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="n">model_scaled</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(),</span>
+    <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_scaled</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_1&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ flatten_1 (Flatten)         (None, 784)               0         
+                                                                 
+ dense_2 (Dense)             (None, 48)                37680     
+                                                                 
+ dropout (Dropout)           (None, 48)                0         
+                                                                 
+ dense_3 (Dense)             (None, 15)                735       
+                                                                 
+ dropout_1 (Dropout)         (None, 15)                0         
+                                                                 
+ dense_4 (Dense)             (None, 10)                160       
+                                                                 
+=================================================================
+Total params: 38,575
+Trainable params: 38,575
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_scaled</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/5
+1875/1875 [==============================] - 2s 899us/step - loss: 0.5824 - accuracy: 0.8214
+Epoch 2/5
+1875/1875 [==============================] - 2s 932us/step - loss: 0.3441 - accuracy: 0.9002
+Epoch 3/5
+1875/1875 [==============================] - 2s 866us/step - loss: 0.2957 - accuracy: 0.9127
+Epoch 4/5
+1875/1875 [==============================] - 2s 875us/step - loss: 0.2712 - accuracy: 0.9210
+Epoch 5/5
+1875/1875 [==============================] - 2s 874us/step - loss: 0.2526 - accuracy: 0.9272
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x163661700&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_scaled</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>313/313 [==============================] - 0s 630us/step - loss: 0.1380 - accuracy: 0.9597
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.13801522552967072, 0.9596999883651733]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Although we only added a few parameters and modified the training behaviour our model already performs better already.
+Now its time to take a look on the examples where our neural networks fail in order to get some new insights of the mechanics.</p>
+</div>
+<div class="section" id="analysing-the-results">
+<h2>Analysing the results<a class="headerlink" href="#analysing-the-results" title="Permalink to this headline">¶</a></h2>
+<p>We start by taking a look how we can ask the neural network for a prediction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_test_image_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_test_scaled</span><span class="p">[</span><span class="n">random_test_image_index</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label for image is </span><span class="si">{</span><span class="n">y_test</span><span class="p">[</span><span class="n">random_test_image_index</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Label for image is 7
+</pre></div>
+</div>
+<img alt="../_images/neural_networks_30_1.png" src="../_images/neural_networks_30_1.png" />
+</div>
+</div>
+<p>We simply give the neural network the whole list of test images we have and ask for its probability of each class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">model_scaled</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test_scaled</span><span class="p">)</span>
+<span class="n">preds</span><span class="p">[</span><span class="n">random_test_image_index</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ -2.8263762 ,   0.03036575,   6.4564805 ,   8.375091  ,
+        -2.5378463 ,   4.2385798 , -11.81926   ,  20.765867  ,
+        -3.2129931 ,   3.379484  ], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="n">random_test_image_index</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+	<span class="n">title</span><span class="o">=</span><span class="s2">&quot;Predicted probability for each digit class&quot;</span><span class="p">,</span>
+	<span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/neural_networks_33_0.png" src="../_images/neural_networks_33_0.png" />
+</div>
+</div>
+<p>The neural network predicts our example correctly as a <span class="math notranslate nohighlight">\(7\)</span>.
+We can use the argmax function in numpy to get the index with the highest value in a vector.
+And as we already have all predictions available we can perform this on every prediction also easily.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preds_one_hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This allows us to filter out the examples where the prediction did not work out as hoped.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">false_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">preds_one_hot</span> <span class="o">!=</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_test</span><span class="p">[</span><span class="n">false_indices</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+	<span class="n">title</span><span class="o">=</span><span class="s2">&quot;Number of wrong predictions per class&quot;</span><span class="p">,</span>
+	<span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/neural_networks_38_0.png" src="../_images/neural_networks_38_0.png" />
+</div>
+</div>
+<p>We see that our neural network seems to detect a <span class="math notranslate nohighlight">\(0\)</span> quite good (although it is also easy as it just needs to check if there are any pixels in the middle of the picture) but not great on a <span class="math notranslate nohighlight">\(8\)</span>.
+But this analysis does not tell us for what the <span class="math notranslate nohighlight">\(8\)</span> got mistakenly taken for, but a <em>confusion matrix</em> can help us out here.
+Thankfully such things are build into TensorFlow.</p>
+<p>From the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/math/confusion_matrix">docs</a> we can obtain</p>
+<blockquote>
+<div><p>The matrix columns represent the prediction labels and the rows represent the real labels.</p>
+</div></blockquote>
+<p>If our neural network would work perfect we would obtain a <a class="reference external" href="https://en.wikipedia.org/wiki/Diagonal_matrix">diagonal matrix</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confusion_matrix</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">preds_one_hot</span><span class="p">)</span>
+<span class="n">confusion_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tf.Tensor: shape=(10, 10), dtype=int32, numpy=
+array([[ 959,    0,    0,    1,    0,    5,    9,    3,    3,    0],
+       [   0, 1114,    2,    4,    0,    2,    3,    1,    9,    0],
+       [   5,    3,  972,   16,    6,    1,    4,    9,   16,    0],
+       [   0,    0,    1,  980,    0,   10,    0,   10,    6,    3],
+       [   1,    0,    2,    0,  929,    0,   10,    1,    3,   36],
+       [   5,    1,    0,   24,    0,  844,    5,    2,    4,    7],
+       [   7,    3,    1,    1,    3,    8,  931,    0,    4,    0],
+       [   1,    6,   17,    4,    1,    0,    0,  988,    1,   10],
+       [   4,    1,    3,    8,    6,    7,    8,    8,  924,    5],
+       [   3,    6,    0,   13,   13,    9,    1,    6,    2,  956]],
+      dtype=int32)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets take a closer look at some examples where the neural network predicted wrong.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_rows</span><span class="o">=</span><span class="mi">7</span>
+<span class="n">n_cols</span><span class="o">=</span><span class="mi">7</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">false_indices</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">)):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="k">n_rows</span>][i//n_rows]
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">preds_one_hot</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s1"> (true: </span><span class="si">{</span><span class="n">y_test</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/neural_networks_42_0.png" src="../_images/neural_networks_42_0.png" />
+</div>
+</div>
+<p>We see that some digits are indeed not clearly written and may be guessed wrongly by the human as well.
+Also it turns out that those classic datasets itself contain errors in its labeling as well, see <a class="reference external" href="https://labelerrors.com/">labelerrors.com</a> and <span id="id1">[<a class="reference internal" href="../docs/bib.html#id6" title="Curtis G. Northcutt, Anish Athalye, and Jonas Mueller. Pervasive label errors in test sets destabilize machine learning benchmarks. 2021. arXiv:2103.14749.">NAM21</a>]</span>.</p>
+<p>Therefore having a success rate of <span class="math notranslate nohighlight">\(100\%\)</span> on a machine learning problem is always sketchy and most likely occurs due to leakage of the y-labeled data into the input variable X.</p>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="machine_learning.html" title="previous page">Machine Learning basics</a>
+    <a class='right-next' id="next-link" href="osc_communication.html" title="next page">Communicating between SuperCollider and Python</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dennis Scheiba<br/>
+        
+            &copy; Copyright 2021, Dennis Scheiba.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
