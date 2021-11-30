@@ -184,7 +184,7 @@ as executing the command
   # on linux/macOS
   source venv/bin/activate
   # on windows
-  source ./venv/Scripts/activate
+  .\venv\Scripts\activate
 
 After the virtual environment has been successfully activated something ``(venv)`` will
 be shown in the command prompt.
