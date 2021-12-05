@@ -42,6 +42,7 @@ generating sounds.
    00_basics/machine_learning.ipynb
    00_basics/neural_networks.ipynb
    00_basics/convolutions.ipynb
+   00_basics/autoencoders.ipynb
    00_basics/osc_communication.ipynb
 
 .. toctree::
