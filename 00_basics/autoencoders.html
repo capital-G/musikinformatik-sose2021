@@ -379,7 +379,7 @@ Non-trainable params: 0
 _________________________________________________________________
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-12-05 20:12:41.936121: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-12-05 20:37:45.766107: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 </pre></div>
 </div>
@@ -503,18 +503,18 @@ l: (28 \times 28) \times (28 \times 28) \rightarrow \mathbb{R} \Rightarrow \text
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/5
-300/300 [==============================] - 32s 106ms/step - loss: 0.0575
+300/300 [==============================] - 32s 105ms/step - loss: 0.0567
 Epoch 2/5
-300/300 [==============================] - 33s 109ms/step - loss: 0.0500
+300/300 [==============================] - 30s 98ms/step - loss: 0.0488
 Epoch 3/5
-300/300 [==============================] - 34s 112ms/step - loss: 0.0475
+300/300 [==============================] - 30s 101ms/step - loss: 0.0465
 Epoch 4/5
-300/300 [==============================] - 34s 113ms/step - loss: 0.0464
+300/300 [==============================] - 31s 105ms/step - loss: 0.0456
 Epoch 5/5
-300/300 [==============================] - 34s 113ms/step - loss: 0.0458
+300/300 [==============================] - 34s 113ms/step - loss: 0.0449
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x16cb7d880&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x16b6b3880&gt;
 </pre></div>
 </div>
 </div>
@@ -526,10 +526,10 @@ Epoch 5/5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>313/313 [==============================] - 5s 15ms/step - loss: 0.0447
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>313/313 [==============================] - 6s 17ms/step - loss: 0.0441
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.04468511790037155
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.04407341778278351
 </pre></div>
 </div>
 </div>
@@ -646,16 +646,16 @@ We therefore scale our random variables <span class="math notranslate nohighligh
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random latent space variables
-[[-6.12051989 -1.13021888]
- [-7.07873079 -3.32350646]
- [ 0.95084162  0.84104558]
- [ 1.10298242 -2.25543484]
- [-0.3254842  -0.33367856]
- [-4.9023244  -2.00349031]
- [-6.78237553 -1.01174071]
- [-1.45350878 -0.88492733]
- [-3.67096413 -2.60730989]
- [-6.56101095  1.12789478]]
+[[-4.07249306 -2.69778185]
+ [-4.55051369 -4.14555818]
+ [-0.54481805 -1.39656167]
+ [-0.46891989 -3.44053033]
+ [-1.18153598 -2.17199023]
+ [-3.46477448 -3.27422322]
+ [-4.40267157 -2.6195751 ]
+ [-1.7442712  -2.53586633]
+ [-2.85048841 -3.672801  ]
+ [-4.2922399  -1.20721419]]
 </pre></div>
 </div>
 <img alt="../_images/autoencoders_24_1.png" src="../_images/autoencoders_24_1.png" />
@@ -664,10 +664,9 @@ We therefore scale our random variables <span class="math notranslate nohighligh
 <p>We can also sample the latent space and create a map out of it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_latent_space</span><span class="p">(</span><span class="n">decoder</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_latent_space</span><span class="p">(</span><span class="n">decoder</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="c1"># display a n*n 2D manifold of digits</span>
     <span class="n">digit_size</span> <span class="o">=</span> <span class="mi">28</span>
-    <span class="n">scale</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="n">figure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">digit_size</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">digit_size</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span>
     <span class="c1"># linearly spaced coordinates corresponding to the 2D plot</span>
     <span class="c1"># of digit classes in the latent space</span>
@@ -690,7 +689,7 @@ We therefore scale our random variables <span class="math notranslate nohighligh
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 
-<span class="n">plot_latent_space</span><span class="p">(</span><span class="n">decoder</span><span class="p">)</span>
+<span class="n">plot_latent_space</span><span class="p">(</span><span class="n">decoder</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
