@@ -423,7 +423,7 @@ This behaviour is called <em>going deep</em> and accounts for the term <em>deep 
 <p>A real world example for this technique is used in e.g. <a class="reference external" href="https://arxiv.org/abs/1512.03385v1">ResNet</a> which was used as a reference network for different problems in computer vision (although this paper became famous because it introduced residual connections which allowed to train such deep networks).
 Each block in the graphic is a convolution, reaching at the end a <span class="math notranslate nohighlight">\(3 \times 3 \times 512\)</span> dimensional state which is then flattened (as before with our image in the fully connected network).
 The idea is that the convolutional layers extract information out of the image and the last fully connected layer(s) are using the extracted information out of the convolutional layers to extract the image.</p>
-<p><img alt="Building blocks of resnet" src="00_basics/resnet.png" /></p>
+<p><img alt="Building blocks of resnet" src="../_images/resnet.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
