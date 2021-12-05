@@ -52,6 +52,7 @@ generating sounds.
    01_spect_resynth/canvas.ipynb
    01_spect_resynth/02_spect.ipynb
    01_spect_resynth/03_nmf.ipynb
+   01_spect_resynth/04_wavesets.ipynb
 
 .. toctree::
    :maxdepth: 2
