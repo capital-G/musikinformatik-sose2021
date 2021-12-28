@@ -45,6 +45,7 @@ generating sounds.
    00_basics/autoencoders.ipynb
    00_basics/lstm.ipynb
    00_basics/osc_communication.ipynb
+   00_basics/compose.ipynb
 
 .. toctree::
    :maxdepth: 2

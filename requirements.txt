@@ -9,3 +9,7 @@ notebook==6.4.6
 pre-commit==2.12.1
 python-osc==1.7.6
 tensorflow==2.7.0
+music21==7.1.0
+pydot==1.4.2
+graphviz==0.19.1
+python-osc==1.7.6
