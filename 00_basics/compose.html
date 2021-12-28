@@ -1,0 +1,1333 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generating MIDI notes via RNNs &#8212; Musikinformatik SoSe2021</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Generating sounds via Python" href="../01_spect_resynth/canvas.html" />
+    <link rel="prev" title="Communicating between SuperCollider and Python" href="osc_communication.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Musikinformatik SoSe2021</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Course information
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/setup.html">
+   Environment setup
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/course-info/contribute.html">
+   Contribute
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/bib.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Basics
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/math.html">
+   Math basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sc_dimensions.html">
+   Dimensionality in SuperCollider
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs/basics/python.html">
+   Python basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="py_dimensions.html">
+   Dimensionality in Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="machine_learning.html">
+   Machine Learning basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="neural_networks.html">
+   Introduction to neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="convolutions.html">
+   Convolutions and deep neural networks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="autoencoders.html">
+   Autoencoders
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lstm.html">
+   RNNs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="osc_communication.html">
+   Communicating between SuperCollider and Python
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Generating MIDI notes via RNNs
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Using Python to synthesize sound
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/canvas.html">
+   Generating sounds via Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/02_spect.html">
+   Resynthesizing sound via spectogram
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/03_nmf.html">
+   Matrix decomposition on STFT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_spect_resynth/04_wavesets.html">
+   Wavesets in Python
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Lesson 1
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_midi_drums/01_midi_drums.html">
+   Extracting information from MIDI files
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/00_basics/compose.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/capital-G/musikinformatik-sose2021/issues/new?title=Issue%20on%20page%20%2F00_basics/compose.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/capital-G/musikinformatik-sose2021/edit/main/00_basics/compose.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/capital-G/musikinformatik-sose2021/main?urlpath=tree/00_basics/compose.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convert-data-to-sequences">
+   Convert data to sequences
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#writing-the-rnn">
+   Writing the RNN
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#predict">
+   Predict
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-original-sequence">
+     The original sequence
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continued-sequence">
+     Continued sequence
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#combined-sequence">
+     Combined sequence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#making-predictions-in-real-time-with-supercollider">
+   Making predictions in real time with SuperCollider
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#supercollider-part">
+     SuperCollider part
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python-part">
+     Python part
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extending">
+   Extending
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="generating-midi-notes-via-rnns">
+<h1>Generating MIDI notes via RNNs<a class="headerlink" href="#generating-midi-notes-via-rnns" title="Permalink to this headline">¶</a></h1>
+<p>After we have taken a look how we train RNNs on a certain text corpora and use it to continue a given text we want to see how we can modify this method so we instead can use it for a musical notation.
+At the end we want to use our model in real time with SuperCollider by using a MIDI keyboard.</p>
+<p>Where in a classical written text the notation only works singulary in one direction the musical score also allows for events happening in paralell at the same time like chords or melodies in multiple instruments.
+We assume that the number of paralell events is not per-determined and dynamic which makes it difficult to account for in mathematical notation.
+For this reason we will limit ourselves to monophonic melodies as corpora.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">music21</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="loading-the-data">
+<h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above to keep things simple for now we will restrict ourselves to monophonic melodies.
+As we don’t want to spend too much time on obtaining and filtering we will simply use easily available monophonic melodies - and we also need as much as possible as this is machine learning with neural networks.
+With such requirements we often tend to use works from J.S. Bach as those are quite easily representable in MIDI format, there are no licensing issues, there is a huge fanbase who transcribed everything into MIDI format and it offers a big and homogenous corpora.</p>
+<p>As corpora we will use the <a class="reference external" href="https://en.wikipedia.org/wiki/Cello_Suites_(Bach)">Suites for Solo Cello</a> which are available in MIDI format <a class="reference external" href="http://www.jsbach.net/midi/midi_solo_cello.html">here</a> but are already included in this repository as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;assets/bach-midi/*.mid&quot;</span><span class="p">)</span>
+<span class="n">random_midi_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> MIDI files. Random selected file is &#39;</span><span class="si">{</span><span class="n">random_midi_file</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded 36 MIDI files. Random selected file is &#39;assets/bach-midi/cs5-2all.mid&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you have <a class="reference external" href="https://musescore.org">MuseScore</a> installed on your system we can transform the MIDI file to score notation within Python via music21.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">random_midi_file</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/compose_5_0.png" src="../_images/compose_5_0.png" />
+</div>
+</div>
+<p>Although we restricted ourselves to a single instrument we notice that the Cello is not played solely monophonic and we need to think of a way how to restrict our data to strictly monophonic sequences.
+For now we wil simply will only take take the upmost note and ignore the others.</p>
+<p>We also need to think of a way to encode the MIDI notation into a text representation.
+For note pitches this is somehow trivial as we can simply take the <a class="reference external" href="https://newt.phys.unsw.edu.au/jw/notes.html">MIDI pitch number</a> which we also often use in SuperCollider.
+The duration of a note can be expressed as a fraction of quarter notes which will also allow us to encode arbitrary tuplets.
+To transform the data we will write a function <code class="docutils literal notranslate"><span class="pre">extract_notes</span></code> which uses <a class="reference external" href="https://web.mit.edu/music21/">music21</a> to extract the necesarry data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_notes</span><span class="p">(</span><span class="n">midi_file_path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">mono</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">durations</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">midi_file_path</span><span class="p">)</span><span class="o">.</span><span class="n">chordify</span><span class="p">()</span><span class="o">.</span><span class="n">flat</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">music21</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">Chord</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">mono</span><span class="p">:</span>
+                <span class="c1"># only use highest pitch</span>
+                <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">pitches</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">midi</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># concat ptiches via ,</span>
+                <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">midi</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">pitches</span><span class="p">]))</span>
+            <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">quarterLength</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">music21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
+            <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">midi</span><span class="p">))</span>
+            <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">quarterLength</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">notes</span><span class="p">,</span> <span class="n">durations</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">notes</span><span class="p">,</span> <span class="n">durations</span> <span class="o">=</span> <span class="n">extract_notes</span><span class="p">(</span><span class="n">random_midi_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Notes (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span><span class="si">}</span><span class="s2">):</span><span class="se">\t\t</span><span class="si">{</span><span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duractions (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="si">}</span><span class="s2">):</span><span class="se">\t</span><span class="si">{</span><span class="n">durations</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Notes (683):		[&#39;60&#39;, &#39;60&#39;, &#39;60&#39;, &#39;58&#39;, &#39;56&#39;, &#39;55&#39;, &#39;56&#39;, &#39;53&#39;, &#39;55&#39;, &#39;50&#39;]
+Duractions (683):	[0.25, 1.0, 0.25, 0.25, 0.25, 0.25, 0.75, 0.25, 0.75, 0.25]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We want to verify if our extraction works as expected by creating a MIDI file from it again via music21.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
+    <span class="n">note</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">note</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">quarterLength</span> <span class="o">=</span> <span class="n">d</span>
+    <span class="n">stream</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+
+<span class="n">stream</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/compose_10_0.png" src="../_images/compose_10_0.png" />
+</div>
+</div>
+<p>We see that <a class="reference external" href="https://en.wikipedia.org/wiki/Tie_(music)">ties</a> were completely ignored which is far from perfect - also some timing (bar 13) seems pretty off as we not have observed such strange timing in our original material.
+Normally we would need to spend much more time on this endeavour as this is the only data that our neural network is given and its bad if it contains avoidable mistakes.
+Also, in my experience, it would be best <strong>not</strong> to use music21 for this as it contradicts common Python schemes and makes it therefore tedious to work with and is also slow if working on a big dataset.
+Nontheless it is an interesting library which offers lots of functionallity for traditional western classical music.</p>
+<p>For now we will ignore all the flaws of our conversion function (we also could it expand this function to convert everything to the same key - but the question is if this is something we really want).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">durations</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">midi_file</span> <span class="ow">in</span> <span class="n">midi_files</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;parse </span><span class="si">{</span><span class="n">midi_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">extract_notes</span><span class="p">(</span><span class="n">midi_file</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>parse assets/bach-midi/cs1-2all.mid
+parse assets/bach-midi/cs5-1pre.mid
+parse assets/bach-midi/cs4-1pre.mid
+parse assets/bach-midi/cs3-5bou.mid
+parse assets/bach-midi/cs1-4sar.mid
+parse assets/bach-midi/cs2-5men.mid
+parse assets/bach-midi/cs3-3cou.mid
+parse assets/bach-midi/cs2-3cou.mid
+parse assets/bach-midi/cs1-6gig.mid
+parse assets/bach-midi/cs6-4sar.mid
+parse assets/bach-midi/cs4-5bou.mid
+parse assets/bach-midi/cs4-3cou.mid
+parse assets/bach-midi/cs5-3cou.mid
+parse assets/bach-midi/cs6-5gav.mid
+parse assets/bach-midi/cs6-6gig.mid
+parse assets/bach-midi/cs6-2all.mid
+parse assets/bach-midi/cs2-1pre.mid
+parse assets/bach-midi/cs3-1pre.mid
+parse assets/bach-midi/cs3-6gig.mid
+parse assets/bach-midi/cs2-6gig.mid
+parse assets/bach-midi/cs2-4sar.mid
+parse assets/bach-midi/cs3-4sar.mid
+parse assets/bach-midi/cs1-5men.mid
+parse assets/bach-midi/cs1-3cou.mid
+parse assets/bach-midi/cs6-1pre.mid
+parse assets/bach-midi/cs2-2all.mid
+parse assets/bach-midi/cs3-2all.mid
+parse assets/bach-midi/cs1-1pre.mid
+parse assets/bach-midi/cs5-2all.mid
+parse assets/bach-midi/cs4-2all.mid
+parse assets/bach-midi/cs5-5gav.mid
+parse assets/bach-midi/cs4-6gig.mid
+parse assets/bach-midi/cs5-6gig.mid
+parse assets/bach-midi/cs5-4sar.mid
+parse assets/bach-midi/cs4-4sar.mid
+parse assets/bach-midi/cs6-3cou.mid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="convert-data-to-sequences">
+<h2>Convert data to sequences<a class="headerlink" href="#convert-data-to-sequences" title="Permalink to this headline">¶</a></h2>
+<p>As RNNs predict the next sample <span class="math notranslate nohighlight">\(x_{m+n+1}\)</span> based on previous <span class="math notranslate nohighlight">\(n\)</span> examples <span class="math notranslate nohighlight">\(\lbrace x_m, x_{m+1}, \dots, x_{m+n} \rbrace\)</span> (where <span class="math notranslate nohighlight">\(m \in \mathbb{N}\)</span> is an arbitrary offset within our data sequenece) we need to prepare our data in such a way as well.
+We can simply copy the function from the text RNN for this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_sequences</span><span class="p">(</span><span class="n">notes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">durations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">seq_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="n">X_notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">X_dur</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y_notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y_dur</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">note</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">note</span><span class="p">)</span> <span class="o">-</span> <span class="n">seq_length</span><span class="p">):</span>
+            <span class="n">X_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">seq_length</span><span class="p">])</span>
+            <span class="n">y_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">seq_length</span><span class="p">])</span>
+            
+            <span class="n">X_dur</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">seq_length</span><span class="p">])</span>
+            <span class="n">y_dur</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">seq_length</span><span class="p">])</span>
+    
+    <span class="c1"># we specify the data type of our data to save some memory which is crucial when working with neural networks</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_notes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_notes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_dur</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_dur</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
+
+<span class="n">X_n</span><span class="p">,</span> <span class="n">y_n</span><span class="p">,</span> <span class="n">X_d</span><span class="p">,</span> <span class="n">y_d</span> <span class="o">=</span> <span class="n">generate_sequences</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">seq_length</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each of our 2 sequences (one sequence are the pitch names, the other one the durations) we created an array <span class="math notranslate nohighlight">\(X\)</span> which will contain <span class="math notranslate nohighlight">\(64\)</span> samples and a vector <span class="math notranslate nohighlight">\(y\)</span> which will contain the next sample, which is exactly what our neural network shall predict.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X_n </span><span class="si">{</span><span class="n">X_n</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="si">{</span><span class="n">X_n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X_d </span><span class="si">{</span><span class="n">X_d</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="si">{</span><span class="n">X_d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_n </span><span class="si">{</span><span class="n">y_n</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">y_n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_d </span><span class="si">{</span><span class="n">y_d</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">y_d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X_n (25132, 64):
+[59 59 59 57 55 54 55 50 52 54 55 57 59 60 62 59 55 54 55 52 50 48 47 48
+ 50 52 54 55 57 59 60 57 55 54 55 52 54 55 45 50 54 55 57 59 60 57 59 55
+ 55 50 50 47 47 43 43 59 60 59 57 55 57 59 60 57]
+X_d (25132, 64):
+[0.25 1.   0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25
+ 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25
+ 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25
+ 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.75 0.25
+ 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25]
+
+y_n (25132,): 55
+y_d (25132,): 0.25
+</pre></div>
+</div>
+</div>
+</div>
+<p>As with our text and with the MNIST example we actually don’t want to predict the next sample but the probability of each possible class (also called <a class="reference external" href="https://en.wikipedia.org/wiki/Probability_distribution">probability distribution</a>).
+Therefore we need to transfer our vector <span class="math notranslate nohighlight">\(y\)</span> (which has as many dimension as we have samples in <span class="math notranslate nohighlight">\(X\)</span>) to a so called <a class="reference external" href="https://en.wikipedia.org/wiki/One-hot">one hot encoding</a> vector, transforming <span class="math notranslate nohighlight">\(y\)</span> to a matrix of dimensions <em>number of samples</em> <span class="math notranslate nohighlight">\(\times\)</span> <em>number of classes</em>.</p>
+<p>For our pitches we can use some knowledge such as that there are only 127 possible pitch classes and the pitches next to each other are also mapped next to each other on our integer encoding.
+Preserving this structure makes it easier for the neural network to look for a structure within our data and also allows us to debug the data more easily.</p>
+<p>We will add the suffix <code class="docutils literal notranslate"><span class="pre">_h</span></code> for the one-hot-encoded version of our data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_n_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">127</span><span class="p">)[</span><span class="n">y_n</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y_n</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_n_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0.]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Doing th same for the durations is not as easy as we do not know beforehand what kind of durations are within our data - although we can be sure that it contain only a finite number of discrete values as our data is finite as well.</p>
+<p>To keep things simple we will rely on a build in function <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"><code class="docutils literal notranslate"><span class="pre">OneHoteEncoder</span></code></a> from sklearn wich will not preserve the order of our durations but we also need to make this step reversible and therefore it is good to use exsisting solutions which we can save as well.</p>
+<p>In Python it is possible to save variables to a file and load a variable from file as well (which is called <a class="reference external" href="https://docs.python.org/3/library/pickle.html"><em>pickling</em></a> - but be aware, such things are handy but a real security nightmare).
+This comes in handy now as we need to save and restore this encoder as we need to save it as well as our model because it is our dictionary for durations outside of the neural network and within the neural network.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">encoder_file</span> <span class="o">=</span> <span class="s1">&#39;assets/bach-model/dur_encoder.pkl&#39;</span>
+
+<span class="c1"># if file exists we load the exsiting encoder</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">encoder_file</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">encoder_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">dur_encoder</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded encoder from </span><span class="si">{</span><span class="n">encoder_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># otherwhise we will create one</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dur_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dur_encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_d</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">y_d</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="c1"># and save it so we can restore it later</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">encoder_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dur_encoder</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved encoder to </span><span class="si">{</span><span class="n">encoder_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved encoder to assets/bach-model/dur_encoder.pkl
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use this encoder to transform our durations into a one-hot encoding.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_d_h</span> <span class="o">=</span> <span class="n">dur_encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y_d</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y_d_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_d_h</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Categories: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dur_encoder</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">First 10 items&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_d</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">],</span> <span class="n">y_d_h</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Categories: 
+ [0.0833 0.1666 0.25   0.3333 0.5    0.6665 0.75   1.     1.25   1.333
+ 1.5    1.75   2.     2.25   2.5    3.     4.    ]
+
+First 10 items
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.75 	 [0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.25 	 [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="writing-the-rnn">
+<h2>Writing the RNN<a class="headerlink" href="#writing-the-rnn" title="Permalink to this headline">¶</a></h2>
+<p>After we have prepared the data we can write a model which can be trained on the sequence and can be used to predict the continuation of new, unseen sequences.
+Note that we will predict 2 sequences at once in one model instead of having a model for pitch and one for duration.
+This allows that the neural network can learn co-relations between the pitch and time domain.</p>
+<p>Below is a graph which shows the in- and output of the network and of each layer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># intermediate layer </span>
+<span class="n">embed_size</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="c1"># num of possible outcomes for each y class</span>
+<span class="n">num_notes</span> <span class="o">=</span> <span class="n">y_n_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">num_durs</span> <span class="o">=</span> <span class="n">dur_encoder</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># the 2 input layers for the model</span>
+<span class="c1"># shape None b/c the first dimension is the batch size used during training</span>
+<span class="n">notes_in</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,))</span>
+<span class="n">durs_in</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,))</span>
+
+<span class="c1"># let the neural net transform the data itself via an embedding layer</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_notes</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">)(</span><span class="n">notes_in</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_durs</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">)(</span><span class="n">durs_in</span><span class="p">)</span>
+
+<span class="c1"># combine both embeddings</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Concatenate</span><span class="p">()([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">])</span>
+<span class="c1"># stack two lstm layers</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">256</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># now create a dense layer for each output</span>
+<span class="n">notes_out</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_notes</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;notes&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">durs_out</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_durs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;durs&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># as our model has multiple in- and outputs we will use a new notation in keras</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">([</span><span class="n">notes_in</span><span class="p">,</span> <span class="n">durs_in</span><span class="p">],</span> <span class="p">[</span><span class="n">notes_out</span><span class="p">,</span> <span class="n">durs_out</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bach_model&#39;</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;bach_model&quot;
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_3 (InputLayer)           [(None, None)]       0           []                               
+                                                                                                  
+ input_4 (InputLayer)           [(None, None)]       0           []                               
+                                                                                                  
+ embedding_2 (Embedding)        (None, None, 40)     5080        [&#39;input_3[0][0]&#39;]                
+                                                                                                  
+ embedding_3 (Embedding)        (None, None, 40)     680         [&#39;input_4[0][0]&#39;]                
+                                                                                                  
+ concatenate_1 (Concatenate)    (None, None, 80)     0           [&#39;embedding_2[0][0]&#39;,            
+                                                                  &#39;embedding_3[0][0]&#39;]            
+                                                                                                  
+ lstm_2 (LSTM)                  (None, None, 256)    345088      [&#39;concatenate_1[0][0]&#39;]          
+                                                                                                  
+ lstm_3 (LSTM)                  (None, 256)          525312      [&#39;lstm_2[0][0]&#39;]                 
+                                                                                                  
+ notes (Dense)                  (None, 127)          32639       [&#39;lstm_3[0][0]&#39;]                 
+                                                                                                  
+ durs (Dense)                   (None, 17)           4369        [&#39;lstm_3[0][0]&#39;]                 
+                                                                                                  
+==================================================================================================
+Total params: 913,168
+Trainable params: 913,168
+Non-trainable params: 0
+__________________________________________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">show_shapes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/compose_26_0.png" src="../_images/compose_26_0.png" />
+</div>
+</div>
+<p>To finalize the model we need to define the rules for a successful learning which is in both cases a <a class="reference external" href="https://gombru.github.io/2018/05/23/cross_entropy_loss/">categorical cross entropy</a> as we want to predict the distribution of the next pitch and duration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.optimizer_v2.rmsprop</span> <span class="kn">import</span> <span class="n">RMSprop</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">loss</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">],</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">RMSprop</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<p>The actual training of the model is not much code thanks to our preparations - although it will consume time.
+We will also save the model and in case the saved model exists we will use the existing model instead of training it from scratch.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;assets/bach-model/v01&#39;</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded model </span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start traning model&quot;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">([</span><span class="n">X_n</span><span class="p">,</span> <span class="n">X_d</span><span class="p">],</span> <span class="p">[</span><span class="n">y_n_h</span><span class="p">,</span> <span class="n">y_d_h</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished training - saved to </span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Start traning model
+Epoch 1/50
+393/393 [==============================] - 86s 207ms/step - loss: 4.0639 - notes_loss: 2.9685 - durs_loss: 1.0954
+Epoch 2/50
+393/393 [==============================] - 85s 215ms/step - loss: 3.5703 - notes_loss: 2.6235 - durs_loss: 0.9468
+Epoch 3/50
+393/393 [==============================] - 89s 227ms/step - loss: 3.2504 - notes_loss: 2.4973 - durs_loss: 0.7531
+Epoch 4/50
+393/393 [==============================] - 93s 235ms/step - loss: 2.9522 - notes_loss: 2.3601 - durs_loss: 0.5921
+Epoch 5/50
+393/393 [==============================] - 103s 261ms/step - loss: 2.7139 - notes_loss: 2.2196 - durs_loss: 0.4943
+Epoch 6/50
+393/393 [==============================] - 110s 281ms/step - loss: 2.4853 - notes_loss: 2.0614 - durs_loss: 0.4239
+Epoch 7/50
+393/393 [==============================] - 116s 296ms/step - loss: 2.2540 - notes_loss: 1.8891 - durs_loss: 0.3649
+Epoch 8/50
+393/393 [==============================] - 103s 263ms/step - loss: 2.0131 - notes_loss: 1.7034 - durs_loss: 0.3097
+Epoch 9/50
+393/393 [==============================] - 108s 275ms/step - loss: 1.7678 - notes_loss: 1.5081 - durs_loss: 0.2597
+Epoch 10/50
+393/393 [==============================] - 114s 290ms/step - loss: 1.5295 - notes_loss: 1.3107 - durs_loss: 0.2189
+Epoch 11/50
+393/393 [==============================] - 109s 276ms/step - loss: 1.3027 - notes_loss: 1.1240 - durs_loss: 0.1786
+Epoch 12/50
+393/393 [==============================] - 112s 285ms/step - loss: 1.0871 - notes_loss: 0.9400 - durs_loss: 0.1471
+Epoch 13/50
+393/393 [==============================] - 115s 292ms/step - loss: 0.8994 - notes_loss: 0.7802 - durs_loss: 0.1191
+Epoch 14/50
+393/393 [==============================] - 121s 307ms/step - loss: 0.7348 - notes_loss: 0.6365 - durs_loss: 0.0983
+Epoch 15/50
+393/393 [==============================] - 126s 320ms/step - loss: 0.5955 - notes_loss: 0.5136 - durs_loss: 0.0819
+Epoch 16/50
+393/393 [==============================] - 133s 339ms/step - loss: 0.4768 - notes_loss: 0.4126 - durs_loss: 0.0642
+Epoch 17/50
+393/393 [==============================] - 140s 355ms/step - loss: 0.3867 - notes_loss: 0.3339 - durs_loss: 0.0528
+Epoch 18/50
+393/393 [==============================] - 127s 323ms/step - loss: 0.3122 - notes_loss: 0.2674 - durs_loss: 0.0448
+Epoch 19/50
+393/393 [==============================] - 111s 282ms/step - loss: 0.2557 - notes_loss: 0.2197 - durs_loss: 0.0360
+Epoch 20/50
+393/393 [==============================] - 122s 310ms/step - loss: 0.2075 - notes_loss: 0.1764 - durs_loss: 0.0311
+Epoch 21/50
+393/393 [==============================] - 116s 295ms/step - loss: 0.1726 - notes_loss: 0.1459 - durs_loss: 0.0267
+Epoch 22/50
+393/393 [==============================] - 140s 356ms/step - loss: 0.1437 - notes_loss: 0.1219 - durs_loss: 0.0218
+Epoch 23/50
+393/393 [==============================] - 135s 342ms/step - loss: 0.1220 - notes_loss: 0.1025 - durs_loss: 0.0195
+Epoch 24/50
+393/393 [==============================] - 108s 274ms/step - loss: 0.1037 - notes_loss: 0.0867 - durs_loss: 0.0171
+Epoch 25/50
+393/393 [==============================] - 108s 274ms/step - loss: 0.0953 - notes_loss: 0.0772 - durs_loss: 0.0181
+Epoch 26/50
+393/393 [==============================] - 109s 276ms/step - loss: 0.0868 - notes_loss: 0.0712 - durs_loss: 0.0157
+Epoch 27/50
+393/393 [==============================] - 107s 273ms/step - loss: 0.0775 - notes_loss: 0.0637 - durs_loss: 0.0138
+Epoch 28/50
+393/393 [==============================] - 107s 273ms/step - loss: 0.0698 - notes_loss: 0.0565 - durs_loss: 0.0134
+Epoch 29/50
+393/393 [==============================] - 110s 279ms/step - loss: 0.0658 - notes_loss: 0.0533 - durs_loss: 0.0125
+Epoch 30/50
+393/393 [==============================] - 90s 229ms/step - loss: 0.0578 - notes_loss: 0.0469 - durs_loss: 0.0109
+Epoch 31/50
+393/393 [==============================] - 95s 240ms/step - loss: 0.0551 - notes_loss: 0.0456 - durs_loss: 0.0095
+Epoch 32/50
+393/393 [==============================] - 95s 241ms/step - loss: 0.0572 - notes_loss: 0.0457 - durs_loss: 0.0115
+Epoch 33/50
+393/393 [==============================] - 101s 257ms/step - loss: 0.0550 - notes_loss: 0.0438 - durs_loss: 0.0112
+Epoch 34/50
+393/393 [==============================] - 112s 284ms/step - loss: 0.0436 - notes_loss: 0.0347 - durs_loss: 0.0090
+Epoch 35/50
+393/393 [==============================] - 111s 282ms/step - loss: 0.0446 - notes_loss: 0.0351 - durs_loss: 0.0095
+Epoch 36/50
+393/393 [==============================] - 115s 293ms/step - loss: 0.0427 - notes_loss: 0.0357 - durs_loss: 0.0070
+Epoch 37/50
+393/393 [==============================] - 117s 297ms/step - loss: 0.0419 - notes_loss: 0.0337 - durs_loss: 0.0082
+Epoch 38/50
+393/393 [==============================] - 116s 295ms/step - loss: 0.0417 - notes_loss: 0.0340 - durs_loss: 0.0076
+Epoch 39/50
+393/393 [==============================] - 120s 306ms/step - loss: 0.0405 - notes_loss: 0.0311 - durs_loss: 0.0093
+Epoch 40/50
+393/393 [==============================] - 118s 301ms/step - loss: 0.0398 - notes_loss: 0.0323 - durs_loss: 0.0074
+Epoch 41/50
+393/393 [==============================] - 119s 302ms/step - loss: 0.0360 - notes_loss: 0.0294 - durs_loss: 0.0067
+Epoch 42/50
+393/393 [==============================] - 112s 284ms/step - loss: 0.0364 - notes_loss: 0.0288 - durs_loss: 0.0076
+Epoch 43/50
+393/393 [==============================] - 109s 277ms/step - loss: 0.0345 - notes_loss: 0.0271 - durs_loss: 0.0073
+Epoch 44/50
+393/393 [==============================] - 108s 275ms/step - loss: 0.0365 - notes_loss: 0.0290 - durs_loss: 0.0075
+Epoch 45/50
+393/393 [==============================] - 109s 278ms/step - loss: 0.0334 - notes_loss: 0.0279 - durs_loss: 0.0055
+Epoch 46/50
+393/393 [==============================] - 109s 276ms/step - loss: 0.0347 - notes_loss: 0.0282 - durs_loss: 0.0065
+Epoch 47/50
+393/393 [==============================] - 108s 274ms/step - loss: 0.0327 - notes_loss: 0.0270 - durs_loss: 0.0057
+Epoch 48/50
+393/393 [==============================] - 108s 275ms/step - loss: 0.0308 - notes_loss: 0.0255 - durs_loss: 0.0053
+Epoch 49/50
+393/393 [==============================] - 109s 277ms/step - loss: 0.0309 - notes_loss: 0.0261 - durs_loss: 0.0049
+Epoch 50/50
+393/393 [==============================] - 108s 274ms/step - loss: 0.0314 - notes_loss: 0.0248 - durs_loss: 0.0066
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-12-28 19:10:02.518097: W tensorflow/python/util/util.cc:368] Sets are not currently considered sequences, but this may change in the future, so consider avoiding using them.
+WARNING:absl:Found untraced functions such as lstm_cell_2_layer_call_fn, lstm_cell_2_layer_call_and_return_conditional_losses, lstm_cell_3_layer_call_fn, lstm_cell_3_layer_call_and_return_conditional_losses, lstm_cell_2_layer_call_fn while saving (showing 5 of 10). These functions will not be directly callable after loading.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:tensorflow:Assets written to: assets/bach-model/v01/assets
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:tensorflow:Assets written to: assets/bach-model/v01/assets
+WARNING:absl:&lt;keras.layers.recurrent.LSTMCell object at 0x1735f1400&gt; has the same name &#39;LSTMCell&#39; as a built-in Keras object. Consider renaming &lt;class &#39;keras.layers.recurrent.LSTMCell&#39;&gt; to avoid naming conflicts when loading with `tf.keras.models.load_model`. If renaming is not possible, pass the object in the `custom_objects` parameter of the load function.
+WARNING:absl:&lt;keras.layers.recurrent.LSTMCell object at 0x1735e1340&gt; has the same name &#39;LSTMCell&#39; as a built-in Keras object. Consider renaming &lt;class &#39;keras.layers.recurrent.LSTMCell&#39;&gt; to avoid naming conflicts when loading with `tf.keras.models.load_model`. If renaming is not possible, pass the object in the `custom_objects` parameter of the load function.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished training - saved to assets/bach-model/v01
+</pre></div>
+</div>
+<img alt="../_images/compose_30_5.png" src="../_images/compose_30_5.png" />
+</div>
+</div>
+</div>
+<div class="section" id="predict">
+<h2>Predict<a class="headerlink" href="#predict" title="Permalink to this headline">¶</a></h2>
+<p>After we have trained the neural network we want to see how we can continue a given sequence.
+This is a bit more complicated as we now need to transfer 2 sequences with 2 custom encoders.
+We will start by implementing some helper functions which can help us for the transfer between both <em>worlds</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+
+<span class="k">def</span> <span class="nf">invert_dur</span><span class="p">(</span><span class="n">durs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dur_encoder</span><span class="p">:</span> <span class="n">OneHotEncoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transfers the duration from neural network internal representation to multiples of quarter notes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dur_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dur_encoder</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">dur_encoder</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="n">dur_mask</span><span class="p">[</span><span class="n">d</span><span class="p">]])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">durs</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">convert_to_stream</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">dur_encoder</span><span class="p">:</span> <span class="n">OneHotEncoder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">music21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts two lists of notes and durations to a music21 stream</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dur_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dur_encoder</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">quarterLength</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dur_encoder</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">([</span><span class="n">dur_mask</span><span class="p">[</span><span class="n">d</span><span class="p">]])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="k">def</span> <span class="nf">continue_sequence</span><span class="p">(</span><span class="n">seq_n</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">seq_d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">times</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Continues a given sequence of pitches and durations n times.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">durs</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="c1"># predict the next note and duration via the model</span>
+        <span class="n">prob_n</span><span class="p">,</span> <span class="n">prob_d</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">seq_n</span><span class="p">,</span> <span class="n">seq_d</span><span class="p">])</span>
+        
+        <span class="c1"># take the most likely note and duration</span>
+        <span class="c1"># argmax is the function which returns the index of the highest item</span>
+        <span class="c1"># could be ajusted w/ temperature etc</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prob_n</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prob_d</span><span class="p">)</span>
+
+        <span class="c1"># add predicted notes to new sequence</span>
+        <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">durs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        
+        <span class="c1"># shift sequences by 1</span>
+        <span class="n">seq_n</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">seq_n</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="c1"># so we can add the just predicted item at the end</span>
+        <span class="n">seq_n</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+
+        <span class="c1"># the same for durations</span>
+        <span class="n">seq_d</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">seq_d</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">seq_d</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">notes</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">durs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will now select a random sequence from our training data and want to continue it.</p>
+<div class="section" id="the-original-sequence">
+<h3>The original sequence<a class="headerlink" href="#the-original-sequence" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rand_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">X_n</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">orig_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X_n</span><span class="p">[</span><span class="n">rand_idx</span><span class="p">],</span> <span class="n">X_d</span><span class="p">[</span><span class="n">rand_idx</span><span class="p">]):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">quarterLength</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="mf">1.0</span>
+    <span class="n">orig_score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">orig_score</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/compose_35_0.png" src="../_images/compose_35_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="continued-sequence">
+<h3>Continued sequence<a class="headerlink" href="#continued-sequence" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_n</span><span class="p">,</span> <span class="n">pred_d</span> <span class="o">=</span> <span class="n">continue_sequence</span><span class="p">(</span>
+    <span class="n">seq_n</span> <span class="o">=</span> <span class="n">X_n</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:][</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span>
+    <span class="n">seq_d</span> <span class="o">=</span> <span class="n">X_d</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:][</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span>
+    <span class="n">times</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span>
+<span class="p">)</span>
+
+<span class="n">stream</span> <span class="o">=</span> <span class="n">convert_to_stream</span><span class="p">(</span><span class="n">pred_n</span><span class="p">,</span> <span class="n">pred_d</span><span class="p">,</span> <span class="n">dur_encoder</span><span class="p">)</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/compose_37_0.png" src="../_images/compose_37_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="combined-sequence">
+<h3>Combined sequence<a class="headerlink" href="#combined-sequence" title="Permalink to this headline">¶</a></h3>
+<p>We now combine the sequences and also save the sequence as MIDI file so we can listen to it via e.g. VLC.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">con_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">orig_score</span><span class="p">:</span>
+    <span class="n">con_score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
+    <span class="n">con_score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">con_score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;assets/bach-model/v01/bach_continue.mid&#39;</span><span class="p">)</span>
+<span class="n">con_score</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/compose_39_0.png" src="../_images/compose_39_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="making-predictions-in-real-time-with-supercollider">
+<h2>Making predictions in real time with SuperCollider<a class="headerlink" href="#making-predictions-in-real-time-with-supercollider" title="Permalink to this headline">¶</a></h2>
+<p>As a final step we want to show how one can interact with our model in real time via SuperCollider.
+For this we need to establish a connection between Python, which will take care of the calculation of the next notes, and SuperCollider, which is great for interacting within a real time environment.</p>
+<p>SuperCollider is limited to the OSC protocoll and files for outside communication so we will use the OSC protocoll here as we are awaiting a response from a system and do not need to transfer much data.
+Python supports the OSC protocoll as well via the library <a class="reference external" href="https://github.com/attwad/python-osc">python-osc</a>.
+We will not get much into detail what will happen here - see the OSC communication between Python and sclang chapter for more information.
+Note that Python normally can only do one thing once and can not schedule something ahead of time - so once we start a server which listens to OSC messages we can not do anything else before we stop the server - this is much different to sclang.</p>
+<p>On a sidenote: It would be possible to combine both aspects in the programming language JavaScript as there is a <a class="reference external" href="https://www.tensorflow.org/js">TensorFlow implementation in JavaScript</a> available and also allows for async execution thanks to its <a class="reference external" href="https://www.geeksforgeeks.org/what-is-an-event-loop-in-javascript/">main event loop</a> on which <em>sclang</em> is also based.
+A demo of this from Google can be found <a class="reference external" href="https://magenta.tensorflow.org/demos/performance_rnn/index.html">here</a> and also the <a class="reference external" href="https://github.com/magenta/magenta-demos/tree/main/performance_rnn">source code</a> of it.</p>
+<div class="section" id="supercollider-part">
+<h3>SuperCollider part<a class="headerlink" href="#supercollider-part" title="Permalink to this headline">¶</a></h3>
+<p>In SuperCollider we will basically just set up a callback function when hitting a note on our MIDI keyboard and save this note to an array.
+If we have enough notes collected we will send an OSC message to Python, asking for a continuation of the played phrase.
+Python will then send an OSC message with the next pitch and duration information which we will send back to the MIDI keyboard - if your MIDI keyboard has no synth engine you can comment out the MIDI type of our <code class="docutils literal notranslate"><span class="pre">\neural</span></code> event which will be instead playbacked on the server.</p>
+<div class="highlight-supercollider notranslate"><div class="highlight"><pre><span></span><span class="c1">// init dictionary to store variables</span>
+<span class="nx">q</span> <span class="o">=</span> <span class="nx">q</span><span class="o">?</span><span class="p">();</span>
+
+<span class="c1">// number of notes which are collected for a prediction</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\numNotes</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\timeScale</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+<span class="c1">// python sender</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\pythonServer</span><span class="p">]</span> <span class="o">=</span> <span class="nx">NetAddr</span><span class="p">.</span><span class="k">new</span><span class="p">(</span>
+	<span class="nx">hostname</span><span class="o">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+	<span class="nx">port</span><span class="o">:</span> <span class="mi">57340</span><span class="p">,</span>
+<span class="p">);</span>
+
+<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">]</span> <span class="o">=</span> <span class="p">();</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\notes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\durs</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\lastNote</span><span class="p">]</span> <span class="o">=</span> <span class="nx">TempoClock</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="nx">beats</span><span class="p">;</span>
+
+<span class="nx">q</span><span class="p">[</span><span class="ss">\helper</span><span class="p">]</span> <span class="o">=</span> <span class="p">();</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\helper</span><span class="p">][</span><span class="ss">\join</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">|</span><span class="nx">array</span><span class="o">|</span>
+	<span class="c1">// transforms an array to a string where</span>
+	<span class="c1">// itmes are separated by a &quot;,&quot;</span>
+	<span class="kd">var</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">asString</span><span class="p">;</span>
+	<span class="nx">array</span><span class="p">[(</span><span class="mi">1</span><span class="p">..</span><span class="nx">array</span><span class="p">.</span><span class="nx">size</span><span class="o">-</span><span class="mi">1</span><span class="p">)].</span><span class="k">do</span><span class="p">({</span><span class="o">|</span><span class="nx">a</span><span class="o">|</span>
+		<span class="nx">string</span> <span class="o">=</span> <span class="nx">string</span> <span class="o">++</span> <span class="nx">$</span><span class="p">,</span> <span class="o">++</span> <span class="nx">a</span><span class="p">.</span><span class="nx">asString</span><span class="p">;</span>
+	<span class="p">});</span>
+	<span class="nx">string</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// init MIDI</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">MIDIClient</span><span class="p">.</span><span class="nx">initialized</span><span class="p">.</span><span class="nx">not</span><span class="p">)</span> <span class="p">{</span> <span class="nx">MIDIClient</span><span class="p">.</span><span class="nx">init</span> <span class="p">};</span>
+<span class="nx">MIDIIn</span><span class="p">.</span><span class="nx">connectAll</span><span class="p">;</span>
+<span class="nx">MIDIClient</span><span class="p">.</span><span class="nx">destinations</span><span class="p">;</span>
+
+<span class="c1">// use one of the destinations (edit this)</span>
+<span class="nx">q</span><span class="p">[</span><span class="ss">\midiOut</span><span class="p">]</span> <span class="o">=</span> <span class="nx">MIDIOut</span><span class="p">.</span><span class="nx">newByName</span><span class="p">(</span><span class="s2">&quot;MIDILINK-mini&quot;</span><span class="p">,</span> <span class="s2">&quot;MIDILINK-mini&quot;</span><span class="p">);</span>
+
+<span class="c1">// make special event type for clarity</span>
+<span class="nx">Event</span><span class="p">.</span><span class="nx">addEventType</span><span class="p">(</span><span class="ss">\neural</span><span class="p">,</span> <span class="p">{</span>
+	<span class="o">~</span><span class="nx">type</span> <span class="o">=</span> <span class="ss">\midi</span><span class="p">;</span>
+	<span class="c1">//~type = \note; // uncomment this for testing without MIDI</span>
+	<span class="o">~</span><span class="nx">midiout</span> <span class="o">=</span> <span class="nx">q</span><span class="p">[</span><span class="ss">\midiOut</span><span class="p">];</span> <span class="c1">// comment this if you have no MIDI out destination at hand</span>
+	<span class="o">~</span><span class="nx">chan</span> <span class="o">=</span> <span class="o">~</span><span class="nx">chan</span> <span class="o">?</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="nx">currentEnvironment</span><span class="p">.</span><span class="nx">play</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// log all incoming OSC messages for debugging</span>
+<span class="nx">OSCFunc</span><span class="p">.</span><span class="nx">trace</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="nx">hideStatusMsg</span><span class="o">:</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nx">OSCdef</span><span class="p">(</span><span class="ss">\listenPrediction</span><span class="p">,</span> <span class="p">{</span><span class="o">|</span><span class="nx">msg</span><span class="o">|</span>
+	<span class="kd">var</span> <span class="nx">notes</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">asString</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">$</span><span class="p">,);</span>
+	<span class="kd">var</span> <span class="nx">durs</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">asString</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">$</span><span class="p">,);</span>
+	
+	<span class="nx">Task</span><span class="p">({</span>
+		<span class="nx">notes</span><span class="p">.</span><span class="k">do</span><span class="p">({</span><span class="o">|</span><span class="nx">note</span><span class="p">,</span> <span class="nx">i</span><span class="o">|</span>
+			<span class="p">(</span>
+				<span class="nx">type</span><span class="o">:</span> <span class="ss">\neural</span><span class="p">,</span>
+				<span class="nx">note</span><span class="o">:</span> <span class="nx">note</span><span class="p">.</span><span class="nx">asInteger</span><span class="p">,</span>
+				<span class="nx">amp</span><span class="o">:</span> <span class="mf">0.7</span><span class="p">.</span><span class="nx">rand</span><span class="p">()</span>
+			<span class="p">).</span><span class="nx">play</span><span class="p">;</span>
+			<span class="p">(</span><span class="nx">durs</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">asFloat</span><span class="o">*</span><span class="nx">q</span><span class="p">[</span><span class="ss">\timeScale</span><span class="p">]).</span><span class="nx">wait</span><span class="p">;</span>
+		<span class="p">});</span>
+	<span class="p">}).</span><span class="nx">start</span><span class="p">;</span>
+<span class="p">},</span> <span class="s2">&quot;/listenPrediction&quot;</span><span class="p">);</span>
+
+<span class="nx">MIDIdef</span><span class="p">.</span><span class="nx">noteOn</span><span class="p">(</span><span class="ss">\recordNotes</span><span class="p">,</span> <span class="p">{</span><span class="o">|</span><span class="nx">msg</span><span class="o">|</span>
+	<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\notes</span><span class="p">]</span> <span class="o">=</span> <span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\notes</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="nx">msg</span><span class="p">];</span>
+	<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\durations</span><span class="p">]</span> <span class="o">=</span> <span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\durations</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="nx">TempoClock</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="nx">beats</span> <span class="o">-</span> <span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\lastNote</span><span class="p">]];</span>
+	
+	<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\lastNote</span><span class="p">]</span> <span class="o">=</span> <span class="nx">TempoClock</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="nx">beats</span><span class="p">;</span>
+	
+	<span class="c1">// send message to python if we have collected enough notes</span>
+	<span class="c1">// and reset notes</span>
+	<span class="k">if</span><span class="p">(</span><span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\notes</span><span class="p">].</span><span class="nx">size</span><span class="o">&gt;</span><span class="nx">q</span><span class="p">[</span><span class="ss">\numNotes</span><span class="p">],</span> <span class="p">{</span>
+		<span class="nx">q</span><span class="p">[</span><span class="ss">\pythonServer</span><span class="p">].</span><span class="nx">sendMsg</span><span class="p">(</span>
+			<span class="s2">&quot;/predict&quot;</span><span class="p">,</span>
+			<span class="nx">q</span><span class="p">[</span><span class="ss">\helper</span><span class="p">][</span><span class="ss">\join</span><span class="p">].(</span><span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\notes</span><span class="p">]),</span>
+			<span class="nx">q</span><span class="p">[</span><span class="ss">\helper</span><span class="p">][</span><span class="ss">\join</span><span class="p">].(</span><span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\durations</span><span class="p">]),</span>
+		<span class="p">);</span>
+		<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\notes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+		<span class="nx">q</span><span class="p">[</span><span class="ss">\storage</span><span class="p">][</span><span class="ss">\durations</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+	<span class="p">});</span>
+<span class="p">});</span> 
+</pre></div>
+</div>
+</div>
+<div class="section" id="python-part">
+<h3>Python part<a class="headerlink" href="#python-part" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pythonosc</span> <span class="kn">import</span> <span class="n">dispatcher</span><span class="p">,</span> <span class="n">osc_server</span><span class="p">,</span> <span class="n">udp_client</span>
+
+<span class="c1"># this needs to be the address on which sclang is listening for osc messages</span>
+<span class="c1"># 127.0.0.1 is localhost and therefore the computer where one is working on</span>
+<span class="c1"># the 2nd number is the port number which is default 57120</span>
+<span class="c1"># but check this via &quot;NetAddr.langPort&quot; in sclange</span>
+<span class="n">osc_client</span> <span class="o">=</span> <span class="n">udp_client</span><span class="o">.</span><span class="n">SimpleUDPClient</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">57120</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test communication</span>
+<span class="c1"># you should see a message in SuperCollider that a OSC message was received</span>
+<span class="n">osc_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;/foo&quot;</span><span class="p">,</span> <span class="s2">&quot;hello world&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test if midi works - this should play 2 sounds if you have loaded </span>
+<span class="n">osc_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;/listenPrediction&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;62,64&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5,0.25&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">unused_addr</span><span class="p">,</span> <span class="o">*</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">message</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)])[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="c1"># currently we ignore the durations, but this could be also implemented</span>
+    <span class="n">durs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">notes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start predicting: &quot;</span><span class="p">,</span> <span class="n">notes</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">durs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pred_n</span><span class="p">,</span> <span class="n">pred_d</span> <span class="o">=</span> <span class="n">continue_sequence</span><span class="p">(</span>
+        <span class="n">seq_n</span><span class="o">=</span><span class="n">notes</span><span class="p">,</span>
+        <span class="n">seq_d</span><span class="o">=</span><span class="n">durs</span><span class="p">,</span>
+        <span class="n">times</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">pred_d</span> <span class="o">=</span> <span class="n">invert_dur</span><span class="p">(</span><span class="n">pred_d</span><span class="p">,</span> <span class="n">dur_encoder</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prediction finished: &quot;</span><span class="p">,</span> <span class="n">pred_n</span><span class="p">,</span> <span class="n">pred_d</span><span class="p">)</span>
+    <span class="n">osc_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">&quot;/listenPrediction&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pred_n</span><span class="p">]),</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pred_d</span><span class="p">])])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">osc_dispatcher</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">Dispatcher</span><span class="p">()</span>
+<span class="n">osc_dispatcher</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s2">&quot;/predict&quot;</span><span class="p">,</span> <span class="n">predict</span><span class="p">)</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">osc_server</span><span class="o">.</span><span class="n">ThreadingOSCUDPServer</span><span class="p">(</span>
+    <span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">57340</span><span class="p">),</span>
+    <span class="n">osc_dispatcher</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To stop the server interrupt execution of the cell (see bar above in Jupyter) or hit <code class="docutils literal notranslate"><span class="pre">ctrl+c</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Server is listining&quot;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stop server&quot;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">server_close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Server is listining
+Start predicting:  (1, 17) (1, 17)
+Prediction finished:  [53 62 62 62 64 64 64 64 64 50 57 59 61 62 61 62 64 57 69 69 67 66 64 62
+ 71 62 64 66 67 66 64 66 67 66 67 66 64 62 64 59 61 59 61 58 66 67 69 67
+ 66 64 43 59 54 66 64 64 66 67 66 67 66 64 66 67] [0.25, 0.5, 0.25, 0.5, 0.25, 0.5, 0.5, 0.5, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.08331298828125, 0.08331298828125, 0.5, 0.5, 0.25, 0.5, 0.25, 1.0, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.25, 0.25, 0.25, 1.0, 0.5, 1.0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+Start predicting:  (1, 17) (1, 17)
+Prediction finished:  [48 60 57 58 57 58 50 48 43 41 58 55 53 50 64 58 57 53 55 51 50 48 46 44
+ 44 41 55 57 48 55 49 51 50 47 48 62 62 60 62 64 59 60 58 57 55 57 55 53
+ 52 53 58 57 55 58 58 53 55 52 53 55 52 53 43 45] [0.25, 0.5, 0.25, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.333251953125, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.25, 1.0, 0.5, 0.25, 0.25, 0.5, 0.5, 1.0, 0.5, 0.5, 1.0, 0.5, 0.5, 1.0, 0.5]
+Stop server
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="extending">
+<h2>Extending<a class="headerlink" href="#extending" title="Permalink to this headline">¶</a></h2>
+<p>Extending this small example can be done in various ways:</p>
+<ul class="simple">
+<li><p>Using bigger/custom training data</p></li>
+<li><p>Modify the architecture of the neural net</p></li>
+<li><p>Take the durations into account during prediction - this is a bit tricky because we need some kind of quantising because we only allow for durations we have seen during training</p></li>
+<li><p>Add an <a class="reference external" href="https://towardsdatascience.com/light-on-math-ml-attention-with-keras-dc8dbc1fad39">attention mechanism</a> to the neural net</p></li>
+<li><p>Using a stacked LSTM with Auto Encoders to allow for polyphonic music</p></li>
+</ul>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="osc_communication.html" title="previous page">Communicating between SuperCollider and Python</a>
+    <a class='right-next' id="next-link" href="../01_spect_resynth/canvas.html" title="next page">Generating sounds via Python</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dennis Scheiba<br/>
+        
+            &copy; Copyright 2021, Dennis Scheiba.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
