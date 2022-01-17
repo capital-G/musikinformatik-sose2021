@@ -277,6 +277,18 @@ while being in the root directory of the repository and click on the appearing l
   Any help on this is appreciated.
 
 
+Docker Compose
+^^^^^^^^^^^^^^
+
+If you have `docker-compose <https://docs.docker.com/compose/install/>`_ installed on your machine you can also simply run
+
+.. code-block:: shell
+
+  docker-compose up
+
+and access the jupyter notebook via `http://localhost:8888 <http://localhost:8888>`_.
+
+
 Updating and working with the repository
 ----------------------------------------
 
