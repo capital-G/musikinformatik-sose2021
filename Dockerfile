@@ -25,4 +25,4 @@ USER root
 RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 
-CMD ["jupyter", "lab", "--ip", "0.0.0.0", "--port", "8888", "--no-browser"]
+CMD ["jupyter", "lab", "--ip", "0.0.0.0", "--port", "8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''"]
