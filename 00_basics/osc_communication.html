@@ -682,13 +682,13 @@ In SuperCollider and Python the data structure of JSON is closely related to a d
 OSC on the other hand is more related to a list which lacks the mapping of its items because I need to know what the first, secound, … value actually represents and I can not change this order without modifying code.</p>
 <p>Although OSC can also be stored as a file it is used most of the time in a network domain.
 JSON finds adaption in networking and in file storage and trades human-readability for performance by not relying on a binary encoding for its messages like OSC and instead using human readable string representations for its data, therefore we can take a look at an example JSON.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;key_a&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;key_b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-    <span class="nt">&quot;key_c&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;nested_key&quot;</span><span class="p">:</span> <span class="mf">42.0</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;key_a&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;value&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;key_b&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;key_c&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;nested_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">42.0</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Nesting dictionaries and storing arrays are really handy and <a class="reference external" href="https://doc.sccode.org/Guides/OSC_communication.html">are not (well) supported by OSC</a>.
