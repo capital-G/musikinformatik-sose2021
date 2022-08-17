@@ -23,3 +23,5 @@ Here is a list of online resources that are worth checking out:
 
 * The `official tutorial <https://docs.python.org/3/tutorial/index.html>`_ is also worth
   checking out.
+  
+* Complete `Python tutorial <https://www.scaler.com/topics/python/>`_ by Scaler topics is a good tutorial for beginners as well as for intermediate learners.  
